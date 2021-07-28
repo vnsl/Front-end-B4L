@@ -7,6 +7,7 @@ import {
 
 import React from "react";
 import Login from "./paginas/Login";
+import Cadastro from "./paginas/Cadastro";
 
 import { AuthProvider } from './context/AuthContext';
 import useAuth from './hook/useAuth';
@@ -27,6 +28,7 @@ function Routes() {
             <Router>
                 <Switch>
                     <Route path="/" exact component={Login}/>
+                    <Route path="/cadastro" component={Cadastro}/>
 
                     <RotasProtegidas>
                         <Route path="/perfil" exact component={Login}/>

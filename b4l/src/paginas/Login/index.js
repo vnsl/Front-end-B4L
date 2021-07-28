@@ -27,7 +27,9 @@ function Login() {
     async function onSubmit(data) {
         setCarregando(true);
         setErro('');
-    
+
+        console.log(data)
+
         try {
           const resposta = await fetch('http://localhost:3000/login', {
             method: 'POST',
@@ -68,9 +70,7 @@ function Login() {
                 <div className="login">
                     <TextField className='textarea' label="E-mail" {...register('email')} type='text'/>
                     <TextField className='textarea' label="Senha" {...register('senha')} type='password'/>
-                    <Button style={{
-                        backgroundColor: "var(--cor-laranja)"
-                    }} variant='contained' type='submit'>Entrar</Button>
+                    <Button variant='contained' type='submit'>Entrar</Button>
                     {erro && <Alert severity="error">{erro}</Alert>}
                     <Typography>Ainda não tem uma conta? <Link to='/cadastro'>Cadastre-se</Link></Typography>
                 </div>

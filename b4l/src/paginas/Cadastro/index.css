@@ -1,0 +1,41 @@
+* {
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+.container-cadastro {
+    background: url("../../assets/bg-cadastro.png") no-repeat center;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+}
+
+.caixa {
+    background: white;
+    position: absolute;
+    width: 50%;
+    height: 100vh;
+    border-bottom-right-radius: 88px;
+    z-index: 2;
+    display: flex;
+}
+
+.content {
+    position: absolute;
+    z-index: 9999;
+}
+
+ 
+.login {
+    display: grid;
+    place-content: center;
+    place-items: center;
+    gap: 30px;
+}
+  
+.textarea {
+    width: 408px;
+    height: 100px;
+    font-family: 'Baloo 2', cursive;
+}
