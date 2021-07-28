@@ -27,27 +27,28 @@ body {
 }
 
   
-  .container-login {
+.container-login {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 30px;
 
-  }
+}
   
-  .login {
+.login {
     display: grid;
     place-content: center;
     place-items: center;
     gap: 30px;
-  }
+}
   
-  .textarea {
+.textarea {
     width: 408px;
     height: 100px;
     font-family: 'Baloo 2', cursive;
-  }
+}
 
-  .button {
-      width: 31px;
-  }
+.botao {
+    width: 31px;
+    background-color: black;
+}
