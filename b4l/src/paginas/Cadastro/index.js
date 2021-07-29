@@ -5,14 +5,12 @@ import { useForm } from 'react-hook-form';
 import './index.css';
 
 function Cadastro() {
-    const { register, handleSubmit } = useForm();
+    const { handleSubmit } = useForm();
 
     return (
         <div className='container-cadastro'>
             <div className='caixa'>
-                <h1>Cadastro</h1>
-                {/* <StepperHorizontal register={register} /> */}
-
+                <StepperHorizontal/>
             </div>
 
         </div>

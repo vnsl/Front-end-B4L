@@ -5,12 +5,19 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 
+import CadastroForm1 from '../CadastroForm1';
+import CadastroForm2 from '../CadastroForm2';
+import CadastroForm3 from '../CadastroForm3';
+
+import './index.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+  },
+  stepsControl: {
+    width: '30%',
   },
   button: {
     marginRight: theme.spacing(1),
@@ -25,20 +32,14 @@ function getSteps() {
   return ['', '', ''];
 }
 
-function getStepContent(step, register) {
+function getStepContent(step) {
   switch (step) {
     case 0:
-      return (
-        <div className="login">
-            <TextField className='textarea' label="E-mail" {...register('email')} type='text'/>
-            <TextField className='textarea' label="Senha" {...register('senha')} type='password'/>
-        
-        </div>
-      );
+      return <CadastroForm1></CadastroForm1>;
     case 1:
-      return 'What is an ad group anyways?';
+      return <CadastroForm2></CadastroForm2>;
     case 2:
-      return 'This is the bit I really care about!';
+      return <CadastroForm3></CadastroForm3>;
     default:
       return 'Unknown step';
   }
@@ -73,28 +74,16 @@ export default function StepperHorizontal() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
   const handleReset = () => {
     setActiveStep(0);
   };
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStep}>
+      <div className='container'>
+        <h1>Cadastro</h1>
+        <Stepper className={classes.stepsControl} activeStep={activeStep}>
+      
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
@@ -105,12 +94,13 @@ export default function StepperHorizontal() {
             stepProps.completed = false;
           }
           return (
-            <Step key={label} {...stepProps}>
+            <Step className={classes.stepsControl} key={label} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
             </Step>
           );
         })}
       </Stepper>
+      </div>
       <div>
         {activeStep === steps.length ? (
           <div>
@@ -118,7 +108,7 @@ export default function StepperHorizontal() {
               All steps completed - you&apos;re finished
             </Typography>
             <Button onClick={handleReset} className={classes.button}>
-              Reset
+              Resetar
             </Button>
           </div>
         ) : (
@@ -126,18 +116,8 @@ export default function StepperHorizontal() {
             <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
             <div>
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Back
+                Voltar
               </Button>
-              {isStepOptional(activeStep) && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSkip}
-                  className={classes.button}
-                >
-                  Skip
-                </Button>
-              )}
 
               <Button
                 variant="contained"
@@ -145,7 +125,7 @@ export default function StepperHorizontal() {
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                {activeStep === steps.length - 1 ? 'Criar conta' : 'Próximo'}
               </Button>
             </div>
           </div>
