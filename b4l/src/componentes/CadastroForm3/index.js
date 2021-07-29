@@ -4,11 +4,7 @@ import './index.css';
 import TextField from '@material-ui/core/TextField';
 import { useForm } from 'react-hook-form';
 
-import useStyles from './styles';
-
-
 export default function CadastroForm1() {
-    const classes = useStyles();
     const { register } = useForm();
 
     return (

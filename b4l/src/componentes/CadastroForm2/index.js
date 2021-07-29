@@ -5,8 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useForm } from 'react-hook-form';
 
-import useStyles from './styles';
-
 const categoria = [
     {
         value: 1,
@@ -19,7 +17,6 @@ const categoria = [
 ]
 
 export default function CadastroForm2() {
-    const classes = useStyles();
     const { register } = useForm();
 
 
