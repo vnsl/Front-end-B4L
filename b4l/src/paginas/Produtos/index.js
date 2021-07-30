@@ -1,10 +1,14 @@
 import React from 'react';
+import CustomCard from '../../componentes/Card';
 
 import './index.css';
 
 function Produtos() {
     return (
-        <h1>Produtos</h1>
+        <div>
+            <h1>Produtos</h1>
+            <CustomCard />
+        </div>
     )
     
 }
