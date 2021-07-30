@@ -75,9 +75,8 @@ function Login() {
                     <Typography>Ainda não tem uma conta? <Link to='/cadastro'>Cadastre-se</Link></Typography>
                 </div>
             </div>
-      </form>
+        </form>
     </div>
-    
   );
 }
 
