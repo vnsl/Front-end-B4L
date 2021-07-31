@@ -11,7 +11,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import Loading from '../Loading';
 import Alert from '@material-ui/lab/Alert';
-import InputSenha from '../InputSenha/index';
+import InputAdornment from '@material-ui/core/InputAdornment';
+// import InputSenha from '../InputSenha/index';
 
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../hook/useAuth';
@@ -45,7 +46,6 @@ function getStepContent(step, register, categorias) {
         <div className='cadastro'>
             <TextField key='nome' className='textarea' label="Nome de usuário" {...register('nome')} type='text'/>
             <TextField key='email' className='textarea' label="Email" {...register('email')} type='text'/>
-            <InputSenha />
             <TextField key='senha' className='textarea' label="Senha" {...register('senha')} type='password'/>
             <TextField key='senhaRepetida' className='textarea' label="Repita a senha" {...register('senhaRepetida')} type='password'/>   
                            
@@ -68,9 +68,9 @@ function getStepContent(step, register, categorias) {
     case 2:
       return (
         <div className='cadastro'>
-            <TextField key='restaurante.taxaEntrega' className='textarea' label="Taxa de entrega" {...register('restaurante.taxaEntrega')} type='number'/>
+            <TextField key='restaurante.taxaEntrega' className='textarea' label="Taxa de entrega" {...register('restaurante.taxaEntrega')} type='number' startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
             <TextField key='restaurante.tempoEntregaEmMinutos' className='textarea' label="Tempo estimado de entrega" {...register('restaurante.tempoEntregaEmMinutos')} type='number'/>
-            <TextField key='restaurante.valorMinimoPedido' className='textarea' label="Valor mínimo do pedido" {...register('restaurante.valorMinimoPedido')} type='number'/>                   
+            <TextField key='restaurante.valorMinimoPedido' className='textarea' label="Valor mínimo do pedido" {...register('restaurante.valorMinimoPedido')} type='number' startAdornment={<InputAdornment position="start">R$</InputAdornment>} />                   
         </div>
       );
     default:
@@ -80,7 +80,7 @@ function getStepContent(step, register, categorias) {
 
 export default function StepperHorizontal() {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
   const { register, handleSubmit } = useForm();
@@ -88,10 +88,6 @@ export default function StepperHorizontal() {
 
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
-  const [values, setValues] = useState({
-    password: '',
-    showPassword: false,
-  });
 
   const { categorias } = useAuth();
 
@@ -126,14 +122,6 @@ export default function StepperHorizontal() {
   const handleBack = () => {
     setErro('');
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-  
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
   };
 
   async function onSubmit(data) {
@@ -193,7 +181,7 @@ export default function StepperHorizontal() {
       <div>
         
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep, register, categorias, values, handleClickShowPassword, handleMouseDownPassword)}</Typography>
+            <Typography className={classes.instructions}>{getStepContent(activeStep, register, categorias)}</Typography>
             <div>
               {carregando && <Loading/>}
               {erro && <Alert severity="error">{erro}</Alert>}
