@@ -11,6 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import Loading from '../Loading';
 import Alert from '@material-ui/lab/Alert';
+import InputSenha from '../InputSenha/index';
 
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../hook/useAuth';
@@ -44,8 +45,10 @@ function getStepContent(step, register, categorias) {
         <div className='cadastro'>
             <TextField key='nome' className='textarea' label="Nome de usuário" {...register('nome')} type='text'/>
             <TextField key='email' className='textarea' label="Email" {...register('email')} type='text'/>
+            <InputSenha />
             <TextField key='senha' className='textarea' label="Senha" {...register('senha')} type='password'/>
-            <TextField key='senhaRepetida' className='textarea' label="Repita a senha" {...register('senhaRepetida')} type='password'/>                   
+            <TextField key='senhaRepetida' className='textarea' label="Repita a senha" {...register('senhaRepetida')} type='password'/>   
+                           
         </div>
       );
     case 1:
@@ -85,6 +88,10 @@ export default function StepperHorizontal() {
 
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
+  const [values, setValues] = useState({
+    password: '',
+    showPassword: false,
+  });
 
   const { categorias } = useAuth();
 
@@ -119,6 +126,14 @@ export default function StepperHorizontal() {
   const handleBack = () => {
     setErro('');
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+  
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   async function onSubmit(data) {
@@ -178,7 +193,7 @@ export default function StepperHorizontal() {
       <div>
         
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep, register, categorias)}</Typography>
+            <Typography className={classes.instructions}>{getStepContent(activeStep, register, categorias, values, handleClickShowPassword, handleMouseDownPassword)}</Typography>
             <div>
               {carregando && <Loading/>}
               {erro && <Alert severity="error">{erro}</Alert>}
