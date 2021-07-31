@@ -9,7 +9,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import useStyles from './styles';
 
-export default function InputSenha() {
+export default function InputSenha(props) {
   const classes = useStyles();
   const [values, setValues] = useState({
     password: '',
@@ -32,9 +32,11 @@ export default function InputSenha() {
     <div className={classes.root}>
       <div>
         <FormControl className={clsx(classes.margin, classes.textField)}>
-          <InputLabel htmlFor="standard-adornment-password">Senha</InputLabel>
+          <InputLabel htmlFor="standard-adornment-password">{props.label}</InputLabel>
           <Input
             id="standard-adornment-password"
+            key={props.label} 
+            {...props.register()} 
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
             onChange={handleChange('password')}

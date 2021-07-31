@@ -8,11 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Link } from 'react-router-dom';
 
 import Loading from '../Loading';
 import Alert from '@material-ui/lab/Alert';
 import InputAdornment from '@material-ui/core/InputAdornment';
-// import InputSenha from '../InputSenha/index';
+import InputSenha from '../InputSenha/index';
 
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../hook/useAuth';
@@ -46,18 +47,19 @@ function getStepContent(step, register, categorias) {
         <div className='cadastro'>
             <TextField key='nome' className='textarea' label="Nome de usuário" {...register('nome')} type='text'/>
             <TextField key='email' className='textarea' label="Email" {...register('email')} type='text'/>
-            <TextField key='senha' className='textarea' label="Senha" {...register('senha')} type='password'/>
-            <TextField key='senhaRepetida' className='textarea' label="Repita a senha" {...register('senhaRepetida')} type='password'/>   
-                           
+            <InputSenha register={() => register('senha', { required: true })} label='Senha'/>
+            <InputSenha register={() => register('senhaRepetida', { required: true })} label='Repita a senha'/>
+            {/* <TextField key='senha' className='textarea' label="Senha" {...register('senha')} type='password'/> */}
+            {/* <TextField key='senhaRepetida' className='textarea' label="Repita a senha" {...register('senhaRepetida')} type='password'/> */}
         </div>
       );
-    case 1:
-      return (
-        <div className='cadastro'>
+      case 1:
+        return (
+          <div className='cadastro'>
             <TextField key='restaurante.nome'className='textarea' label="Nome do restaurante" {...register('restaurante.nome')} type='text'/>
             <TextField key='restaurante.idCategoria' className='textarea' label="Categoria" {...register('restaurante.idCategoria')} select type='number'>
                 {categorias.map((opcao) => (
-                    <MenuItem key={opcao.id} value={opcao.id}>
+                  <MenuItem key={opcao.id} value={opcao.id}>
                         {opcao.nome}
                     </MenuItem>
                 ))}
@@ -65,104 +67,104 @@ function getStepContent(step, register, categorias) {
             <TextField key='restaurante.descricao' className='textarea' label="Descrição" {...register('restaurante.descricao')} type='text'/>                   
         </div>
       );
-    case 2:
-      return (
-        <div className='cadastro'>
+      case 2:
+        return (
+          <div className='cadastro'>
             <TextField key='restaurante.taxaEntrega' className='textarea' label="Taxa de entrega" {...register('restaurante.taxaEntrega')} type='number' startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
             <TextField key='restaurante.tempoEntregaEmMinutos' className='textarea' label="Tempo estimado de entrega" {...register('restaurante.tempoEntregaEmMinutos')} type='number'/>
             <TextField key='restaurante.valorMinimoPedido' className='textarea' label="Valor mínimo do pedido" {...register('restaurante.valorMinimoPedido')} type='number' startAdornment={<InputAdornment position="start">R$</InputAdornment>} />                   
         </div>
       );
-    default:
-      return 'Cadastro efetuado com sucesso.';
-}
-}
-
-export default function StepperHorizontal() {
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
-  const steps = getSteps();
-
-  const { register, handleSubmit } = useForm();
-  const history = useHistory();
-
-  const [ erro, setErro ] = useState('');
-  const [ carregando, setCarregando ] = useState(false);
-
-  const { categorias } = useAuth();
-
-  const handleNext = (data) => {
-    setErro('');
-    
-    if(activeStep === 0) {
-      if (!data.nome) {
-        setErro('Nome obrigatório');
-        return;
+      default:
+        return 'Cadastro efetuado com sucesso.';
       }
-  
-      if (!data.email) {
-        setErro('Email obrigatório');
-        return;
-      }
-      
-      if (!data.senha) {
-        setErro('Senha obrigatória');
-        return;
-      }
-      
-      if (data.senha !== data.senhaRepetida) {
-        setErro('Senhas não conferem.');
-        return;
-      }
-    } else 
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setErro('');
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  async function onSubmit(data) {
-    setCarregando(true);
-    setErro('');
-  
-    try {
-
-      if(!data.restaurante.nome){
-        setErro('Precisa preencher algo!');
-        setCarregando(false);
-      }
-
-      const resposta = await fetch('http://localhost:3000/usuarios', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-type': 'application/json'
-        }
-      })
-      
-      const dados = await resposta.json();
-      
-      setCarregando(false);
-      
-      if (!resposta.ok) {
-        setErro(dados);
-        return;
-      }
-
-      if (resposta.ok) {
-        handleNext();
-      }
-      history.push('/');
-    } catch (error) {
-      setErro(error.message)
     }
-  };
-
-  return (
-    <div className={classes.root}>
+    
+    export default function StepperHorizontal() {
+      const classes = useStyles();
+      const [activeStep, setActiveStep] = useState(0);
+      const steps = getSteps();
+      
+      const { register, handleSubmit } = useForm();
+      const history = useHistory();
+      
+      const [ erro, setErro ] = useState('');
+      const [ carregando, setCarregando ] = useState(false);
+      
+      const { categorias } = useAuth();
+      
+      const handleNext = (data) => {
+        setErro('');
+        
+        if(activeStep === 0) {
+          // if (!data.nome) {
+          //   setErro('Nome obrigatório');
+          //   return;
+          // }
+          
+          // if (!data.email) {
+          //   setErro('Email obrigatório');
+          //   return;
+          // }
+          
+          // if (!data.senha) {
+          //   setErro('Senha obrigatória');
+          //   return;
+          // }
+          
+          if (data.senha !== data.senhaRepetida) {
+            setErro('Senhas não conferem.');
+            return;
+          }
+        }
+        
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      };
+      
+      const handleBack = () => {
+        setErro('');
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+      };
+      
+      async function onSubmit(data) {
+        setCarregando(true);
+        setErro('');
+        
+        try {
+          
+          if(!data.restaurante.nome){
+            setErro('Precisa preencher algo!');
+            setCarregando(false);
+          }
+          
+          const resposta = await fetch('http://localhost:3000/usuarios', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+              'Content-type': 'application/json'
+            }
+          })
+          
+          const dados = await resposta.json();
+          
+          setCarregando(false);
+          
+          if (!resposta.ok) {
+            setErro(dados);
+            return;
+          }
+          
+          if (resposta.ok) {
+            handleNext();
+          }
+          history.push('/');
+        } catch (error) {
+          setErro(error.message)
+        }
+      };
+      
+      return (
+        <div className={classes.root}>
       <div className='container'>
         <h1>Cadastro</h1>
         <Stepper className={classes.stepsControl} activeStep={activeStep}>
@@ -194,7 +196,7 @@ export default function StepperHorizontal() {
                 color="primary"
                 onClick={handleSubmit(onSubmit)}
                 className={classes.button}
-                >Criar conta</Button> : 
+                >Criar conta</Button> :
                 <Button
                 variant="contained"
                 color="primary"
@@ -202,6 +204,7 @@ export default function StepperHorizontal() {
                 className={classes.button}
                 >Próximo</Button>
               }
+              <Typography>Já tem uma conta? <Link to='/login'>Login</Link></Typography>               
             </div>
           </div>
 
