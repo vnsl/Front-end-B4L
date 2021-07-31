@@ -13,19 +13,9 @@ import Loading from '../Loading';
 import Alert from '@material-ui/lab/Alert';
 
 import { useHistory } from 'react-router-dom';
+import useAuth from '../../hook/useAuth';
 
 import './index.css';
-
-const categoria = [
-  {
-      value: 1,
-      label: 'Italiano',
-  },
-  {
-      value: 2,
-      label: 'Vegetariano',
-  },
-]
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,41 +37,41 @@ function getSteps() {
   return ['', '', ''];
 }
 
-function getStepContent(step, register) {
+function getStepContent(step, register, categorias) {
   switch (step) {
     case 0:
       return (
         <div className='cadastro'>
-            <TextField className='textarea' label="Nome de usuário" {...register('nome')} type='text' required/>
-            <TextField className='textarea' label="Email" {...register('email')} type='text'/>
-            <TextField className='textarea' label="Senha" {...register('senha')} type='password'/>
-            <TextField className='textarea' label="Repita a senha" {...register('senhaRepetida')} type='password'/>                   
+            <TextField key='nome' className='textarea' label="Nome de usuário" {...register('nome')} type='text'/>
+            <TextField key='email' className='textarea' label="Email" {...register('email')} type='text'/>
+            <TextField key='senha' className='textarea' label="Senha" {...register('senha')} type='password'/>
+            <TextField key='senhaRepetida' className='textarea' label="Repita a senha" {...register('senhaRepetida')} type='password'/>                   
         </div>
       );
     case 1:
       return (
         <div className='cadastro'>
-            <TextField className='textarea' label="Nome do restaurante" {...register('restaurante.nome')} type='text'/>
-            <TextField className='textarea' label="Categoria" {...register('restaurante.idCategoria')} select type='number'>
-                {categoria.map((opcao) => (
-                    <MenuItem key={opcao.value} value={opcao.value}>
-                        {opcao.label}
+            <TextField key='restaurante.nome'className='textarea' label="Nome do restaurante" {...register('restaurante.nome')} type='text'/>
+            <TextField key='restaurante.idCategoria' className='textarea' label="Categoria" {...register('restaurante.idCategoria')} select type='number'>
+                {categorias.map((opcao) => (
+                    <MenuItem key={opcao.id} value={opcao.id}>
+                        {opcao.nome}
                     </MenuItem>
                 ))}
             </TextField>
-            <TextField className='textarea' label="Descrição" {...register('restaurante.descricao')} type='text'/>                   
+            <TextField key='restaurante.descricao' className='textarea' label="Descrição" {...register('restaurante.descricao')} type='text'/>                   
         </div>
       );
     case 2:
       return (
         <div className='cadastro'>
-            <TextField className='textarea' label="Taxa de entrega" {...register('restaurante.taxaEntrega')} type='number'/>
-            <TextField className='textarea' label="Tempo estimado de entrega" {...register('restaurante.tempoEntregaEmMinutos')} type='number'/>
-            <TextField className='textarea' label="Valor mínimo do pedido" {...register('restaurante.valorMinimoPedido')} type='number'/>                   
+            <TextField key='restaurante.taxaEntrega' className='textarea' label="Taxa de entrega" {...register('restaurante.taxaEntrega')} type='number'/>
+            <TextField key='restaurante.tempoEntregaEmMinutos' className='textarea' label="Tempo estimado de entrega" {...register('restaurante.tempoEntregaEmMinutos')} type='number'/>
+            <TextField key='restaurante.valorMinimoPedido' className='textarea' label="Valor mínimo do pedido" {...register('restaurante.valorMinimoPedido')} type='number'/>                   
         </div>
       );
     default:
-      return 'Unknown step';
+      return 'Cadastro efetuado com sucesso.';
 }
 }
 
@@ -96,14 +86,33 @@ export default function StepperHorizontal() {
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
 
+  const { categorias } = useAuth();
+
   const handleNext = (data) => {
     setErro('');
     
-    if (data.senha !== data.senhaRepetida) {
-      setErro('Senhas não conferem');
-      setCarregando(false);
-      return;
-    }
+    if(activeStep === 0) {
+      if (!data.nome) {
+        setErro('Nome obrigatório');
+        return;
+      }
+  
+      if (!data.email) {
+        setErro('Email obrigatório');
+        return;
+      }
+      
+      if (!data.senha) {
+        setErro('Senha obrigatória');
+        return;
+      }
+      
+      if (data.senha !== data.senhaRepetida) {
+        setErro('Senhas não conferem.');
+        return;
+      }
+    } else 
+
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -115,9 +124,7 @@ export default function StepperHorizontal() {
   async function onSubmit(data) {
     setCarregando(true);
     setErro('');
-    console.log(data);
-    console.log(data.restaurante);
-
+  
     try {
 
       if(!data.restaurante.nome){
@@ -142,6 +149,9 @@ export default function StepperHorizontal() {
         return;
       }
 
+      if (resposta.ok) {
+        handleNext();
+      }
       history.push('/');
     } catch (error) {
       setErro(error.message)
@@ -168,7 +178,7 @@ export default function StepperHorizontal() {
       <div>
         
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep, register)}</Typography>
+            <Typography className={classes.instructions}>{getStepContent(activeStep, register, categorias)}</Typography>
             <div>
               {carregando && <Loading/>}
               {erro && <Alert severity="error">{erro}</Alert>}

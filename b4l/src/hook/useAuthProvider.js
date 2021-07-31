@@ -6,7 +6,9 @@ export default function useAuthProvider() {
     const [tokenPersistido, setTokenPersistido, removeTokenPersistido] = useLocalStorage('TOKEN', null);
     const [userPersistido, setUserPersistido, removeUserPersistido] = useLocalStorage('USER', '');
 
+
     const [token, setToken] = useState(tokenPersistido);
+    const [categorias, setCategorias] = useState([]);
 
     const logar = (token, user) => {
         setToken(token);
@@ -26,5 +28,7 @@ export default function useAuthProvider() {
         deslogar,
         userPersistido,
         setUserPersistido,
+        setCategorias,
+        categorias
     };
 };

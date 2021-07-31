@@ -6,6 +6,7 @@ import './index.css';
 import Header from '../../componentes/HeaderProduto';
 
 function Produtos() {
+    
     return (
         <div className='content'>
             <Header></Header>

@@ -33,7 +33,7 @@ function Routes() {
                     <Route path="/produtos" exact component={Produtos}/>
 
                     <RotasProtegidas>
-                        <Route path="/produtosdps" exact component={Produtos}/>
+                        <Route path="/produtos2" exact component={Produtos}/>
                     </RotasProtegidas>
                 </Switch>
             </Router>
