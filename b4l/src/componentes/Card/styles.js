@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
-    root: {
+    root: { 
+      position: 'relative',
       width: 592,
       height: 238,
       borderRadius: 24,

@@ -41,14 +41,15 @@ function getSteps() {
 }
 
 function getStepContent(step, register, categorias) {
+
   switch (step) {
     case 0:
       return (
         <div className='cadastro'>
-            <TextField key='nome' className='textarea' label="Nome de usuário" {...register('nome')} type='text'/>
+            <TextField key='nome' className='textarea' label="Nome de usuário" {...register('nome')} type='text' />
             <TextField key='email' className='textarea' label="Email" {...register('email')} type='text'/>
-            <InputSenha register={() => register('senha', { required: true })} label='Senha'/>
-            <InputSenha register={() => register('senhaRepetida', { required: true })} label='Repita a senha'/>
+            <InputSenha register={() => register('senha')} label='Senha'/>
+            <InputSenha register={() => register('senhaRepetida')} label='Repita a senha'/>
             {/* <TextField key='senha' className='textarea' label="Senha" {...register('senha')} type='password'/> */}
             {/* <TextField key='senhaRepetida' className='textarea' label="Repita a senha" {...register('senhaRepetida')} type='password'/> */}
         </div>
@@ -61,7 +62,7 @@ function getStepContent(step, register, categorias) {
                 {categorias.map((opcao) => (
                   <MenuItem key={opcao.id} value={opcao.id}>
                         {opcao.nome}
-                    </MenuItem>
+                  </MenuItem>
                 ))}
             </TextField>
             <TextField key='restaurante.descricao' className='textarea' label="Descrição" {...register('restaurante.descricao')} type='text'/>                   
@@ -97,23 +98,52 @@ function getStepContent(step, register, categorias) {
         setErro('');
         
         if(activeStep === 0) {
-          // if (!data.nome) {
-          //   setErro('Nome obrigatório');
-          //   return;
-          // }
+          if (!data.nome) {
+            setErro('Nome obrigatório');
+            return;
+          }
           
-          // if (!data.email) {
-          //   setErro('Email obrigatório');
-          //   return;
-          // }
+          if (!data.email) {
+            setErro('Email obrigatório');
+            return;
+          }
           
-          // if (!data.senha) {
-          //   setErro('Senha obrigatória');
-          //   return;
-          // }
+          if (!data.senha) {
+            setErro('Senha obrigatória');
+            return;
+          }
           
           if (data.senha !== data.senhaRepetida) {
             setErro('Senhas não conferem.');
+            return;
+          }
+        }
+
+        if(activeStep === 1) {
+          if (!data.restaurante.nome) {
+            setErro('Nome do restaurante é obrigatório');
+            return;
+          }
+          
+          if (!data.restaurante.idCategoria) {
+            setErro('Selecione uma categoria');
+            return;
+          }
+        }
+
+        if(activeStep === 2) {
+          if (!data.restaurante.taxaEntrega) {
+            setErro('Insira um valor de taxa de entrega');
+            return;
+          }
+          
+          if (!data.restaurante.tempoEntregaEmMinutos) {
+            setErro('Indique o tempo estimado de entrega em minutos');
+            return;
+          }
+
+          if (!data.restaurante.valorMinimoPedido) {
+            setErro('Indique o valor mínimo do pedido');
             return;
           }
         }
@@ -132,11 +162,6 @@ function getStepContent(step, register, categorias) {
         
         try {
           
-          if(!data.restaurante.nome){
-            setErro('Precisa preencher algo!');
-            setCarregando(false);
-          }
-          
           const resposta = await fetch('http://localhost:3000/usuarios', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -154,9 +179,6 @@ function getStepContent(step, register, categorias) {
             return;
           }
           
-          if (resposta.ok) {
-            handleNext();
-          }
           history.push('/');
         } catch (error) {
           setErro(error.message)

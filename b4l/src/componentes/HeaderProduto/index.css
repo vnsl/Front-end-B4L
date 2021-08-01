@@ -1,5 +1,6 @@
 .header {
     display: block;
+    width: 100vw;
 }
 
 .logo {
@@ -17,21 +18,20 @@
 }
 
 .header-text {
-    width: 900px;
+    width: 65vw;
     position: relative;
     color: white;
     z-index: 3;
     top: -50%;
-    left: 40%;
+    left: 35%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-
 .imagem {
-    /* position: absolute; */
     background-color: black;
     border-bottom-right-radius: 233px;
     z-index: 1;
+    width: 100%;
 }

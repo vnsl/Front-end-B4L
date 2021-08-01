@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import StepperHorizontal from '../../componentes/Stepper';
-// import Loading from '../../componentes/Loading';
+import Loading from '../../componentes/Loading';
 
 import './index.css';
 
 import useAuth from '../../hook/useAuth';
 
 function Cadastro() {
-    // const [carregando, setCarregando] = useState(false);
+    const [carregando, setCarregando] = useState(false);
 
     const { setCategorias } = useAuth();
 
     async function listarCategorias() {
-        // setCarregando(true);
+        setCarregando(true);
         
         const resposta = await fetch('http://localhost:3000/categorias', {
           method: 'GET',
@@ -24,7 +24,7 @@ function Cadastro() {
         const categorias = await resposta.json();
         
         setCategorias(categorias);
-        // setCarregando(false);
+        setCarregando(false);
       };
     
       useEffect(() => {
@@ -33,7 +33,7 @@ function Cadastro() {
 
     return (
         <div className='container-cadastro'>
-            {/* {carregando && <Loading/>} */}
+            {carregando && <Loading/>}
             <div className='caixa'>
                 <StepperHorizontal/>
             </div>

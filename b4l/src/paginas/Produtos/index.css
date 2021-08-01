@@ -3,7 +3,6 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
 }
 
@@ -13,4 +12,21 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(592px, 1fr));
+    row-gap: 40px;
+    column-gap: 32px;
+    padding-top: 30px;
+}
+
+.botao-direita {
+    align-self: flex-end;
+    padding-top: 50px;
+}
+
+.container-produtos {
+    width: 70%;
 }

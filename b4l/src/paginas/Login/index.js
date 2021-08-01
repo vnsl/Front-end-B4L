@@ -50,7 +50,7 @@ function Login() {
     
           logar(dados.token, dados.usuario);
     
-          history.push('/produtos');
+          history.push('/produtos2');
         } catch (error) {
           setErro(error.message)
         }

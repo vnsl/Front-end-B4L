@@ -3,7 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
     paper: {
       position: 'absolute',
-      width: 400,
+      overflow: 'auto',
+      width: '90%',
+      height: '90%',
       backgroundColor: theme.palette.background.paper,
       border: '2px solid #000',
       boxShadow: theme.shadows[5],

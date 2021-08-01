@@ -45,7 +45,7 @@ export default function CustomModal() {
         </div>
         <div className="imagem">
             <div className={classes.botoes}>
-                <Button type="button" color="secondary" onClick={handleOpen}>
+                <Button type="button" color="secondary" onClick={handleClose}>
                     Cancelar
                 </Button>
                 <Button variant="contained" type="button" color="secondary" onClick={handleOpen}>
