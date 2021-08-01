@@ -47,7 +47,6 @@ export default function CustomizedSwitches(props) {
   const handleChange = (event) => {
       setState({ ...state, [event.target.name]: event.target.checked });
       props.setProdutoAtivo(props.produtoAtivo ? false : true);
-      console.log(props.produtoAtivo)
   };
 
   return (
