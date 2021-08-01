@@ -20,12 +20,14 @@ export default function CustomModal(props) {
   
   const recarregar = props.recarregar;
   
-  const { id, nome, preco, descricao, ativo } = props.produtoInfo ?? '';
+  const { id, nome, preco, descricao, ativo, permite_observacoes: permiteObserservacoes } = props.produtoInfo ?? '';
   const [ produtoAtivo, setProdutoAtivo ] = useState(ativo);
+  const [ observacoes, setObservacoes ] = useState(false);
 
   const handleOpen = () => {
     if (props.acao === 'Novo produto') {
       setProdutoAtivo(true);
+      setObservacoes(false);
     }
     setOpen(true);
   };
@@ -35,8 +37,9 @@ export default function CustomModal(props) {
   };
 
   async function onSubmit(data) {
+    console.log(data);
     setCarregando(true);
-        setErro('');
+    setErro('');
         
         try {
           if (props.acao === 'Novo produto') {
@@ -135,7 +138,7 @@ export default function CustomModal(props) {
         </div>
         <div className={classes.containerSwitches}>
           <Switch acao='Ativar produto' setProdutoAtivo={setProdutoAtivo} produtoAtivo={produtoAtivo}/>
-          <Switch acao='Permitir observações'/>
+          <Switch acao='Permitir observações' setProdutoAtivo={setObservacoes} produtoAtivo={observacoes}/>
         </div>
         <div className={classes.containerBotoes}>
             <div className={classes.botoes}>

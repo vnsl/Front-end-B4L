@@ -28,8 +28,6 @@ function Login() {
         setCarregando(true);
         setErro('');
 
-        console.log(data)
-
         try {
           const resposta = await fetch('http://localhost:3000/login', {
             method: 'POST',
