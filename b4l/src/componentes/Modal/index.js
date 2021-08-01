@@ -4,8 +4,8 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { useForm } from 'react-hook-form';
 import Loading from '../Loading';
+import Switch from '../../componentes/Switch';
 import Alert from '@material-ui/lab/Alert';
-import { useHistory } from 'react-router-dom';
 import useStyles from './styles';
 
 import useAuth from '../../hook/useAuth';
@@ -16,12 +16,17 @@ export default function CustomModal(props) {
   const { register, handleSubmit } = useForm();
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
-  const history = useHistory();
   const { token } = useAuth();
-
-  const { id, nome, preco, descricao } = props.produtoInfo ?? '';
+  
+  const recarregar = props.recarregar;
+  
+  const { id, nome, preco, descricao, ativo } = props.produtoInfo ?? '';
+  const [ produtoAtivo, setProdutoAtivo ] = useState(ativo);
 
   const handleOpen = () => {
+    if (props.acao === 'Novo produto') {
+      setProdutoAtivo(true);
+    }
     setOpen(true);
   };
 
@@ -53,7 +58,35 @@ export default function CustomModal(props) {
               return;
             }
           } else {
-            const resposta = await fetch(`http://localhost:3000/produtos/${id}`, {
+            if (ativo !== produtoAtivo && !produtoAtivo) {
+              try {
+                const resposta = await fetch(`http://localhost:3000/produtos/${id}/desativar`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                  }
+                })
+                setCarregando(false);
+              } catch (error) {
+                setErro(error.message)
+              }
+            } else if (ativo !== produtoAtivo && produtoAtivo) {
+              try {
+                const resposta = await fetch(`http://localhost:3000/produtos/${id}/ativar`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                  }
+                })
+                setCarregando(false);
+              } catch (error) {
+                setErro(error.message)
+              }
+            }
+            if(data.nome || data.preco || data.descricao) {
+              const resposta = await fetch(`http://localhost:3000/produtos/${id}`, {
               method: 'PUT',
               body: JSON.stringify(data),
               headers: {
@@ -70,10 +103,16 @@ export default function CustomModal(props) {
               setErro(dados);
               return;
             }
+            }
+            if(data.nome && data.preco && data.descricao) {
+              setCarregando(false);
+              handleClose();
+            }
+            
           }
           
+          recarregar();
           handleClose();
-          props.recarregar();
           
         } catch (error) {
           setErro(error.message)
@@ -86,8 +125,8 @@ export default function CustomModal(props) {
           <div className={classes.fields}>
               <h2 id="custom-modal-title">{props.acao}</h2>
               <TextField key='produto.nome' className='textarea' label="Nome" type='text' {...register('nome')} defaultValue={nome}/>
-              <TextField key='produto.descricao' className='textarea' label="Descrição" type='text' {...register('descricao')} value={descricao}/>
-              <TextField key='preco' className='textarea' label="Valor" type='number' {...register('preco')} value={preco}/>
+              <TextField key='produto.descricao' className='textarea' label="Descrição" type='text' {...register('descricao')} defaultValue={descricao}/>
+              <TextField key='preco' className='textarea' label="Valor" type='number' {...register('preco')} defaultValue={preco}/>
               {carregando && <Loading/>}
               {erro && <Alert severity="error">{erro}</Alert>}
           </div>
@@ -95,7 +134,8 @@ export default function CustomModal(props) {
           </div>
         </div>
         <div className={classes.containerSwitches}>
-
+          <Switch acao='Ativar produto' setProdutoAtivo={setProdutoAtivo} produtoAtivo={produtoAtivo}/>
+          <Switch acao='Permitir observações'/>
         </div>
         <div className={classes.containerBotoes}>
             <div className={classes.botoes}>
