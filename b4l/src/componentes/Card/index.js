@@ -9,45 +9,48 @@ import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/lab/Alert';
 import Loading from '../../componentes/Loading';
 import useAuth from '../../hook/useAuth';
+import CustomModal from '../../componentes/Modal';
 import useStyles from './styles';
 import './index.css';
 
 export default function CustomCard(produto) {
   const classes = useStyles();
-  const { id, nome, descricao, preco, imagem } = produto.produto;
+  const { id, nome, descricao, preco, imagem, ativo } = produto.produto;
   const { token } = useAuth();
 
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
 
   async function handleExcluir() { 
-    setErro('');   
-    try {
-      const resposta = await fetch(`http://localhost:3000/produtos/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
+    setErro('');
+    if (!ativo){
+      try {
+        const resposta = await fetch(`http://localhost:3000/produtos/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        
+        const dados = await resposta.json();
+        
+        if (!resposta.ok) {
+          setErro(dados);
+          return;
         }
-      })
-      
-      const dados = await resposta.json();
-      
-      if (!resposta.ok) {
-        setErro(dados);
-        return;
+        produto.recarregar();
+      } catch (error) {
+        setErro(error.message)
       }
-      
-    } catch (error) {
-      setErro(error.message)
-    }
+    }   
   };
   
   return (
-    <Card className={classes.root,  'cabelo'}>
+    <Card className={classes.root, 'cabelo'}>
       <div className={'eita'}>
         {erro && <Alert severity="error">{erro}</Alert>}
-        <Button onClick={handleExcluir}>AQUI</Button>
-        <Button onClick={handleExcluir}>AQUI</Button>
+        <Button onClick={handleExcluir}>Excluir produto do catalogo</Button>
+        <CustomModal className='modal' acao='Editar produto' produtoInfo={produto.produto} recarregar={produto.recarregar} ativo={produto.ativo}/>
       </div>
       {carregando && <Loading/>}
       <CardActionArea className={classes.cardActionArea, 'adc-blur'}>

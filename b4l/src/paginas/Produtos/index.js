@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CustomModal from '../../componentes/Modal';
 import CardMarket from '../../componentes/Card';
 import useAuth from '../../hook/useAuth';
+import { useHistory } from 'react-router-dom';
 import Loading from '../../componentes/Loading';
 
 import './index.css';
@@ -14,7 +15,8 @@ function Produtos() {
     const [produtos, setProdutos] = useState([]);
     const [carregando, setCarregando] = useState(false);
     const [carregar, setCarregar] = useState(false);
-  
+    const history = useHistory();
+
     useEffect(() => {
       setCarregar(false);
   
@@ -33,7 +35,6 @@ function Produtos() {
         });
         
           const dados = await resposta.json();
-          console.log(dados);
         
           setCarregando(false);
           
@@ -46,8 +47,11 @@ function Produtos() {
             setErro(dados);
             return;
           }
-  
+          
           setProdutos(dados);
+          if(dados.length === 0) {
+            history.push('/produtos2')
+          }
         } catch (error) {
           setErro(error.message);
         }
@@ -60,21 +64,17 @@ function Produtos() {
         <div className='content'>
             {carregando && <Loading/>}
             <Header></Header>
-            {produtos.length === 0 ? 
                 <div className='container-produtos'>
+                  <div style={produtos.length !== 0 ? {display:'none'} : {display:'contents'}}>
                     <p>Você não tem nenhum produto no seu cardápio.</p>
                     <p>Gostaria de adicionar um novo produto.</p>
-                    <CustomModal className='modal' />
-                </div> :
-                <div className='container-produtos'>
-                    <h1 className='botao-direita' >Existe produto</h1>
-                    <CustomModal className='botao-direita'/>
+                  </div>
+                    <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
                     <div className='cards'>
-                        {produtos.map( produto => <CardMarket produto={produto}/>)}
+                        {produtos.map(produto => <CardMarket produto={produto} recarregar={() => setCarregar(true)}/>)}
                     </div>
                 </div>
-            
-            }
+
         </div>
     )
     
