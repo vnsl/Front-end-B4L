@@ -1,7 +1,4 @@
-h3 {
-    color: var(--cor-vermelho);
-    font-family: 'Baloo 2', cursive;
-}
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Montserrat:wght@400;700&display=swap');
 
 .card {
     background: url("../../assets/bg-login.png") no-repeat center;
@@ -9,6 +6,15 @@ h3 {
     height: 100vh;
 }
 
+h3 {
+    color: var(--cor-vermelho);
+    padding-left: 15px;
+}
+
+.title {
+    font-family: 'Baloo 2', cursive !important;
+    font-weight: 700 !important;
+}
   
 .container-login {
     display: flex;
@@ -22,6 +28,7 @@ h3 {
     border-radius: 16px;
     box-shadow: 0px 4px 16px rgba(50, 50, 50, 0.4);
     right: 320px;
+    padding: 20px;
     /* top: 169px; */
 
 }
@@ -38,13 +45,14 @@ h3 {
     border-radius: 20px;
     background-color: var(--cor-vermelho);
 }
+
 .textarea {
     width: 408px;
     height: 100px;
-    font-family: 'Baloo 2', cursive;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .botao {
     width: 31px;
-    background-color: black;
+    /* background-color: black; */
 }

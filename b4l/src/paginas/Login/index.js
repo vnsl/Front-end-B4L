@@ -65,7 +65,7 @@ function Login() {
         onSubmit={handleSubmit(onSubmit)}
         >
             <div className="container-login">
-                <Typography variant="h3">Login</Typography>
+                <Typography variant="h3" className="title" >Login</Typography>
                 {carregando && <Loading/>}
                 <div className="login">
                     <TextField className='textarea' label="E-mail" {...register('email')} type='text'/>

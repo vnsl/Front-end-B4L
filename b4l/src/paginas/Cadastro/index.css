@@ -17,11 +17,12 @@
     align-items: center;
     justify-content: center;
     color: var(--cor-laranja);
+    padding-left: 80px;
 }
 
 .content {
     position: absolute;
-    z-index: 9999;
+    z-index: 1;
 }
 
  

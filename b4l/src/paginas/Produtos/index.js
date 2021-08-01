@@ -58,7 +58,7 @@ function Produtos() {
 
     return (
         <div className='content'>
-            {/* {carregando && <Loading/>} */}
+            {carregando && <Loading/>}
             <Header></Header>
             {produtos.length === 0 ? 
                 <div className='container-produtos'>

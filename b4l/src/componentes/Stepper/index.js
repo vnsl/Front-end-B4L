@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginRight: theme.spacing(1),
+    borderRadius: 20,
   },
   instructions: {
     marginTop: theme.spacing(1),
@@ -187,50 +188,52 @@ function getStepContent(step, register, categorias) {
       
       return (
         <div className={classes.root}>
-      <div className='container'>
-        <h1>Cadastro</h1>
-        <Stepper className={classes.stepsControl} activeStep={activeStep}>
-      
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          return (
-            <Step className={classes.stepsControl} key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      </div>
-      <div>
-        
-          <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep, register, categorias)}</Typography>
-            <div>
-              {carregando && <Loading/>}
-              {erro && <Alert severity="error">{erro}</Alert>}
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Voltar
-              </Button>
-              {activeStep === steps.length - 1 ? 
-                <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit(onSubmit)}
-                className={classes.button}
-                >Criar conta</Button> :
-                <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit(handleNext)}
-                className={classes.button}
-                >Próximo</Button>
-              }
-              <Typography>Já tem uma conta? <Link to='/login'>Login</Link></Typography>               
-            </div>
+          <div className='container'>
+            <h1>Cadastro</h1>
+            <Stepper className={classes.stepsControl} activeStep={activeStep}>
+          
+            {steps.map((label, index) => {
+              const stepProps = {};
+              const labelProps = {};
+              return (
+                <Step className={classes.stepsControl} key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
           </div>
+          <div>
+            <div>
+              <Typography className={classes.instructions}>{getStepContent(activeStep, register, categorias)}</Typography>
+              <div>
+                {carregando && <Loading/>}
+                {erro && <Alert severity="error">{erro}</Alert>}
+                <div className="container-botoes">
 
-      </div>
+                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                  Anterior
+                </Button>
+                {activeStep === steps.length - 1 ? 
+                  <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit(onSubmit)}
+                  className={classes.button}
+                  >Criar conta</Button> :
+                  <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleSubmit(handleNext)}
+                  className={classes.button}
+                  >Próximo</Button>
+                }
+                </div>
+                <Typography>Já tem uma conta? <Link to='/login'>Login</Link></Typography>               
+              </div>
+            </div>
+
+        </div>
     </div>
   );
 }
