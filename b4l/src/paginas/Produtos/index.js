@@ -33,7 +33,6 @@ function Produtos() {
         });
         
           const dados = await resposta.json();
-          console.log(dados);
         
           setCarregando(false);
           
@@ -58,19 +57,19 @@ function Produtos() {
 
     return (
         <div className='content'>
-            {/* {carregando && <Loading/>} */}
+            {carregando && <Loading/>}
             <Header></Header>
             {produtos.length === 0 ? 
                 <div className='container-produtos'>
                     <p>Você não tem nenhum produto no seu cardápio.</p>
                     <p>Gostaria de adicionar um novo produto.</p>
-                    <CustomModal className='modal' />
+                    <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
                 </div> :
                 <div className='container-produtos'>
                     <h1 className='botao-direita' >Existe produto</h1>
-                    <CustomModal className='botao-direita'/>
+                    <CustomModal className='botao-direita' acao='Novo produto' recarregar={() => setCarregar(true)}/>
                     <div className='cards'>
-                        {produtos.map( produto => <CardMarket produto={produto}/>)}
+                        {produtos.map(produto => <CardMarket produto={produto} recarregar={() => setCarregar(true)}/>)}
                     </div>
                 </div>
             
