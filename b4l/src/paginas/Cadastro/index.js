@@ -33,7 +33,7 @@ function Cadastro() {
 
     return (
         <div className='container-cadastro'>
-            {carregando && <Loading/>}
+            {/* {carregando && <Loading/>} */}
             <div className='caixa'>
                 <StepperHorizontal/>
             </div>

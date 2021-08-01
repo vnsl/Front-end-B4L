@@ -4,7 +4,6 @@ import CardMarket from '../../componentes/Card';
 import useAuth from '../../hook/useAuth';
 import Loading from '../../componentes/Loading';
 
-import './styles.js';
 import './index.css';
 
 import Header from '../../componentes/HeaderProduto';
@@ -59,13 +58,13 @@ function Produtos() {
 
     return (
         <div className='content'>
-            {carregando && <Loading/>}
+            {/* {carregando && <Loading/>} */}
             <Header></Header>
             {produtos.length === 0 ? 
                 <div className='container-produtos'>
                     <p>Você não tem nenhum produto no seu cardápio.</p>
                     <p>Gostaria de adicionar um novo produto.</p>
-                    <CustomModal/>
+                    <CustomModal className='modal' />
                 </div> :
                 <div className='container-produtos'>
                     <h1 className='botao-direita' >Existe produto</h1>
