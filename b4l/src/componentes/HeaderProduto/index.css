@@ -1,0 +1,41 @@
+.header {
+    display: block;
+    width: 100vw;
+}
+
+.logo {
+    position: absolute;
+    height: 250px;
+}
+
+.logo img {
+    z-index: 2;
+    top: -50%;
+    left: 10%;
+    box-sizing: border-box;
+    border: 6px solid #FFFFFF;
+    border-radius: 50%;
+}
+
+.header-text {
+    width: 65vw;
+    position: relative;
+    color: white;
+    z-index: 3;
+    top: -50%;
+    left: 35%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.imagem {
+    background-color: black;
+    border-bottom-right-radius: 233px;
+    z-index: 1;
+    width: 100%;
+}
+
+p:hover {
+    cursor: pointer;
+}
