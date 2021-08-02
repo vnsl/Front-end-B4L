@@ -38,7 +38,7 @@ export default function CustomizedSnackbars() {
       <Button variant="outlined" onClick={handleClick}>
         Open success snackbar
       </Button>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={3} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
           Cadastro concluído com sucesso.
         </Alert>

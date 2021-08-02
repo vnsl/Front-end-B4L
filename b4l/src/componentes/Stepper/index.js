@@ -226,7 +226,7 @@ function getStepContent(step, register, categorias) {
                 className={classes.button}
                 >Próximo</Button>
               }
-              <Typography>Já tem uma conta? <Link to='/login'>Login</Link></Typography>               
+              <Typography>Já tem uma conta? <Link to='/login'>Login</Link></Typography>            
             </div>
           </div>
 

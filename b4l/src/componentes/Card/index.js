@@ -46,7 +46,7 @@ export default function CustomCard(produto) {
   };
   
   return (
-    <Card className={classes.root, 'cabelo'}>
+    <Card key={id} className={classes.root, 'cabelo'}>
       <div className={'eita'}>
         {erro && <Alert severity="error">{erro}</Alert>}
         <Button onClick={handleExcluir}>Excluir produto do catalogo</Button>

@@ -37,7 +37,6 @@ function Cadastro() {
             <div className='caixa'>
                 <StepperHorizontal/>
             </div>
-
         </div>
     )
 }
