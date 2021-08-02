@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
@@ -32,8 +32,8 @@ export default function InputSenha(props) {
     <div className={classes.root}>
       <div>
         <FormControl className={clsx(classes.margin, classes.textField)}>
-          <InputLabel htmlFor="standard-adornment-password">{props.label}</InputLabel>
-          <Input
+          <InputLabel className={classes.label} htmlFor="standard-adornment-password">{props.label}</InputLabel>
+          <OutlinedInput
             id="standard-adornment-password"
             key={props.label} 
             {...props.register()} 

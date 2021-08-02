@@ -23,12 +23,18 @@ import './index.css';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+
   },
   stepsControl: {
-    width: '30%',
+    width: '50%',
   },
   button: {
     marginRight: theme.spacing(1),
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
     borderRadius: 20,
   },
   instructions: {
@@ -47,8 +53,8 @@ function getStepContent(step, register, categorias) {
     case 0:
       return (
         <div className='cadastro'>
-            <TextField key='nome' className='textarea' label="Nome de usuário" {...register('nome')} type='text' />
-            <TextField key='email' className='textarea' label="Email" {...register('email')} type='text'/>
+            <TextField variant="outlined" key='nome' className='textarea' label="Nome de usuário" {...register('nome')} type='text' />
+            <TextField variant="outlined" key='email' className='textarea' label="Email" {...register('email')} type='text'/>
             <InputSenha register={() => register('senha')} label='Senha'/>
             <InputSenha register={() => register('senhaRepetida')} label='Repita a senha'/>
             {/* <TextField key='senha' className='textarea' label="Senha" {...register('senha')} type='password'/> */}
@@ -58,23 +64,27 @@ function getStepContent(step, register, categorias) {
       case 1:
         return (
           <div className='cadastro'>
-            <TextField key='restaurante.nome'className='textarea' label="Nome do restaurante" {...register('restaurante.nome')} type='text'/>
-            <TextField key='restaurante.idCategoria' className='textarea' label="Categoria" {...register('restaurante.idCategoria')} select type='number'>
+            <TextField variant="outlined" key='restaurante.nome'className='textarea' label="Nome do restaurante" {...register('restaurante.nome')} type='text'/>
+            <TextField variant="outlined" key='restaurante.idCategoria' className='textarea' label="Categoria" {...register('restaurante.idCategoria')} select type='number'>
                 {categorias.map((opcao) => (
                   <MenuItem key={opcao.id} value={opcao.id}>
                         {opcao.nome}
                   </MenuItem>
                 ))}
             </TextField>
-            <TextField key='restaurante.descricao' className='textarea' label="Descrição" {...register('restaurante.descricao')} type='text'/>                   
+            <TextField variant="outlined" multiline rows={3} helperText="Máx: 50 caracteres" key='restaurante.descricao' className='textarea' label="Descrição" {...register('restaurante.descricao')} type='text'/>                   
         </div>
       );
       case 2:
         return (
           <div className='cadastro'>
-            <TextField key='restaurante.taxaEntrega' className='textarea' label="Taxa de entrega" {...register('restaurante.taxaEntrega')} type='number' startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
-            <TextField key='restaurante.tempoEntregaEmMinutos' className='textarea' label="Tempo estimado de entrega" {...register('restaurante.tempoEntregaEmMinutos')} type='number'/>
-            <TextField key='restaurante.valorMinimoPedido' className='textarea' label="Valor mínimo do pedido" {...register('restaurante.valorMinimoPedido')} type='number' startAdornment={<InputAdornment position="start">R$</InputAdornment>} />                   
+            <TextField variant="outlined" key='restaurante.taxaEntrega' className='textarea' label="Taxa de entrega" {...register('restaurante.taxaEntrega')} type='number' InputProps={{
+            startAdornment: <InputAdornment position="start">R$</InputAdornment>,
+          }} />
+            <TextField variant="outlined" key='restaurante.tempoEntregaEmMinutos' className='textarea' label="Tempo estimado de entrega" {...register('restaurante.tempoEntregaEmMinutos')} type='number'/>
+            <TextField variant="outlined" key='restaurante.valorMinimoPedido' className='textarea' label="Valor mínimo do pedido" {...register('restaurante.valorMinimoPedido')} type='number' InputProps={{
+            startAdornment: <InputAdornment position="start">R$</InputAdornment>,
+          }} />                   
         </div>
       );
       default:
@@ -189,47 +199,48 @@ function getStepContent(step, register, categorias) {
       return (
         <div className={classes.root}>
           <div className='container'>
-            <h1>Cadastro</h1>
-            <Stepper className={classes.stepsControl} activeStep={activeStep}>
-          
-            {steps.map((label, index) => {
-              const stepProps = {};
-              const labelProps = {};
-              return (
-                <Step className={classes.stepsControl} key={label} {...stepProps}>
-                  <StepLabel {...labelProps}>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
+            <div className="title" >
+
+              <h1>Cadastro</h1>
+              <Stepper className={classes.stepsControl} activeStep={activeStep}>
+                {steps.map((label, index) => {
+                  const stepProps = {};
+                  const labelProps = {};
+                  return (
+                    <Step className={classes.stepsControl} key={label} {...stepProps}>
+                      <StepLabel {...labelProps}>{label}</StepLabel>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+            </div>
           </div>
           <div>
             <div>
               <Typography className={classes.instructions}>{getStepContent(activeStep, register, categorias)}</Typography>
-              <div>
+              <div className="container-bottom" >
                 {carregando && <Loading/>}
                 {erro && <Alert severity="error">{erro}</Alert>}
                 <div className="container-botoes">
-
-                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                  Anterior
-                </Button>
-                {activeStep === steps.length - 1 ? 
-                  <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSubmit(onSubmit)}
-                  className={classes.button}
-                  >Criar conta</Button> :
-                  <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleSubmit(handleNext)}
-                  className={classes.button}
-                  >Próximo</Button>
-                }
+                  <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                    Anterior
+                  </Button>
+                  {activeStep === steps.length - 1 ? 
+                    <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit(onSubmit)}
+                    className={classes.button}
+                    >Criar conta</Button> :
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleSubmit(handleNext)}
+                    className={classes.button}
+                    >Próximo</Button>
+                  }
                 </div>
-                <Typography>Já tem uma conta? <Link to='/login'>Login</Link></Typography>               
+                <Typography className="cadastrado" >Já tem uma conta? <Link to='/login'>Login</Link></Typography>               
               </div>
             </div>
 

@@ -69,10 +69,10 @@ function Produtos() {
                     <p>Você não tem nenhum produto no seu cardápio.</p>
                     <p>Gostaria de adicionar um novo produto.</p>
                   </div>
-                    <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
-                    <div className='cards'>
-                        {produtos.map(produto => <CardMarket produto={produto} recarregar={() => setCarregar(true)}/>)}
-                    </div>
+                  <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
+                  <div className='cards'>
+                    {produtos.map(produto => <CardMarket produto={produto} recarregar={() => setCarregar(true)}/>)}
+                  </div>
                 </div>
 
         </div>

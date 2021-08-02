@@ -9,11 +9,10 @@
 h3 {
     color: var(--cor-vermelho);
     padding-left: 15px;
-}
-
-.title {
     font-family: 'Baloo 2', cursive !important;
     font-weight: 700 !important;
+    font-size: 32px !important;
+    margin-bottom: 68px !important;
 }
   
 .container-login {

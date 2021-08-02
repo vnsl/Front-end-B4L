@@ -2,11 +2,13 @@ import { useState } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { useForm } from 'react-hook-form';
-import Loading from '../Loading';
-import Switch from '../../componentes/Switch';
 import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
+import Loading from '../Loading';
+import Switch from '../../componentes/Switch';
+import InputDinheiro from '../../componentes/InputDinheiro';
 
 import useAuth from '../../hook/useAuth';
 
@@ -124,12 +126,33 @@ export default function CustomModal(props) {
 
   const body = (
     <div className={classes.paper}>
-        <div className={classes.main}>
+        <div className={classes.content}>
           <div className={classes.fields}>
               <h2 id="custom-modal-title">{props.acao}</h2>
-              <TextField key='produto.nome' className='textarea' label="Nome" type='text' {...register('nome')} defaultValue={nome}/>
-              <TextField key='produto.descricao' className='textarea' label="Descrição" type='text' {...register('descricao')} defaultValue={descricao}/>
-              <TextField key='preco' className='textarea' label="Valor" type='number' {...register('preco')} defaultValue={preco}/>
+              <TextField 
+                variant="outlined" 
+                key='produto.nome' 
+                className='textarea' 
+                label="Nome" 
+                type='text' 
+                {...register('nome')} 
+                defaultValue={nome}/>
+              <TextField 
+                variant="outlined" 
+                key='produto.descricao' className='textarea' label="Descrição" type='text' {...register('descricao')} defaultValue={descricao}/>
+              <TextField 
+                variant="outlined" 
+                key='preco' 
+                className='textarea' 
+                label="Valor" 
+                type='number' 
+                {...register('preco')} 
+                defaultValue={preco} 
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">R$</InputAdornment>,
+                }}
+              />
+              {/* <InputDinheiro register={() => register('preco2')} label="Preço2"/> */}
               {carregando && <Loading/>}
               {erro && <Alert severity="error">{erro}</Alert>}
           </div>

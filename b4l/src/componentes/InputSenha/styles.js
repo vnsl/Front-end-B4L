@@ -12,4 +12,7 @@ export default makeStyles((theme) => ({
       width: '46ch',
       marginBottom: theme.spacing(3),
     },
+    label: {
+      marginLeft: 15,
+    }
   }));

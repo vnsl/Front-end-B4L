@@ -48,7 +48,7 @@ function Login() {
     
           logar(dados.token, dados.usuario);
     
-          history.push('/produtos2');
+          history.push('/produtos');
         } catch (error) {
           setErro(error.message)
         }
@@ -63,11 +63,11 @@ function Login() {
         onSubmit={handleSubmit(onSubmit)}
         >
             <div className="container-login">
-                <Typography variant="h3" className="title" >Login</Typography>
+                <Typography variant="h3" >Login</Typography>
                 {carregando && <Loading/>}
                 <div className="login">
-                    <TextField className='textarea' label="E-mail" {...register('email')} type='text'/>
-                    <TextField className='textarea' label="Senha" {...register('senha')} type='password'/>
+                    <TextField variant="outlined" className='textarea' label="E-mail" {...register('email')} type='text'/>
+                    <TextField variant="outlined" className='textarea' label="Senha" {...register('senha')} type='password'/>
                     <Button variant='contained' type='submit'>Entrar</Button>
                     {erro && <Alert severity="error">{erro}</Alert>}
                     <Typography>Ainda não tem uma conta? <Link to='/cadastro'>Cadastre-se</Link></Typography>
