@@ -217,7 +217,7 @@ function getStepContent(step, register, categorias) {
           </div>
           <div>
             <div>
-              <Typography className={classes.instructions}>{getStepContent(activeStep, register, categorias)}</Typography>
+              {/* <Typography className={classes.instructions}>{getStepContent(activeStep, register, categorias)}</Typography>
               <div className="container-bottom" >
                 {carregando && <Loading/>}
                 {erro && <Alert severity="error">{erro}</Alert>}
@@ -241,7 +241,27 @@ function getStepContent(step, register, categorias) {
                   }
                 </div>
                 <Typography className="cadastrado" >Já tem uma conta? <Link to='/login'>Login</Link></Typography>               
-              </div>
+              </div> */}
+              {carregando && <Loading/>}
+              {erro && <Alert severity="error">{erro}</Alert>}
+              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                Voltar
+              </Button>
+              {activeStep === steps.length - 1 ? 
+                <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit(onSubmit)}
+                className={classes.button}
+                >Criar conta</Button> :
+                <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit(handleNext)}
+                className={classes.button}
+                >Próximo</Button>
+              }
+              <Typography>Já tem uma conta? <Link to='/login'>Login</Link></Typography>            
             </div>
 
         </div>

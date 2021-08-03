@@ -11,11 +11,13 @@ import Switch from '../../componentes/Switch';
 import InputDinheiro from '../../componentes/InputDinheiro';
 
 import useAuth from '../../hook/useAuth';
+import { useHistory } from 'react-router-dom';
 
 export default function CustomModal(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [open, setOpen] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
   const { token } = useAuth();
@@ -28,15 +30,50 @@ export default function CustomModal(props) {
 
   const handleOpen = () => {
     if (props.acao === 'Novo produto') {
+      setErro('');
       setProdutoAtivo(true);
       setObservacoes(false);
     }
     setOpen(true);
+    
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  async function cadastrarProduto(data) {
+    console.log(data);
+    setCarregando(true);
+    setErro('');
+
+    try {
+      const resposta = await fetch('http://localhost:3000/produtos', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      
+      const dados = await resposta.json();
+      
+      setCarregando(false);
+      
+      if (!resposta.ok) {
+        setErro(dados);
+        return;
+      }
+      
+      recarregar();
+      handleClose();
+
+    } catch (error) {
+      setErro(error.message)
+    }
+
+    }
 
   async function onSubmit(data) {
     console.log(data);
@@ -103,12 +140,13 @@ export default function CustomModal(props) {
             const dados = await resposta.json();
             
             setCarregando(false);
-            
+            history.push('/produtos2');
             if (!resposta.ok) {
               setErro(dados);
               return;
             }
             }
+
             if(data.nome && data.preco && data.descricao) {
               setCarregando(false);
               handleClose();
@@ -169,7 +207,7 @@ export default function CustomModal(props) {
                     Cancelar
                 </Button>
                 {props.acao === 'Novo produto' ? 
-                  <Button variant="contained" type="button" color="secondary" onClick={handleSubmit(onSubmit)}>
+                  <Button variant="contained" type="button" color="secondary" onClick={handleSubmit(cadastrarProduto)}>
                   Adicionar produto ao cardápio
                   </Button> :
                   <Button variant="contained" type="button" color="secondary" onClick={handleSubmit(onSubmit)}>
