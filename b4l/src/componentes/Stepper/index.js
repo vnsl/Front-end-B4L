@@ -240,7 +240,7 @@ function getStepContent(step, register, categorias) {
                     >Próximo</Button>
                   }
                 </div>
-                <Typography className="cadastrado" >Já tem uma conta? <Link to='/login'>Login</Link></Typography>               
+                <Typography className="cadastrado" >Já tem uma conta? <Link to='/'>Login</Link></Typography>               
               </div>
             </div>
 
