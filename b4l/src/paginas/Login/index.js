@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import Loading from '../../componentes/Loading';
+import InputSenha from '../../componentes/InputSenha';
 
 import './index.css';
 
@@ -67,7 +68,8 @@ function Login() {
                 {carregando && <Loading/>}
                 <div className="login">
                     <TextField variant="outlined" className='textarea' label="E-mail" {...register('email')} type='text'/>
-                    <TextField variant="outlined" className='textarea' label="Senha" {...register('senha')} type='password'/>
+                    {/* <TextField variant="outlined" className='textarea' label="Senha" {...register('senha')} type='password'/> */}
+                    <InputSenha register={() => register('senha')} label='Senha'/>
                     <Button variant='contained' type='submit'>Entrar</Button>
                     {erro && <Alert severity="error">{erro}</Alert>}
                     <Typography>Ainda não tem uma conta? <Link to='/cadastro'>Cadastre-se</Link></Typography>
