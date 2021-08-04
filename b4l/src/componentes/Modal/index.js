@@ -223,7 +223,7 @@ export default function CustomModal(props) {
   return (
     <div>
       {props.acao === 'Novo produto' ? 
-        <Button variant="contained" type="button" color="secondary" onClick={handleOpen}>
+        <Button className={classes.botaomodal} variant="contained" type="button" color="secondary" onClick={handleOpen}>
         Adicionar produto ao cardápio
         </Button> :
         <Button variant="contained" type="button" color="secondary" onClick={handleOpen}>
