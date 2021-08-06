@@ -3,7 +3,7 @@
     width: 100vw;
 }
 
-.logo {
+/* .logo {
     position: absolute;
     height: 250px;
 }
@@ -15,7 +15,7 @@
     box-sizing: border-box;
     border: 6px solid #FFFFFF;
     border-radius: 50%;
-}
+} */
 
 .header-text {
     width: 65vw;
@@ -34,6 +34,10 @@
     border-bottom-right-radius: 233px;
     z-index: 1;
     width: 100%;
+}
+
+.modal {
+    padding-top: 15px;
 }
 
 p:hover {

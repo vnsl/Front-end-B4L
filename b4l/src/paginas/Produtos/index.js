@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CustomModal from '../../componentes/Modal';
-import ModalEditarUsuario from '../../componentes/ModalEditarUsuario';
+// import ModalEditarUsuario from '../../componentes/ModalEditarUsuario';
 import CardMarket from '../../componentes/Card';
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';
@@ -71,7 +71,7 @@ function Produtos() {
                     <p>Gostaria de adicionar um novo produto.</p>
                   </div>
                   <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
-                  <ModalEditarUsuario className='modal' recarregar={() => setCarregar(true)}/>
+                  {/* <ModalEditarUsuario className='modal' recarregar={() => setCarregar(true)}/> */}
                   <div className='cards'>
                     {produtos.map(produto => <CardMarket produto={produto} recarregar={() => setCarregar(true)}/>)}
                   </div>

@@ -9,8 +9,10 @@ import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
 import Loading from '../Loading';
 import InputSenha from '../InputSenha/index';
+import UploadImage from '../UploadImage';
 
 import './index.css';
+import novo from '../../assets/logo-pizarria.png';
 
 import useAuth from '../../hook/useAuth';
 
@@ -206,8 +208,7 @@ export default function ModalEditarUsuario(props) {
             {carregando && <Loading/>}
             {erro && <Alert severity="error">{erro}</Alert>}
           </div>
-          <div className={classes.imgUpload}>
-          </div>
+          <UploadImage />
         </div>
         <div className={classes.containerBotoes}>
             <div className={classes.botoes}>
@@ -231,13 +232,12 @@ export default function ModalEditarUsuario(props) {
 
   return (
     <div>
-      <Button 
-        variant="contained" 
-        type="button" 
-        color="secondary" 
-        onClick={handleOpen}>
-          Editar Perfil
-      </Button>
+      <img 
+        className='logo' 
+        src={novo} 
+        alt="" 
+        onClick={handleOpen}
+      />
       <Modal
         open={open}
         onClose={handleClose}
