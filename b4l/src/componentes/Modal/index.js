@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import { useForm, Controller } from 'react-hook-form';
 import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
@@ -212,22 +211,7 @@ export default function CustomModal(props) {
                   />
                   }
                 />
-                <Controller 
-                  name="preco"
-                  control={control}
-                  render={({field}) => <TextField 
-                    defaultValue={preco}
-                    variant="outlined" 
-                    className='textarea' 
-                    label="Preço" 
-                    type='text' 
-                    InputProps={{
-                      startAdornment: <InputAdornment position="start">R$</InputAdornment>,
-                    }}
-                    {...field}
-                  />
-                  }
-                />
+                <InputDinheiro control={control} name='preco' label='Preço'/>
                 
               {carregando && <Loading/>}
               {erro && <Alert severity="error">{erro}</Alert>}

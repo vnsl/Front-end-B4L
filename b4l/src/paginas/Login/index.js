@@ -78,32 +78,11 @@ function Login() {
                       {...field}
                     />}
                   />
-                  {/* <Controller
-                    name='senha'
-                    control={control}
-                    render={( {field} ) => <TextField 
-                      variant="outlined" 
-                      className='textarea' 
-                      label="Senha" 
-                      type={mostrarSenha ? 'text' : 'password'}
-                      InputProps={{endAdornment: <InputAdornment              
-                        position="end">
-                          <IconButton
-                            onClick={handleClickShowPassword}
-                          >
-                            {mostrarSenha ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>
-                      }}
-                      {...field}
-                    > 
-                    </TextField>}
-                  />  */}
                   <InputSenha label='Senha' name='senha' control={control}/>
                   
-                    <Button variant='contained' type='submit'>Entrar</Button>
-                    {erro && <Alert severity="error">{erro}</Alert>}
-                    <Typography>Ainda não tem uma conta? <Link to='/cadastro'>Cadastre-se</Link></Typography>
+                  <Button variant='contained' type='submit'>Entrar</Button>
+                  {erro && <Alert severity="error">{erro}</Alert>}
+                  <Typography>Ainda não tem uma conta? <Link to='/cadastro'>Cadastre-se</Link></Typography>
                 </div>
             </div>
         </form>
