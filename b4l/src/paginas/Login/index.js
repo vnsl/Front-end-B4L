@@ -11,14 +11,14 @@ import './index.css';
 
 import useStyles from './styles';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
 import useAuth from '../../hook/useAuth';
 
 function Login() {
     const classes = useStyles();
-    const { register, handleSubmit } = useForm();
+    const { handleSubmit, control } = useForm();
     const history = useHistory();
     const [erro, setErro] = useState('');
     const [carregando, setCarregando] = useState(false);
@@ -67,9 +67,40 @@ function Login() {
                 <Typography variant="h3" >Login</Typography>
                 {carregando && <Loading/>}
                 <div className="login">
-                    <TextField variant="outlined" className='textarea' label="E-mail" {...register('email')} type='text'/>
-                    {/* <TextField variant="outlined" className='textarea' label="Senha" {...register('senha')} type='password'/> */}
-                    <InputSenha register={() => register('senha')} label='Senha'/>
+                  <Controller
+                    name='email'
+                    control={control}
+                    render={({ field }) => <TextField 
+                      variant="outlined" 
+                      className='textarea' 
+                      label="E-mail" 
+                      type='text'
+                      {...field}
+                    />}
+                  />
+                  {/* <Controller
+                    name='senha'
+                    control={control}
+                    render={( {field} ) => <TextField 
+                      variant="outlined" 
+                      className='textarea' 
+                      label="Senha" 
+                      type={mostrarSenha ? 'text' : 'password'}
+                      InputProps={{endAdornment: <InputAdornment              
+                        position="end">
+                          <IconButton
+                            onClick={handleClickShowPassword}
+                          >
+                            {mostrarSenha ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      }}
+                      {...field}
+                    > 
+                    </TextField>}
+                  />  */}
+                  <InputSenha label='Senha' name='senha' control={control}/>
+                  
                     <Button variant='contained' type='submit'>Entrar</Button>
                     {erro && <Alert severity="error">{erro}</Alert>}
                     <Typography>Ainda não tem uma conta? <Link to='/cadastro'>Cadastre-se</Link></Typography>

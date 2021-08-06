@@ -2,16 +2,44 @@ import React from 'react';
 import './index.css';
 
 import TextField from '@material-ui/core/TextField';
-import { useForm } from 'react-hook-form';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { Controller } from 'react-hook-form';
+import InputDinheiro from '../InputDinheiro';
 
-export default function CadastroForm1() {
-    const { register } = useForm();
+export default function CadastroForm3({control}) {
 
     return (
         <div className='cadastro'>
-            <TextField className='textarea' label="Taxa de entrega" {...register('taxa_entrega')} type='text'/>
-            <TextField className='textarea' label="Tempo estimado de entrega" {...register('tempo_entrega_minutos')} type='text'/>
-            <TextField className='textarea' label="Valor mínimo do pedido" {...register('valor_minimo_pedido')} type='text'/>                   
+            {/* <Controller
+                name='restaurante.taxaEntrega'
+                control={control}
+                render={({ field }) => <TextField 
+                    variant='outlined'
+                    className='textarea' 
+                    label="Taxa de entrega" 
+                    type='text'
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start">R$</InputAdornment>,
+                    }}
+                    {...field}
+                />}
+            /> */}
+            <InputDinheiro name='restaurante.taxaEntrega' label='Taxa de entrega' control={control}/>
+            <Controller
+                name='restaurante.tempoEntregaEmMinutos'
+                control={control}
+                render={({ field }) => <TextField 
+                variant="outlined" 
+                className='textarea' 
+                label="Tempo de entrega"  
+                type='number'
+                InputProps={{
+                    endAdornment: <InputAdornment position="start">Minutos</InputAdornment>,
+                }}
+                {...field}>
+            </TextField>}
+            />
+            <InputDinheiro name='restaurante.valorMinimoPedido' label='Valor mínimo do pedido' control={control}/>     
         </div>
     );
 }
