@@ -61,10 +61,17 @@ export default function CustomModal(props) {
     setCarregando(true);
     setErro('');
 
+    const produto = {
+      nome: data.nome,
+      descricao: data.descricao,
+      preco: data.preco,
+      permiteObserservacoes: observacoes
+    }
+
     try {
       const resposta = await fetch('http://localhost:3000/produtos', {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(produto),
         headers: {
           'Content-type': 'application/json',
           'Authorization': `Bearer ${token}`
