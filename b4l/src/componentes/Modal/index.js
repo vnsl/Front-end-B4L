@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
 import Loading from '../Loading';
@@ -13,11 +12,13 @@ import UploadImage from '../UploadImage';
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';
 
+
+
 export default function CustomModal(props) {
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = useState(false);
-  const { register, handleSubmit, reset } = useForm();
+  
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
   const { token } = useAuth();
@@ -25,8 +26,22 @@ export default function CustomModal(props) {
   const recarregar = props.recarregar;
   
   const { id, nome, preco, descricao, ativo, permite_observacoes: permiteObserservacoes } = props.produtoInfo ?? '';
+
+  const defaultValues = {
+    nome: "",
+    descricao: "",
+    preco: "",
+  };
+  
   const [ produtoAtivo, setProdutoAtivo ] = useState(ativo);
   const [ observacoes, setObservacoes ] = useState(false);
+  const { handleSubmit, reset, control, setValue } = useForm({defaultValues});
+
+  useEffect(() => {
+    setValue("nome", nome)
+    setValue("descricao", descricao)
+    setValue("preco", preco)
+  }, [nome, setValue, preco, descricao])
 
   const handleOpen = () => {
     if (props.acao === 'Novo produto') {
@@ -43,14 +58,20 @@ export default function CustomModal(props) {
   };
 
   async function cadastrarProduto(data) {
-    console.log(data);
     setCarregando(true);
     setErro('');
+
+    const produto = {
+      nome: data.nome,
+      descricao: data.descricao,
+      preco: data.preco,
+      permiteObserservacoes: observacoes
+    }
 
     try {
       const resposta = await fetch('http://localhost:3000/produtos', {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(produto),
         headers: {
           'Content-type': 'application/json',
           'Authorization': `Bearer ${token}`
@@ -62,21 +83,18 @@ export default function CustomModal(props) {
       setCarregando(false);
       
       if (!resposta.ok) {
-        setErro(dados);
-        return;
+        return setErro(dados);
       }
-      
+      reset();
       recarregar();
       handleClose();
 
     } catch (error) {
       setErro(error.message)
     }
-
-    }
+  }
 
   async function onSubmit(data) {
-    console.log(data);
     setCarregando(true);
     setErro('');
         
@@ -127,6 +145,12 @@ export default function CustomModal(props) {
                 setErro(error.message)
               }
             }
+            if(!data.nome || !data.preco ) {
+              setErro('Campos nome e preço são obrigatórios');
+              setCarregando(false);
+              return;
+            }
+
             if(data.nome || data.preco || data.descricao) {
               const resposta = await fetch(`http://localhost:3000/produtos/${id}`, {
               method: 'PUT',
@@ -140,7 +164,7 @@ export default function CustomModal(props) {
             const dados = await resposta.json();
             
             setCarregando(false);
-            history.push('/produtos2');
+            history.push('/produtos');
             if (!resposta.ok) {
               setErro(dados);
               return;
@@ -163,33 +187,39 @@ export default function CustomModal(props) {
   }
 
   const body = (
-    <div className={classes.paper}>
+    <form className={classes.paper}>
         <div className={classes.content}>
           <div className={classes.fields}>
               <h2 id="custom-modal-title">{props.acao}</h2>
-              <TextField 
-                variant="outlined" 
-                key='produto.nome' 
-                className='textarea' 
-                label="Nome" 
-                type='text' 
-                {...register('nome')} 
-                defaultValue={nome}/>
-              <TextField 
-                variant="outlined" 
-                key='produto.descricao' className='textarea' label="Descrição" type='text' {...register('descricao')} defaultValue={descricao}/>
-              <TextField 
-                variant="outlined" 
-                key='preco' 
-                className='textarea' 
-                label="Valor" 
-                type='number' 
-                {...register('preco')} 
-                defaultValue={preco} 
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">R$</InputAdornment>,
-                }}
-              />
+               <Controller
+                  name="nome"
+                  control={control}
+                  defaultValue={nome}
+                  render={({ field }) => <TextField 
+                    variant="outlined" 
+                    className='textarea' 
+                    label="Nome" 
+                    type='text' 
+                    {...field}
+                    
+                  />}
+                />
+                <Controller 
+                  name="descricao"
+                  control={control}
+                  render={({field})=>
+                  <TextField 
+                    defaultValue={descricao}
+                    variant="outlined" 
+                    className='textarea' 
+                    label="Descrição" 
+                    type='text' 
+                    {...field}
+                  />
+                  }
+                />
+                <InputDinheiro control={control} name='preco' label='Preço'/>
+              
               {carregando && <Loading/>}
               {erro && <Alert severity="error">{erro}</Alert>}
           </div>
@@ -205,17 +235,17 @@ export default function CustomModal(props) {
                     Cancelar
                 </Button>
                 {props.acao === 'Novo produto' ? 
-                  <Button variant="contained" type="button" color="secondary" onClick={handleSubmit(cadastrarProduto)}>
+                  <Button variant="contained" type="submit" color="secondary"  onClick={handleSubmit(cadastrarProduto)}>
                   Adicionar produto ao cardápio
                   </Button> :
-                  <Button variant="contained" type="button" color="secondary" onClick={handleSubmit(onSubmit)}>
+                  <Button variant="contained" type="submit" color="secondary" onClick={handleSubmit(onSubmit)}>
                   Salvar alterações
                   </Button>
                 }
                 
             </div>
         </div>
-    </div>
+    </form>
   );
 
   return (
@@ -225,7 +255,7 @@ export default function CustomModal(props) {
         Adicionar produto ao cardápio
         </Button> :
         <Button variant="contained" type="button" color="secondary" onClick={handleOpen}>
-        Editar produto
+          Editar produto
         </Button>
       }
       <Modal

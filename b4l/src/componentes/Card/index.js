@@ -17,7 +17,6 @@ export default function CustomCard(produto) {
   const classes = useStyles();
   const { id, nome, descricao, preco, imagem, ativo } = produto.produto;
   const { token } = useAuth();
-
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
 
@@ -33,14 +32,14 @@ export default function CustomCard(produto) {
         })
         
         const dados = await resposta.json();
-        
+        console.log({dados});
         if (!resposta.ok) {
           setErro(dados);
           return;
         }
         produto.recarregar();
       } catch (error) {
-        setErro(error.message)
+        return setErro(error.message)
       }
     }   
   };

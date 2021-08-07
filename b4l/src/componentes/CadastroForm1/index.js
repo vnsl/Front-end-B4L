@@ -2,21 +2,38 @@ import React from 'react';
 import './index.css';
 
 import TextField from '@material-ui/core/TextField';
-import { useForm } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
+import InputSenha from '../InputSenha';
 
-import useStyles from './styles';
-
-
-export default function CadastroForm1() {
-    const classes = useStyles();
-    const { register } = useForm();
+export default function CadastroForm1({control}) {
+   
 
     return (
-        <div className='cadastro'>
-            <TextField className='textarea' label="Nome de usuário" {...register('nome')} type='text'/>
-            <TextField className='textarea' label="Email" {...register('email')} type='password'/>
-            <TextField className='textarea' label="Senha" {...register('senha')} type='text'/>
-            <TextField className='textarea' label="Repita a senha" {...register('senhaRepetida')} type='password'/>                   
-        </div>
+        <form className='cadastro'>
+            <Controller
+                name='nome'
+                control={control}
+                render={({ field }) => <TextField
+                    variant="outlined" 
+                    className='textarea' 
+                    label="Nome de usuário" 
+                    type='text'
+                    {...field}
+                />}
+            />
+            <Controller
+                name='email'
+                control={control}
+                render={({ field }) => <TextField 
+                variant="outlined" 
+                className='textarea' 
+                label="Email" 
+                type='text'
+                {...field}
+                />}
+            />    
+            <InputSenha name='senha' label='Senha' control={control}/>
+            <InputSenha name='senhaRepetida' label='Repira a senha' control={control}/>              
+        </form>
     );
 }

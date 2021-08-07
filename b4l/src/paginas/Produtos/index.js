@@ -20,12 +20,11 @@ function Produtos() {
 
     useEffect(() => {
       setCarregar(false);
-  
       async function carregarProdutos() {
         try {
           setCarregando(true);
           setErro('');
-  
+
           const resposta = await fetch('http://localhost:3000/produtos', {
             method: 'GET',
             body: JSON.stringify(),
@@ -40,41 +39,46 @@ function Produtos() {
           setCarregando(false);
           
           if (!resposta.ok) {
-            setErro(dados);
-            return;
+            return setErro(dados);
           };
-  
-          if (erro) {
-            setErro(dados);
-            return;
-          }
+
+          // if (erro) {
+          //   return setErro(dados);
+          // }
           
           setProdutos(dados);
           if(dados.length === 0) {
-            history.push('/produtos2')
+            return history.push('/produtos');
+            
           }
         } catch (error) {
-          setErro(error.message);
+          console.log({error})
+          return setErro(error.message);
         }
+        
       }
-  
       carregarProdutos();
     }, [token, carregar]);
 
     return (
         <div className='content'>
             {carregando && <Loading/>}
-            <Header></Header>
+            
+            <Header/>
                 <div className='container-produtos'>
-                  <div style={produtos.length !== 0 ? {display:'none'} : {display:'contents'}}>
-                    <p>Você não tem nenhum produto no seu cardápio.</p>
-                    <p>Gostaria de adicionar um novo produto.</p>
-                  </div>
                   <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
-                  {/* <ModalEditarUsuario className='modal' recarregar={() => setCarregar(true)}/> */}
-                  <div className='cards'>
-                    {produtos.map(produto => <CardMarket produto={produto} recarregar={() => setCarregar(true)}/>)}
-                  </div>
+                    {produtos.length > 0?(
+                      <div className='cards'>
+                        {/* {produtos?.map(produto => <p>{produto.preco}</p>)} */}
+                        {produtos.map(produto => <CardMarket key={produto.id} produto={produto} recarregar={() => {setCarregar(true); console.log({carregar})}}/>)}
+                      </div>
+                      ) :(
+                      <div>
+                        <p>Você não tem nenhum produto no seu cardápio.</p>
+                        <p>Gostaria de adicionar um novo produto.</p>
+                      </div>)
+                    }
+
                 </div>
 
         </div>
