@@ -8,6 +8,7 @@ import useStyles from './styles';
 import Loading from '../Loading';
 import Switch from '../../componentes/Switch';
 import UploadImage from '../UploadImage';
+import InputDinheiro from '../InputDinheiro';
 
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';

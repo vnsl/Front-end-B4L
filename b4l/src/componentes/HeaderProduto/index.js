@@ -6,6 +6,7 @@ import './index.css';
 import useAuth from '../../hook/useAuth';
 
 import background from '../../assets/bg-pizzaria.png';
+import novo from '../../assets/logo-pizarria.png';
 
 export default function Header() {
     const { deslogar, userPersistido, categoriasPersistidas } = useAuth();
@@ -28,10 +29,10 @@ export default function Header() {
                     <img className='logo' src={logo ? logo : novo} alt=''/>
                     <div>
                         <ModalEditarUsuario className='modal'/>
-
                     <div className='header-text'>
                         <h1>{userPersistido.restaurante.nome}</h1>
                         <p onClick={deslogar}>Logout</p>
+                    </div>
                     </div>
                 </div>
             </div>

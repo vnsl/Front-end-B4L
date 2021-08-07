@@ -23,13 +23,12 @@ export default function ModalEditarUsuario(props) {
   const [ erro, setErro ] = useState('');
   const [baseImage, setBaseImage] = useState('');
   const [ carregando, setCarregando ] = useState(false);
-  const { token, categorias, setCategorias, userPersistido, setUserPersistido } = useAuth();
+  const { token, categoriasPersistidas, userPersistido, setUserPersistido } = useAuth();
   
   
   const recarregar = props.recarregar;
 
   const handleOpen = () => {
-    console.log(categorias);
     if (props.acao === 'Editar Perfil') {
       setErro('');
     }
@@ -40,26 +39,6 @@ export default function ModalEditarUsuario(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-    async function listarCategorias() {
-        setCarregando(true);
-        
-        const resposta = await fetch('http://localhost:3000/categorias', {
-          method: 'GET',
-          body: JSON.stringify(),
-          headers: {
-            'Content-type': 'application/json',
-          }
-        });
-        const categorias = await resposta.json();
-        
-        setCategorias(categorias);
-        setCarregando(false);
-      };
-    
-      useEffect(() => {
-        listarCategorias();
-      }, []);
 
   async function onSubmit(data) {
     setCarregando(true);
@@ -156,7 +135,7 @@ export default function ModalEditarUsuario(props) {
                 select type='number'
                 defaultValue={userPersistido.restaurante.categoria_id}
               >
-                  {categorias.map((opcao) => (
+                  {categoriasPersistidas.map((opcao) => (
                     <MenuItem key={opcao.id} value={opcao.id}>
                     {opcao.nome}
                     </MenuItem>
