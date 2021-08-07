@@ -13,8 +13,6 @@ import InputDinheiro from '../InputDinheiro';
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';
 
-
-
 export default function CustomModal(props) {
   const classes = useStyles();
   const history = useHistory();

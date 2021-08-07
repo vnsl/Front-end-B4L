@@ -24,17 +24,15 @@ export default function Header() {
 
     return (
         <div className='header'>
-                <img className='imagem' src={banner ? banner : background} alt=''/>
-                <div className='logo'>
-                    <img className='logo' src={logo ? logo : novo} alt=''/>
-                    <div>
-                        <ModalEditarUsuario className='modal'/>
-                    <div className='header-text'>
-                        <h1>{userPersistido.restaurante.nome}</h1>
-                        <p onClick={deslogar}>Logout</p>
-                    </div>
-                    </div>
+            <img className='imagem' src={banner ? banner : background} alt=''/>
+            <div className='logo'>
+                {/* <img className='logo' src={logo ? logo : novo} alt=''/> */}
+                <ModalEditarUsuario className='modal' usuario={userPersistido}/>
+                <div className='header-text'>
+                    <h1>{userPersistido.restaurante.nome}</h1>
+                    <p onClick={deslogar}>Logout</p>
                 </div>
             </div>
+        </div>
     );
 }

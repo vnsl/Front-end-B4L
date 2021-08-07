@@ -4,13 +4,15 @@ import './index.css';
 import TextField from '@material-ui/core/TextField';
 import { Controller } from 'react-hook-form';
 import InputSenha from '../InputSenha';
+import InputText from '../InputText';
 
 export default function CadastroForm1({control}) {
    
 
     return (
         <form className='cadastro'>
-            <Controller
+            <InputText name='nome' label='Nome de usuário' control={control}/>
+            {/* <Controller
                 name='nome'
                 control={control}
                 render={({ field }) => <TextField
@@ -20,7 +22,7 @@ export default function CadastroForm1({control}) {
                     type='text'
                     {...field}
                 />}
-            />
+            /> */}
             <Controller
                 name='email'
                 control={control}
