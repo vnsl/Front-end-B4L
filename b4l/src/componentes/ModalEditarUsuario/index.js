@@ -194,11 +194,11 @@ export default function ModalEditarUsuario(props) {
               /> 
             </div>
             <InputSenha 
-              register={() => register('senha_atual')} 
+              register={() => register('senha')} 
               label='Senha Atual'
             />
             <InputSenha 
-              register={() => register('senha')} 
+              register={() => register('novaSenha')} 
               label='Nova Senha'
             />
             <InputSenha 

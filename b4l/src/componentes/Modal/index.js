@@ -8,7 +8,7 @@ import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
 import Loading from '../Loading';
 import Switch from '../../componentes/Switch';
-import InputDinheiro from '../../componentes/InputDinheiro';
+import UploadImage from '../UploadImage';
 
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';
@@ -190,12 +190,10 @@ export default function CustomModal(props) {
                   startAdornment: <InputAdornment position="start">R$</InputAdornment>,
                 }}
               />
-              {/* <InputDinheiro register={() => register('preco2')} label="Preço2"/> */}
               {carregando && <Loading/>}
               {erro && <Alert severity="error">{erro}</Alert>}
           </div>
-          <div className={classes.imgUpload}>
-          </div>
+          <UploadImage />
         </div>
         <div className={classes.containerSwitches}>
           <Switch acao='Ativar produto' setProdutoAtivo={setProdutoAtivo} produtoAtivo={produtoAtivo}/>
