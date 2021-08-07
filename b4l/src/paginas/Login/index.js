@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React , { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -23,7 +23,7 @@ function Login() {
     const [erro, setErro] = useState('');
     const [carregando, setCarregando] = useState(false);
 
-    const { logar } = useAuth();
+    const { logar, setCategorias } = useAuth();
 
     async function onSubmit(data) {
         setCarregando(true);
@@ -46,9 +46,17 @@ function Login() {
             setErro(dados);
             return;
           }
-    
-          logar(dados.token, dados.usuario);
-    
+
+                  
+          const respostaCategorias = await fetch('http://localhost:3000/categorias', {
+            method: 'GET',
+            headers: {
+              'Content-type': 'application/json',
+            }
+          });
+          const categorias = await respostaCategorias.json();          
+          
+          logar(dados.token, dados.usuario, categorias);
           history.push('/produtos');
         } catch (error) {
           setErro(error.message)
