@@ -16,7 +16,6 @@ function Cadastro() {
         
         const resposta = await fetch('http://localhost:3000/categorias', {
           method: 'GET',
-          body: JSON.stringify(),
           headers: {
             'Content-type': 'application/json',
           }

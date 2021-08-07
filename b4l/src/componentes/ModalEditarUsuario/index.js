@@ -4,11 +4,13 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
 import Loading from '../Loading';
-import InputSenha from '../InputSenha/index';
+import InputSenha from '../InputSenha/';
+import InputText from '../InputText';
+import InputDinheiro from '../InputDinheiro';
 import UploadImage from '../UploadImage';
 
 import './index.css';
@@ -19,21 +21,19 @@ import useAuth from '../../hook/useAuth';
 export default function ModalEditarUsuario(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm();
   const [ erro, setErro ] = useState('');
   const [baseImage, setBaseImage] = useState('');
   const [ carregando, setCarregando ] = useState(false);
   const { token, categoriasPersistidas, userPersistido, setUserPersistido } = useAuth();
   
-  
   const recarregar = props.recarregar;
+  const { restaurante } = props.usuario.restaurante;
+  const { id, nome, email } = props.usuario;
 
   const handleOpen = () => {
-    if (props.acao === 'Editar Perfil') {
-      setErro('');
-    }
+    setErro('');
     setOpen(true);
-    
   };
 
   const handleClose = () => {
@@ -45,7 +45,6 @@ export default function ModalEditarUsuario(props) {
     setErro('');
 
         try {
-          
           const resposta = await fetch(`http://localhost:3000/usuarios/${userPersistido.id}`, {
               method: 'PUT',
               body: JSON.stringify(data),
@@ -94,40 +93,15 @@ export default function ModalEditarUsuario(props) {
 
   const body = (
     <div className={classes.paper}>
-        <h2 className={classes.title} >{props.acao}</h2>
         <div className={classes.content}>
           <div className={classes.fields}>
+            <h2>Editar usuário</h2>
             <div className={classes.dadosUsuario}>
-              <TextField 
-                variant="outlined" 
-                key='nome' 
-                className='textarea' 
-                label="Nome de usuário" 
-                {...register('nome')} 
-                type='text' 
-                defaultValue={userPersistido.nome} 
-              />
-              <TextField 
-                variant="outlined" 
-                key='email' 
-                className='textarea' 
-                label="Email" 
-                {...register('email')} 
-                type='text' 
-                defaultValue={userPersistido.email} 
-              />
-            </div>
-            <div className="dados-restaurante" >
-              <TextField 
-                variant="outlined" 
-                key='restaurante.nome'
-                className='textarea' 
-                label="Nome do restaurante" 
-                {...register('restaurante.nome')} 
-                type='text' 
-                defaultValue={userPersistido.restaurante.nome} 
-            />
-              <TextField variant="outlined" 
+              <InputText name='nome' label='Usuário' control={control}/>
+              <InputText name='email' label='Email' control={control}/>
+              <InputText name='restaurante.nome' label='Nome do restaurante' control={control}/>
+                      
+              {/* <TextField variant="outlined" 
                 key='restaurante.idCategoria' 
                 className='textarea' 
                 label="Categoria" 
@@ -140,8 +114,8 @@ export default function ModalEditarUsuario(props) {
                     {opcao.nome}
                     </MenuItem>
                     ))}
-              </TextField>
-              <TextField 
+              </TextField> */}
+              {/* <TextField 
                 variant="outlined" 
                 multiline rows={2} 
                 helperText="Máx: 50 caracteres" 
@@ -151,59 +125,17 @@ export default function ModalEditarUsuario(props) {
                 {...register('restaurante.descricao')} 
                 type='text'
                 defaultValue={userPersistido.restaurante.descricao}
-              />
-              <TextField 
-                variant="outlined" 
-                key='restaurante.taxaEntrega' 
-                className='textarea' 
-                label="Taxa de entrega" 
-                {...register('restaurante.taxaEntrega')} 
-                type='number' 
-                InputProps={{
-                  startAdornment: 
-                    <InputAdornment position="start">
-                      R$
-                    </InputAdornment>,
-                }} 
-                defaultValue={userPersistido.restaurante.taxa_entrega}
-              />
-              <TextField 
-                variant="outlined" 
-                key='restaurante.tempoEntregaEmMinutos' 
-                className='textarea' 
-                label="Tempo estimado de entrega" 
-                {...register('restaurante.tempoEntregaEmMinutos')} 
-                type='number'
-                defaultValue={userPersistido.restaurante.tempo_entrega_minutos}
-              />
-              <TextField 
-                variant="outlined" 
-                key='restaurante.valorMinimoPedido' 
-                className='textarea' 
-                label="Valor mínimo do pedido" 
-                {...register('restaurante.valorMinimoPedido')} 
-                type='number' 
-                InputProps={{
-                  startAdornment: 
-                    <InputAdornment position="start">
-                      R$
-                    </InputAdornment>,
-                }} 
-                defaultValue={userPersistido.restaurante.valor_minimo_pedido}
-              /> 
+              /> */}
+              <InputDinheiro name='restaurante.taxaEntrega' label='Taxa de entrega' control={control}/>
+              <InputText name='restaurante.tempoEntregaEmMinutos' label="Tempo estimado de entrega" control={control}/>
+              <InputDinheiro name='restaurante.valorMinimoPedido' label='Valor mínimo do pedido' control={control}/>
+              
+              
             </div>
-            <InputSenha 
-              register={() => register('senha')} 
-              label='Senha Atual'
-            />
-            <InputSenha 
-              register={() => register('novaSenha')} 
-              label='Nova Senha'
-            />
-            <InputSenha 
-              register={() => register('senhaRepetida')} 
-              label='Repita a nova senha'
-            />
+            <InputSenha name='senha' label='Senha Atual' control={control}/>
+            <InputSenha name='novaSenha' label='Nova Senha' control={control}/>
+            <InputSenha name='Repita a nova senha' label='Repita a nova senha' control={control}/>
+            
             {carregando && <Loading/>}
             {erro && <Alert severity="error">{erro}</Alert>}
           </div>
