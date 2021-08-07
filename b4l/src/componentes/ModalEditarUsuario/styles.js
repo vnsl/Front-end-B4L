@@ -1,36 +1,36 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
-    botaomodal: {
-      marginTop: 30,
-    },
     content: {
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: 50,
+      alignItems: 'top',
+    },
+    title: {
+      marginTop: 20,
     },
     fields: {
       display: 'flex',
       flexDirection: 'column',
+      width: 408,
+      paddingLeft: 20,
     },
-    imgUpload: {
+    /* imgUpload: {
       backgroundColor: 'gray',
       width: 384,
       height: 384,
       borderRadius: 16,
-      marginTop: 50,
-      marginRight: 50,
-    },
+      marginRight: 80,
+    }, */
     paper: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
-      marginTop: '50px',
-      marginLeft: '50px',
+      justifyContent: 'start',
+      marginTop: '10px',
+      marginLeft: '250px',
       overflow: 'auto',
-      width: '80%',
-      height: '80%',
+      width: '1008px',
+      height: '98%',
       backgroundColor: theme.palette.background.paper,
       border: '2px solid #000',
       borderRadius: 16,

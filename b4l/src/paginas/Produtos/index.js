@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CustomModal from '../../componentes/Modal';
+// import ModalEditarUsuario from '../../componentes/ModalEditarUsuario';
 import CardMarket from '../../componentes/Card';
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';
@@ -77,8 +78,6 @@ function Produtos() {
                         <p>Gostaria de adicionar um novo produto.</p>
                       </div>)
                     }
-
-                  
 
                 </div>
 

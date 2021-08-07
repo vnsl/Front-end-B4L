@@ -7,7 +7,7 @@ import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
 import Loading from '../Loading';
 import Switch from '../../componentes/Switch';
-import InputDinheiro from '../../componentes/InputDinheiro';
+import UploadImage from '../UploadImage';
 
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';
@@ -219,12 +219,11 @@ export default function CustomModal(props) {
                   }
                 />
                 <InputDinheiro control={control} name='preco' label='Preço'/>
-                
+              
               {carregando && <Loading/>}
               {erro && <Alert severity="error">{erro}</Alert>}
           </div>
-          <div className={classes.imgUpload}>
-          </div>
+          <UploadImage />
         </div>
         <div className={classes.containerSwitches}>
           <Switch acao='Ativar produto' setProdutoAtivo={setProdutoAtivo} produtoAtivo={produtoAtivo}/>
@@ -252,8 +251,8 @@ export default function CustomModal(props) {
   return (
     <div>
       {props.acao === 'Novo produto' ? 
-        <Button variant="contained" type="button" color="secondary" onClick={handleOpen}>
-          Adicionar produto ao cardápio
+        <Button className={classes.botaomodal} variant="contained" type="button" color="secondary" onClick={handleOpen}>
+        Adicionar produto ao cardápio
         </Button> :
         <Button variant="contained" type="button" color="secondary" onClick={handleOpen}>
           Editar produto

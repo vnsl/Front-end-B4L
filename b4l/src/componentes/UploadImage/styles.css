@@ -1,0 +1,11 @@
+.image-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 384px;
+    width: 100%;
+    max-width: 384px;
+    margin: 30px;
+    background: gray;
+    border-radius: 50%;
+  }
