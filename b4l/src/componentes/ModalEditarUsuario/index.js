@@ -21,8 +21,9 @@ export default function ModalEditarUsuario(props) {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit } = useForm();
   const [ erro, setErro ] = useState('');
+  const [baseImage, setBaseImage] = useState('');
   const [ carregando, setCarregando ] = useState(false);
-  const { token, categorias, setCategorias, userPersistido } = useAuth();
+  const { token, categorias, setCategorias, userPersistido, setUserPersistido } = useAuth();
   
   
   const recarregar = props.recarregar;
@@ -78,14 +79,33 @@ export default function ModalEditarUsuario(props) {
           const dados = await resposta.json();
           
           setCarregando(false);
+
+          /* setUserPersistido({
+            id: userPersistido.id,
+            nome: data.nome,
+            email: data.email,
+            restaurante: {
+              id: userPersistido.restaurante.id,
+              usuario_id: userPersistido.id,
+              nome: data.restaurante.nome,
+              descricao: data.restaurante.descricao,
+              categoria_id: data.restaurante.idCategoria,
+              taxa_entrega: data.restaurante.taxaEntrega,
+              tempo_entrega_minutos: data.restaurante.tempoEntregaEmMinutos,
+              valor_minimo_pedido: data.restaurante.valor_minimo_pedido
+            }
+
+          }); */
           
           if (!resposta.ok) {
             setErro(dados);
             return;
           }
           
-          recarregar();
+          // recarregar();
           handleClose();
+          console.log(userPersistido);
+
 
         } catch (error) {
           setErro(error.message)
@@ -208,7 +228,7 @@ export default function ModalEditarUsuario(props) {
             {carregando && <Loading/>}
             {erro && <Alert severity="error">{erro}</Alert>}
           </div>
-          <UploadImage />
+          <UploadImage baseImage={baseImage} setBaseImage={setBaseImage} />
         </div>
         <div className={classes.containerBotoes}>
             <div className={classes.botoes}>

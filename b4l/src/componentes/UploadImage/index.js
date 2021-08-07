@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 // import Dropzone from 'react-dropzone';
 import "./styles.css";
 
-function UploadImage() {
-  const [baseImage, setBaseImage] = useState("");
-
+function UploadImage({ baseImage, setBaseImage }) {
   const uploadImage = async (e) => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
@@ -28,14 +26,14 @@ function UploadImage() {
   };
 
   return (
-    <div className="image-upload">
+    <div className="image-upload" style={{ backgroundImage: `url(${baseImage})`, backgroundSize: 'cover' , borderRadius: '50%' }}>
       <input
         type="file"
-        style={{ backgroundImage: `url(${baseImage})`, height: '384px', width: '384px', borderRadius: '16px'}}
         onChange={(e) => {
           uploadImage(e);
         }}
       />
+      {/* <img src={baseImage} alt="" /> */}
     </div>
   );
 }
