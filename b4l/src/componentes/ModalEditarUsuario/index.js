@@ -24,12 +24,13 @@ export default function ModalEditarUsuario(props) {
   const { control, handleSubmit } = useForm();
   const [ erro, setErro ] = useState('');
   const [baseImage, setBaseImage] = useState('');
+  const [imagem, setImagem] = useState('');
   const [ carregando, setCarregando ] = useState(false);
   const { token, categoriasPersistidas, userPersistido, setUserPersistido } = useAuth();
   
-  const recarregar = props.recarregar;
-  const { restaurante } = props.usuario.restaurante;
-  const { id, nome, email } = props.usuario;
+  const { id, nome, email } = userPersistido;
+  const restaurante = userPersistido.restaurante;
+  const { id: idRestaurante, nome: nomeRestaurante, categoria_id, descricao: descricaoRestaurante, taxa_entrega, tempo_entrega_minutos, valor_minimo_pedido } = restaurante;
 
   const handleOpen = () => {
     setErro('');
@@ -44,10 +45,57 @@ export default function ModalEditarUsuario(props) {
     setCarregando(true);
     setErro('');
 
+    if(baseImage) {
+      const envio = {
+        id: idRestaurante,
+        nome: nomeRestaurante,
+        pasta: 'restaurante',
+        imagem: baseImage
+      }
+      try {
+        const resposta = await fetch('http://localhost:3000/upload', {
+          method: 'POST',
+          body: JSON.stringify(envio),
+          headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        
+        const dados = await resposta.json();
+        setImagem(dados);
+        
+        if (!resposta.ok) {
+          return setErro(dados);
+        }
+  
+      } catch (error) {
+        setErro(error.message)
+      }
+    }
+
+    const usuario = {
+      id: userPersistido.id,
+      nome: data.nome ?? userPersistido.nome,
+      email: data.email ?? userPersistido.email,
+      restaurante: {
+        id: idRestaurante ?? userPersistido.restaurante.id,
+        usuario_id: userPersistido.id,
+        nome: data.restaurante.nome ?? nomeRestaurante,
+        descricao: data.restaurante.descricao ?? descricaoRestaurante,
+        idCategoria: data.restaurante.idCategoria ?? categoria_id,
+        taxaEntrega: data.restaurante.taxaEntrega ?? taxa_entrega,
+        tempoEntregaEmMinutos: data.restaurante.tempo_entrega_minutos ?? tempo_entrega_minutos,
+        valorMinimoPedido: data.restaurante.valorMinimoPedido ?? valor_minimo_pedido,
+        imagem: imagem ?? ''
+      }
+
+    };
+
         try {
           const resposta = await fetch(`http://localhost:3000/usuarios/${userPersistido.id}`, {
               method: 'PUT',
-              body: JSON.stringify(data),
+              body: JSON.stringify(usuario),
               headers: {
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -57,33 +105,15 @@ export default function ModalEditarUsuario(props) {
           const dados = await resposta.json();
           
           setCarregando(false);
-
-          /* setUserPersistido({
-            id: userPersistido.id,
-            nome: data.nome,
-            email: data.email,
-            restaurante: {
-              id: userPersistido.restaurante.id,
-              usuario_id: userPersistido.id,
-              nome: data.restaurante.nome,
-              descricao: data.restaurante.descricao,
-              categoria_id: data.restaurante.idCategoria,
-              taxa_entrega: data.restaurante.taxaEntrega,
-              tempo_entrega_minutos: data.restaurante.tempoEntregaEmMinutos,
-              valor_minimo_pedido: data.restaurante.valor_minimo_pedido
-            }
-
-          }); */
           
           if (!resposta.ok) {
             setErro(dados);
             return;
           }
           
-          // recarregar();
+          setUserPersistido(usuario);
+          props.recarregar();
           handleClose();
-          console.log(userPersistido);
-
 
         } catch (error) {
           setErro(error.message)
@@ -97,44 +127,50 @@ export default function ModalEditarUsuario(props) {
           <div className={classes.fields}>
             <h2>Editar usuário</h2>
             <div className={classes.dadosUsuario}>
-              <InputText name='nome' label='Usuário' control={control}/>
-              <InputText name='email' label='Email' control={control}/>
-              <InputText name='restaurante.nome' label='Nome do restaurante' control={control}/>
-                      
-              {/* <TextField variant="outlined" 
-                key='restaurante.idCategoria' 
-                className='textarea' 
-                label="Categoria" 
-                {...register('restaurante.idCategoria')} 
-                select type='number'
-                defaultValue={userPersistido.restaurante.categoria_id}
-              >
-                  {categoriasPersistidas.map((opcao) => (
-                    <MenuItem key={opcao.id} value={opcao.id}>
-                    {opcao.nome}
-                    </MenuItem>
-                    ))}
-              </TextField> */}
-              {/* <TextField 
-                variant="outlined" 
-                multiline rows={2} 
-                helperText="Máx: 50 caracteres" 
-                key='restaurante.descricao' 
-                className='textarea' 
-                label="Descrição" 
-                {...register('restaurante.descricao')} 
-                type='text'
-                defaultValue={userPersistido.restaurante.descricao}
-              /> */}
-              <InputDinheiro name='restaurante.taxaEntrega' label='Taxa de entrega' control={control}/>
-              <InputText name='restaurante.tempoEntregaEmMinutos' label="Tempo estimado de entrega" control={control}/>
-              <InputDinheiro name='restaurante.valorMinimoPedido' label='Valor mínimo do pedido' control={control}/>
-              
-              
+              <InputText name='nome' label='Usuário' control={control} defaultValue={nome}/>
+              <InputText name='email' label='Email' control={control} defaultValue={email}/>
+              <InputText name='restaurante.nome' label='Nome do restaurante' control={control} defaultValue={nomeRestaurante}/>
+              <Controller
+                name='restaurante.idCategoria'
+                control={control}
+                render={({ field }) => <TextField 
+                    variant="outlined" 
+                    className='textarea' 
+                    label="Categoria"
+                    defaultValue={categoria_id} 
+                    select 
+                    type='number'
+                    {...field}>
+                        {categoriasPersistidas.map((opcao) => (
+                            <MenuItem key={opcao.id} value={opcao.id}>
+                            {opcao.nome}
+                            </MenuItem>
+                        ))}
+                    
+                    </TextField>}
+              />        
+              <Controller
+                name='restaurante.descricao'
+                control={control}
+                render={({ field }) => <TextField 
+                    variant="outlined" 
+                    multiline 
+                    rows={3} 
+                    helperText="Máx: 50 caracteres"  
+                    className='textarea'
+                    defaultValue={descricaoRestaurante} 
+                    label="Descrição"  
+                    type='text'   
+                    {...field}       
+                /> }
+              />
+              <InputDinheiro name='restaurante.taxaEntrega' label='Taxa de entrega' control={control} defaultValue={taxa_entrega}/>
+              <InputText name='restaurante.tempo_entrega_minutos' label="Tempo estimado de entrega" control={control} defaultValue={tempo_entrega_minutos}/>
+              <InputDinheiro name='restaurante.valorMinimoPedido' label='Valor mínimo do pedido' control={control} defaultValue={valor_minimo_pedido}/>
+              <InputSenha name='senhaAtual' label='Senha atual' control={control} />
+              <InputSenha name='novaSenha' label='Nova senha' control={control} />
+              <InputSenha name='novaSenhaRepetida' label='Repita a nova senha' control={control} />
             </div>
-            <InputSenha name='senha' label='Senha Atual' control={control}/>
-            <InputSenha name='novaSenha' label='Nova Senha' control={control}/>
-            <InputSenha name='Repita a nova senha' label='Repita a nova senha' control={control}/>
             
             {carregando && <Loading/>}
             {erro && <Alert severity="error">{erro}</Alert>}

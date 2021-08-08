@@ -50,6 +50,7 @@ export default function InputDinheiro(props) {
         className='textarea'
         variant="outlined"
         label={props.label}
+        defaultValue={props.defaultValue}
         key={props.label}
         value={values.numberformat}
         onChange={handleChange}

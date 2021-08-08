@@ -7,22 +7,9 @@ import InputSenha from '../InputSenha';
 import InputText from '../InputText';
 
 export default function CadastroForm1({control}) {
-   
-
     return (
         <form className='cadastro'>
             <InputText name='nome' label='Nome de usuário' control={control}/>
-            {/* <Controller
-                name='nome'
-                control={control}
-                render={({ field }) => <TextField
-                    variant="outlined" 
-                    className='textarea' 
-                    label="Nome de usuário" 
-                    type='text'
-                    {...field}
-                />}
-            /> */}
             <Controller
                 name='email'
                 control={control}
