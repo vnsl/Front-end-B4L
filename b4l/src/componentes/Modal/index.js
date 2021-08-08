@@ -64,7 +64,8 @@ export default function CustomModal(props) {
       nome: data.nome,
       descricao: data.descricao,
       preco: data.preco,
-      permiteObserservacoes: observacoes
+      permiteObserservacoes: observacoes,
+      ativo: produtoAtivo
     }
 
     try {

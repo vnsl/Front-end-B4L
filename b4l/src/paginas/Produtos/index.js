@@ -64,13 +64,13 @@ function Produtos() {
         <div className='content'>
             {carregando && <Loading/>}
             
-            <Header/>
+            <Header recarregar={() => setCarregar(true)}/>
                 <div className='container-produtos'>
                   <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
                     {produtos.length > 0?(
                       <div className='cards'>
                         {/* {produtos?.map(produto => <p>{produto.preco}</p>)} */}
-                        {produtos.map(produto => <CardMarket key={produto.id} produto={produto} recarregar={() => {setCarregar(true); console.log({carregar})}}/>)}
+                        {produtos.map(produto => <CardMarket key={produto.id} produto={produto} recarregar={() => setCarregar(true)}/>)}
                       </div>
                       ) :(
                       <div>
