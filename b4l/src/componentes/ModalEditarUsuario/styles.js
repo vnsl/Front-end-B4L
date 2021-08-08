@@ -15,13 +15,6 @@ export default makeStyles((theme) => ({
       width: 408,
       paddingLeft: 20,
     },
-    /* imgUpload: {
-      backgroundColor: 'gray',
-      width: 384,
-      height: 384,
-      borderRadius: 16,
-      marginRight: 80,
-    }, */
     paper: {
       display: 'flex',
       flexDirection: 'column',

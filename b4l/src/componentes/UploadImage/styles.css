@@ -1,8 +1,9 @@
 .image-upload-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
+  height: fit-content;
+  gap: 30px;
+  width: 384px;
 }
 
 .image-upload {
@@ -15,6 +16,6 @@
     /* margin-left: auto; */
     background: gray;
     border-radius: 50%;
-  }
+}
 
   
