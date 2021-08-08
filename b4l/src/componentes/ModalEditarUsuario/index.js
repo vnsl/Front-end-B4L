@@ -29,7 +29,7 @@ export default function ModalEditarUsuario(props) {
   
   const { nome, email } = userPersistido;
   const restaurante = userPersistido.restaurante;
-  const { id: id_restaurante, nome: nome_restaurante, categoria_id, descricao, taxa_entrega, tempo_entrega_minutos, valor_minimo_pedido } = restaurante;
+  const { id: id_restaurante, nome: nome_restaurante, categoria_id, descricao, taxa_entrega, tempo_entrega_minutos, valor_minimo_pedido, imagem } = restaurante;
 
   const defaultValues = {
     nome: '',
@@ -95,9 +95,7 @@ export default function ModalEditarUsuario(props) {
     
     if(baseImage) {
       const envio = {
-        id: id_restaurante,
         nome: data.restaurante.nome,
-        pasta: 'restaurante',
         imagem: baseImage
       }
     
@@ -112,7 +110,6 @@ export default function ModalEditarUsuario(props) {
         })
         
         const dados = await resposta.json();
-        console.log(dados);
         setImagemEnvio(dados);
         
         if (!resposta.ok) {
@@ -139,7 +136,7 @@ export default function ModalEditarUsuario(props) {
         taxa_entrega: data.restaurante.taxa_entrega ?? taxa_entrega,
         tempo_entrega_minutos: data.restaurante.tempo_entrega_minutos ?? tempo_entrega_minutos,
         valor_minimo_pedido: data.restaurante.valor_minimo_pedido ?? valor_minimo_pedido,
-        imagem: imagemEnvio ?? ''
+        imagem: imagemEnvio ?? imagem
       }
 
     };
@@ -153,8 +150,6 @@ export default function ModalEditarUsuario(props) {
                 'Authorization': `Bearer ${token}`
               }
             })
-
-            console.log(imagemEnvio);
           
           const dados = await resposta.json();
           

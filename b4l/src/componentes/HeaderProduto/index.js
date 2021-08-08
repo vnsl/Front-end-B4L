@@ -11,7 +11,7 @@ import novo from '../../assets/logo-pizarria.png';
 export default function Header(props) {
     const { deslogar, userPersistido, categoriasPersistidas } = useAuth();
     const [banner, setBanner] = useState('');
-    const [logo, setLogo] = useState('');
+    const [logo, setLogo] = useState();
 
     function atualizarBanner() {
         const filtro = categoriasPersistidas.filter((categoria) => categoria.id ===  userPersistido.restaurante.categoria_id);
