@@ -34,7 +34,7 @@ export default function CustomModal(props) {
   
   const [ produtoAtivo, setProdutoAtivo ] = useState(ativo);
   const [ observacoes, setObservacoes ] = useState(false);
-  const { handleSubmit, reset, control, setValue } = useForm({defaultValues});
+  const { handleSubmit, control, setValue } = useForm({defaultValues});
 
   useEffect(() => {
     setValue("nome", nome)
@@ -64,7 +64,7 @@ export default function CustomModal(props) {
       nome: data.nome,
       descricao: data.descricao,
       preco: data.preco,
-      permiteObserservacoes: observacoes,
+      permite_obserservacoes: observacoes,
       ativo: produtoAtivo
     }
 
@@ -85,7 +85,6 @@ export default function CustomModal(props) {
       if (!resposta.ok) {
         return setErro(dados);
       }
-      reset();
       recarregar();
       handleClose();
 
