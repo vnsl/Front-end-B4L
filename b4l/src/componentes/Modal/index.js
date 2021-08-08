@@ -85,7 +85,6 @@ export default function CustomModal(props) {
       if (!resposta.ok) {
         return setErro(dados);
       }
-      reset();
       recarregar();
       handleClose();
 

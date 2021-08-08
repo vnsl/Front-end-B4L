@@ -28,9 +28,9 @@ export default function ModalEditarUsuario(props) {
   const [ carregando, setCarregando ] = useState(false);
   const { token, categoriasPersistidas, userPersistido, setUserPersistido } = useAuth();
   
-  const { id, nome, email } = userPersistido;
+  const { nome, email } = userPersistido;
   const restaurante = userPersistido.restaurante;
-  const { id: idRestaurante, nome: nomeRestaurante, categoria_id, descricao: descricaoRestaurante, taxa_entrega, tempo_entrega_minutos, valor_minimo_pedido } = restaurante;
+  const { id: id_restaurante, nome: nome_restaurante, categoria_id, descricao, taxa_entrega, tempo_entrega_minutos, valor_minimo_pedido } = restaurante;
 
   const handleOpen = () => {
     setErro('');
@@ -47,8 +47,8 @@ export default function ModalEditarUsuario(props) {
 
     if(baseImage) {
       const envio = {
-        id: idRestaurante,
-        nome: nomeRestaurante,
+        id: id_restaurante,
+        nome: nome_restaurante,
         pasta: 'restaurante',
         imagem: baseImage
       }
@@ -79,14 +79,14 @@ export default function ModalEditarUsuario(props) {
       nome: data.nome ?? userPersistido.nome,
       email: data.email ?? userPersistido.email,
       restaurante: {
-        id: idRestaurante ?? userPersistido.restaurante.id,
+        id: id_restaurante ?? userPersistido.restaurante.id,
         usuario_id: userPersistido.id,
-        nome: data.restaurante.nome ?? nomeRestaurante,
-        descricao: data.restaurante.descricao ?? descricaoRestaurante,
-        idCategoria: data.restaurante.idCategoria ?? categoria_id,
-        taxaEntrega: data.restaurante.taxaEntrega ?? taxa_entrega,
-        tempoEntregaEmMinutos: data.restaurante.tempo_entrega_minutos ?? tempo_entrega_minutos,
-        valorMinimoPedido: data.restaurante.valorMinimoPedido ?? valor_minimo_pedido,
+        nome: data.restaurante.nome ?? nome_restaurante,
+        descricao: data.restaurante.descricao ?? descricao,
+        categoria_id: data.restaurante.categoria_id ?? categoria_id,
+        taxa_entrega: data.restaurante.taxa_entrega ?? taxa_entrega,
+        tempo_entrega_minutos: data.restaurante.tempo_entrega_minutos ?? tempo_entrega_minutos,
+        valor_minimo_pedido: data.restaurante.valor_minimo_pedido ?? valor_minimo_pedido,
         imagem: imagem ?? ''
       }
 
@@ -129,9 +129,9 @@ export default function ModalEditarUsuario(props) {
             <div className={classes.dadosUsuario}>
               <InputText name='nome' label='Usuário' control={control} defaultValue={nome}/>
               <InputText name='email' label='Email' control={control} defaultValue={email}/>
-              <InputText name='restaurante.nome' label='Nome do restaurante' control={control} defaultValue={nomeRestaurante}/>
+              <InputText name='restaurante.nome' label='Nome do restaurante' control={control} defaultValue={nome_restaurante}/>
               <Controller
-                name='restaurante.idCategoria'
+                name='restaurante.categoria_id'
                 control={control}
                 render={({ field }) => <TextField 
                     variant="outlined" 
@@ -158,18 +158,18 @@ export default function ModalEditarUsuario(props) {
                     rows={3} 
                     helperText="Máx: 50 caracteres"  
                     className='textarea'
-                    defaultValue={descricaoRestaurante} 
+                    defaultValue={descricao} 
                     label="Descrição"  
                     type='text'   
                     {...field}       
                 /> }
               />
-              <InputDinheiro name='restaurante.taxaEntrega' label='Taxa de entrega' control={control} defaultValue={taxa_entrega}/>
+              <InputDinheiro name='restaurante.taxa_entrega' label='Taxa de entrega' control={control} defaultValue={taxa_entrega}/>
               <InputText name='restaurante.tempo_entrega_minutos' label="Tempo estimado de entrega" control={control} defaultValue={tempo_entrega_minutos}/>
-              <InputDinheiro name='restaurante.valorMinimoPedido' label='Valor mínimo do pedido' control={control} defaultValue={valor_minimo_pedido}/>
-              <InputSenha name='senhaAtual' label='Senha atual' control={control} />
-              <InputSenha name='novaSenha' label='Nova senha' control={control} />
-              <InputSenha name='novaSenhaRepetida' label='Repita a nova senha' control={control} />
+              <InputDinheiro name='restaurante.valor_minimo_pedido' label='Valor mínimo do pedido' control={control} defaultValue={valor_minimo_pedido}/>
+              <InputSenha name='senha_atual' label='Senha atual' control={control} />
+              <InputSenha name='nova_senha' label='Nova senha' control={control} />
+              <InputSenha name='nova_senha_repetida' label='Repita a nova senha' control={control} />
             </div>
             
             {carregando && <Loading/>}
