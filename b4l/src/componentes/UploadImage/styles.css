@@ -1,11 +1,20 @@
+.image-upload-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
 .image-upload {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
     height: 384px;
-    width: 100%;
+    width: 384px;
     max-width: 384px;
-    margin: 30px;
+    /* margin-left: auto; */
     background: gray;
     border-radius: 50%;
   }
+
+  

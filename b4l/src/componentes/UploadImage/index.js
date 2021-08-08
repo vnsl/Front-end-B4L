@@ -26,14 +26,16 @@ function UploadImage({ baseImage, setBaseImage }) {
   };
 
   return (
-    <div className="image-upload" style={{ backgroundImage: `url(${baseImage})`, backgroundSize: 'cover' , borderRadius: '50%' }}>
+    <div className="image-upload-container" >
+      <div className="image-upload" style={{ backgroundImage: `url(${baseImage})`, backgroundSize: 'cover' , borderRadius: '50%' }} >
+
+      </div>
       <input
         type="file"
         onChange={(e) => {
           uploadImage(e);
         }}
       />
-      {/* <img src={baseImage} alt="" /> */}
     </div>
   );
 }
