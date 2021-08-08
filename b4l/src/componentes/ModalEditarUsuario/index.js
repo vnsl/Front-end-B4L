@@ -27,7 +27,7 @@ export default function ModalEditarUsuario(props) {
   const [ carregando, setCarregando ] = useState(false);
   const { token, categoriasPersistidas, userPersistido, setUserPersistido } = useAuth();
   
-  const { nome, email, imagem } = userPersistido;
+  const { nome, email } = userPersistido;
   const restaurante = userPersistido.restaurante;
   const { id: id_restaurante, nome: nome_restaurante, categoria_id, descricao, taxa_entrega, tempo_entrega_minutos, valor_minimo_pedido } = restaurante;
 
@@ -96,11 +96,11 @@ export default function ModalEditarUsuario(props) {
     if(baseImage) {
       const envio = {
         id: id_restaurante,
-        nome: nome_restaurante,
+        nome: data.restaurante.nome,
         pasta: 'restaurante',
         imagem: baseImage
       }
-    console.log(envio);
+    
       try {
         const resposta = await fetch('http://localhost:3000/upload', {
           method: 'POST',
@@ -123,7 +123,7 @@ export default function ModalEditarUsuario(props) {
         setErro(error.message)
       }
     }
-    console.log({imagemEnvio});
+
     const usuario = {
       id: userPersistido.id,
       nome: data.nome ?? userPersistido.nome,
@@ -153,6 +153,8 @@ export default function ModalEditarUsuario(props) {
                 'Authorization': `Bearer ${token}`
               }
             })
+
+            console.log(imagemEnvio);
           
           const dados = await resposta.json();
           
@@ -253,7 +255,7 @@ export default function ModalEditarUsuario(props) {
     <div>
       <img 
         className='logo' 
-        src={imagem ?? novo} 
+        src={imagemEnvio ?? novo} 
         alt="" 
         onClick={handleOpen}
       />

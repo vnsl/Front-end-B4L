@@ -5,7 +5,8 @@ import "./styles.css";
 function UploadImage({ baseImage, setBaseImage }) {
   const uploadImage = async (e) => {
     const file = e.target.files[0];
-    const base64 = await convertBase64(file);
+    const base64 = await convertBase64(file);  
+    // const imagemConvertida = base64.replace("data:image/jpeg;base64,", "");
     console.log(base64);
     setBaseImage(base64);
   };

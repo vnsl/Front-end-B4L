@@ -4,13 +4,15 @@
 
 .logo {
     position: absolute;
-    height: 250px;
+    height: 384px;
 }
 
 .logo img {
     z-index: 2;
     top: -50%;
     left: 10%;
+    width: 384px;
+    height: 384px;
     box-sizing: border-box;
     border: 6px solid #FFFFFF;
     border-radius: 50%;
