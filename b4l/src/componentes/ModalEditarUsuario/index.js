@@ -14,7 +14,7 @@ import InputDinheiro from '../InputDinheiro';
 import UploadImage from '../UploadImage';
 
 import './index.css';
-import novo from '../../assets/logo-pizarria.png';
+import novo from '../../assets/logo.png';
 
 import useAuth from '../../hook/useAuth';
 
@@ -30,6 +30,8 @@ export default function ModalEditarUsuario(props) {
   const { nome, email } = userPersistido;
   const restaurante = userPersistido.restaurante;
   const { id: id_restaurante, nome: nome_restaurante, categoria_id, descricao, taxa_entrega, tempo_entrega_minutos, valor_minimo_pedido, imagem } = restaurante;
+
+  const imagemPerfil = baseImage ? baseImage : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
 
   const defaultValues = {
     nome: '',
@@ -223,7 +225,11 @@ export default function ModalEditarUsuario(props) {
             {carregando && <Loading/>}
             {erro && <Alert severity="error">{erro}</Alert>}
           </div>
-          <div className={classes.containerImg} style={{ backgroundImage: `url(${baseImage})`, backgroundSize: 'cover' , borderRadius: '50%' }}  >
+          {/* <div className={classes.containerImg} style={{ backgroundImage: `url(${baseImage})`, backgroundSize: 'cover' , borderRadius: '50%' }}  >
+            <UploadImage setBaseImage={setBaseImage} />
+          </div> */}
+          <div className={classes.containerImg} >
+            <img className={classes.imgUpload} src={imagemPerfil} alt="" />
             <UploadImage setBaseImage={setBaseImage} />
           </div>
         </div>

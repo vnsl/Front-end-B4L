@@ -27,7 +27,6 @@ export default function Header(props) {
         <div className='header'>
             <img className='imagem' src={banner ? banner : background} alt=''/>
             <div className='logo'>
-                {/* <img className='logo' src={logo ? logo : novo} alt=''/> */}
                 <ModalEditarUsuario className='modal' logo={logo} usuario={userPersistido} recarregar={props.recarregar}/>
                 <div className='header-text'>
                     <h1>{userPersistido.restaurante.nome}</h1>

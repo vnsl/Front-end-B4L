@@ -90,8 +90,11 @@ export default function CustomCard(produto) {
             {descricao}
           </Typography>
           <CardActions>
-            <Button variant="contained" size="small">
+            {/* <Button variant="contained" size="small">
               R$ {(preco / 100).toFixed([2]) }
+            </Button> */}
+            <Button variant="contained" size="small">
+              R$ {(preco).toFixed([2]) }
             </Button>
           </CardActions>
         </CardContent>
