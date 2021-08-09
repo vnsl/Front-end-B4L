@@ -1,7 +1,7 @@
 import "./styles.css";
 // import useAuth from '../../hook/useAuth';
 
-function UploadImage({ baseImage, setBaseImage }) {
+function UploadImage({ setBaseImage }) {
   // const { userPersistido } = useAuth();
 
   const uploadImage = async (e) => {
@@ -26,17 +26,12 @@ function UploadImage({ baseImage, setBaseImage }) {
   };
 
   return (
-    <div className="image-upload-container" >
-      <div className="image-upload" style={{ backgroundImage: `url(${baseImage})`, backgroundSize: 'cover' , borderRadius: '50%' }} >
-
-      </div>
-      <input
+    <input
         type="file"
         onChange={(e) => {
           uploadImage(e);
         }}
-      />
-    </div>
+    />
   );
 }
 

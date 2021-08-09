@@ -95,7 +95,6 @@ export default function ModalEditarUsuario(props) {
     
     if(baseImage) {
       const envio = {
-        nome: data.restaurante.nome,
         imagem: baseImage
       }
     
@@ -224,7 +223,9 @@ export default function ModalEditarUsuario(props) {
             {carregando && <Loading/>}
             {erro && <Alert severity="error">{erro}</Alert>}
           </div>
-          <UploadImage baseImage={baseImage} setBaseImage={setBaseImage} />
+          <div className={classes.containerImg} style={{ backgroundImage: `url(${baseImage})`, backgroundSize: 'cover' , borderRadius: '50%' }}  >
+            <UploadImage setBaseImage={setBaseImage} />
+          </div>
         </div>
         <div className={classes.containerBotoes}>
             <div className={classes.botoes}>

@@ -17,14 +17,14 @@ export default function CustomModal(props) {
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = useState(false);
-  
+  const [baseImage, setBaseImage] = useState('');
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
   const { token } = useAuth();
-  
+
   const recarregar = props.recarregar;
   
-  const { id, nome, preco, descricao, ativo, permite_observacoes: permiteObserservacoes } = props.produtoInfo ?? '';
+  const { id, nome, preco, descricao, ativo, permite_observacoes, imagem } = props.produtoInfo ?? '';
 
   const defaultValues = {
     nome: "",
@@ -60,12 +60,40 @@ export default function CustomModal(props) {
     setCarregando(true);
     setErro('');
 
+    if(baseImage) {
+      const envio = {
+        imagem: baseImage
+      }
+    
+      try {
+        const resposta = await fetch('http://localhost:3000/upload', {
+          method: 'POST',
+          body: JSON.stringify(envio),
+          headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        
+        const dados = await resposta.json();
+        props.setImgProduto(dados);
+        
+        if (!resposta.ok) {
+          return setErro(dados);
+        }
+  
+      } catch (error) {
+        setErro(error.message)
+      }
+    }
+
     const produto = {
       nome: data.nome,
       descricao: data.descricao,
       preco: data.preco,
-      permite_obserservacoes: observacoes,
-      ativo: produtoAtivo
+      permite_obserservacoes: data.permite_observacoes,
+      ativo: produtoAtivo,
+      imagem: props.imgProduto
     }
 
     try {
@@ -98,84 +126,95 @@ export default function CustomModal(props) {
     setErro('');
         
         try {
-          if (props.acao === 'Novo produto') {
-            const resposta = await fetch('http://localhost:3000/produtos', {
-              method: 'POST',
-              body: JSON.stringify(data),
-              headers: {
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${token}`
-              }
-            })
-            
-            const dados = await resposta.json();
-            
-            setCarregando(false);
-            
-            if (!resposta.ok) {
-              setErro(dados);
-              return;
-            }
-          } else {
-            if (ativo !== produtoAtivo && !produtoAtivo) {
-              try {
-                const resposta = await fetch(`http://localhost:3000/produtos/${id}/desativar`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                  }
-                })
-                setCarregando(false);
-              } catch (error) {
-                setErro(error.message)
-              }
-            } else if (ativo !== produtoAtivo && produtoAtivo) {
-              try {
-                const resposta = await fetch(`http://localhost:3000/produtos/${id}/ativar`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                  }
-                })
-                setCarregando(false);
-              } catch (error) {
-                setErro(error.message)
-              }
-            }
-            if(!data.nome || !data.preco ) {
-              setErro('Campos nome e preço são obrigatórios');
-              setCarregando(false);
-              return;
-            }
 
-            if(data.nome || data.preco || data.descricao) {
-              const resposta = await fetch(`http://localhost:3000/produtos/${id}`, {
-              method: 'PUT',
-              body: JSON.stringify(data),
-              headers: {
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${token}`
-              }
-            })
+          if(!data.nome || !data.preco ) {
+            setErro('Campos nome e preço são obrigatórios');
+            setCarregando(false);
+            return;
+          }
+
+          if (ativo !== produtoAtivo && !produtoAtivo) {
+            try {
+              const resposta = await fetch(`http://localhost:3000/produtos/${id}/desativar`, {
+                method: 'POST',
+                headers: {
+                  'Content-type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                }
+              })
+              setCarregando(false);
+            } catch (error) {
+              setErro(error.message)
+            }
+          } else if (ativo !== produtoAtivo && produtoAtivo) {
+            try {
+              const resposta = await fetch(`http://localhost:3000/produtos/${id}/ativar`, {
+                method: 'POST',
+                headers: {
+                  'Content-type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                }
+              })
+              setCarregando(false);
+            } catch (error) {
+              setErro(error.message)
+            }
+          }
+
+          if(baseImage) {
+            const envio = {
+              imagem: baseImage
+            }
             
+            const resposta = await fetch('http://localhost:3000/upload', {
+                method: 'POST',
+                body: JSON.stringify(envio),
+                headers: {
+                  'Content-type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                }
+              })
+              
+              const dados = await resposta.json();
+              props.setImgProduto(dados);
+          }
+
+          const produto = {
+            nome: data.nome ?? nome,
+            descricao: data.descricao ?? descricao,
+            preco: data.preco ?? preco,
+            permite_obserservacoes: data.permite_observacoes ?? permite_observacoes,
+            ativo: produtoAtivo,
+            imagem: props.imgProduto,
+          }
+
+          console.log(produto.imagem);
+
+          if(data.nome || data.preco || data.descricao) {
+
+            const resposta = await fetch(`http://localhost:3000/produtos/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(produto),
+            headers: {
+              'Content-type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          })
+          
             const dados = await resposta.json();
-            
+          
             setCarregando(false);
             history.push('/produtos');
             if (!resposta.ok) {
               setErro(dados);
               return;
             }
-            }
-
-            if(data.nome && data.preco && data.descricao) {
-              setCarregando(false);
-              handleClose();
-            }
-            
           }
+
+          /* if(data.nome && data.preco && data.descricao) {
+            setCarregando(false);
+            handleClose();
+          }           */
           
           recarregar();
           handleClose();
@@ -222,7 +261,10 @@ export default function CustomModal(props) {
               {carregando && <Loading/>}
               {erro && <Alert severity="error">{erro}</Alert>}
           </div>
-          <UploadImage />
+          <div className={classes.containerImg} >
+            <img className={classes.imgUpload} src={baseImage} alt="" />
+            <UploadImage setBaseImage={setBaseImage} />
+          </div>
         </div>
         <div className={classes.containerSwitches}>
           <Switch acao='Ativar produto' setProdutoAtivo={setProdutoAtivo} produtoAtivo={produtoAtivo}/>

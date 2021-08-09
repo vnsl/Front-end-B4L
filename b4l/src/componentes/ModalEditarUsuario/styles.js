@@ -15,6 +15,13 @@ export default makeStyles((theme) => ({
       width: 408,
       paddingLeft: 20,
     },
+    containerImg: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: 'fit-content',
+      gap: '30px',
+      width: '384px',
+    },
     paper: {
       display: 'flex',
       flexDirection: 'column',

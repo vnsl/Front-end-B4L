@@ -47,9 +47,9 @@ function Produtos() {
           // }
           
           setProdutos(dados);
+
           if(dados.length === 0) {
             return history.push('/produtos');
-            
           }
         } catch (error) {
           console.log({error})
