@@ -24,9 +24,9 @@ export default function CadastroForm3({control}) {
                     {...field}
                 />}
             /> */}
-            <InputDinheiro name='restaurante.taxaEntrega' label='Taxa de entrega' control={control}/>
+            <InputDinheiro name='restaurante.taxa_entrega' label='Taxa de entrega' control={control}/>
             <Controller
-                name='restaurante.tempoEntregaEmMinutos'
+                name='restaurante.tempo_entrega_minutos'
                 control={control}
                 render={({ field }) => <TextField 
                 variant="outlined" 
@@ -39,7 +39,7 @@ export default function CadastroForm3({control}) {
                 {...field}>
             </TextField>}
             />
-            <InputDinheiro name='restaurante.valorMinimoPedido' label='Valor mínimo do pedido' control={control}/>     
+            <InputDinheiro name='restaurante.valor_minimo_pedido' label='Valor mínimo do pedido' control={control}/>     
         </div>
     );
 }

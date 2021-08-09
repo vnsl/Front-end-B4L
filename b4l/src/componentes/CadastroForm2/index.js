@@ -21,7 +21,7 @@ export default function CadastroForm2({control, categorias}) {
                 />}
             />
             <Controller
-                name='restaurante.idCategoria'
+                name='restaurante.categoria_id'
                 control={control}
                 render={({ field }) => <TextField 
                     variant="outlined" 
