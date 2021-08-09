@@ -204,6 +204,7 @@ export default function ModalEditarUsuario(props) {
                 control={control}
                 render={({ field }) => <TextField 
                     variant="outlined" 
+                    style={{marginBottom: '40px'}}
                     multiline 
                     rows={3} 
                     helperText="Máx: 50 caracteres"  
