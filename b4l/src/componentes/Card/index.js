@@ -39,6 +39,7 @@ export default function CustomCard(produto) {
   };
 
   const handleClose = () => {
+    produto.produto.imagem = imgProduto;
     setOpen(false);
   };
 
@@ -54,7 +55,7 @@ export default function CustomCard(produto) {
         })
         
         const dados = await resposta.json();
-        console.log({dados});
+  
         if (!resposta.ok) {
           setErro(dados);
           return;

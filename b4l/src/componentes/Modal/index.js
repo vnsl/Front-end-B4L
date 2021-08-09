@@ -32,6 +32,8 @@ export default function CustomModal(props) {
     preco: "",
   };
   
+  const imagemCard = imagem ? imagem : baseImage;
+
   const [ produtoAtivo, setProdutoAtivo ] = useState(ativo);
   const [ observacoes, setObservacoes ] = useState(false);
   const { handleSubmit, control, setValue } = useForm({defaultValues});
@@ -56,6 +58,8 @@ export default function CustomModal(props) {
     setOpen(false);
   };
 
+  
+
   async function cadastrarProduto(data) {
     setCarregando(true);
     setErro('');
@@ -77,6 +81,8 @@ export default function CustomModal(props) {
         
         const dados = await resposta.json();
         props.setImgProduto(dados);
+
+        console.log(props.imgProduto);
         
         if (!resposta.ok) {
           return setErro(dados);
@@ -188,7 +194,6 @@ export default function CustomModal(props) {
             imagem: props.imgProduto,
           }
 
-          console.log(produto.imagem);
 
           if(data.nome || data.preco || data.descricao) {
 
@@ -262,7 +267,7 @@ export default function CustomModal(props) {
               {erro && <Alert severity="error">{erro}</Alert>}
           </div>
           <div className={classes.containerImg} >
-            <img className={classes.imgUpload} src={baseImage} alt="" />
+            <img className={classes.imgUpload} src={imagemCard} alt="" />
             <UploadImage setBaseImage={setBaseImage} />
           </div>
         </div>
