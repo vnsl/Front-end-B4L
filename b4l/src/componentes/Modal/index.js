@@ -49,6 +49,9 @@ export default function CustomModal(props) {
       setErro('');
       setProdutoAtivo(true);
       setObservacoes(false);
+      setValue("nome", '')
+      setValue("descricao", '')
+      setValue("preco", '')
     }
     setOpen(true);
     
