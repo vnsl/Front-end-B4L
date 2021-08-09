@@ -216,10 +216,10 @@ export default function CustomModal(props) {
             }
           }
 
-          /* if(data.nome && data.preco && data.descricao) {
+          if(data.nome && data.preco && data.descricao) {
             setCarregando(false);
             handleClose();
-          }           */
+          }         
           
           recarregar();
           handleClose();
