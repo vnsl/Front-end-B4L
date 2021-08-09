@@ -95,6 +95,8 @@ export default function ModalEditarUsuario(props) {
       return setErro('Nova senha e sua repetição não conferem.');
     }
     
+    let imagemPerfil = "";
+
     if(baseImage) {
       const envio = {
         imagem: baseImage
@@ -111,7 +113,7 @@ export default function ModalEditarUsuario(props) {
         })
         
         const dados = await resposta.json();
-        setImagemEnvio(dados);
+        imagemPerfil = dados;
         
         if (!resposta.ok) {
           return setErro(dados);
@@ -137,7 +139,7 @@ export default function ModalEditarUsuario(props) {
         taxa_entrega: data.restaurante.taxa_entrega ?? taxa_entrega,
         tempo_entrega_minutos: data.restaurante.tempo_entrega_minutos ?? tempo_entrega_minutos,
         valor_minimo_pedido: data.restaurante.valor_minimo_pedido ?? valor_minimo_pedido,
-        imagem: imagemEnvio ?? imagem
+        imagem: imagemPerfil,
       }
 
     };
