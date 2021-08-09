@@ -23,6 +23,8 @@ export default function CustomModal(props) {
   const { token } = useAuth();
 
   const recarregar = props.recarregar;
+
+  const imagemModal = baseImage ? baseImage : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
   
   const { id, nome, preco, descricao, ativo, permite_observacoes, imagem } = props.produtoInfo ?? '';
 
@@ -32,8 +34,6 @@ export default function CustomModal(props) {
     preco: "",
   };
   
-  const imagemCard = imagem ? imagem : baseImage;
-
   const [ produtoAtivo, setProdutoAtivo ] = useState(ativo);
   const [ observacoes, setObservacoes ] = useState(false);
   const { handleSubmit, control, setValue } = useForm({defaultValues});
@@ -49,9 +49,9 @@ export default function CustomModal(props) {
       setErro('');
       setProdutoAtivo(true);
       setObservacoes(false);
-      setValue("nome", '')
-      setValue("descricao", '')
-      setValue("preco", '')
+      setValue("nome", '');
+      setValue("descricao", '');
+      setValue("preco", '');
     }
     setOpen(true);
     
@@ -222,7 +222,7 @@ export default function CustomModal(props) {
           if(data.nome && data.preco && data.descricao) {
             setCarregando(false);
             handleClose();
-          }         
+          }          
           
           recarregar();
           handleClose();
@@ -270,7 +270,7 @@ export default function CustomModal(props) {
               {erro && <Alert severity="error">{erro}</Alert>}
           </div>
           <div className={classes.containerImg} >
-            <img className={classes.imgUpload} src={imagemCard} alt="" />
+            <img className={classes.imgUpload} src={imagemModal} alt="" />
             <UploadImage setBaseImage={setBaseImage} />
           </div>
         </div>

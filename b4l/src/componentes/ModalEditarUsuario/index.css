@@ -3,16 +3,17 @@
 }
 
 .logo {
+    background-color: white;
     position: absolute;
-    height: 384px;
+    height: 250px;
 }
 
 .logo img {
     z-index: 2;
     top: -50%;
     left: 10%;
-    width: 384px;
-    height: 384px;
+    width: 250px;
+    height: 250px;
     box-sizing: border-box;
     border: 6px solid #FFFFFF;
     border-radius: 50%;

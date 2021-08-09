@@ -18,9 +18,15 @@ export default makeStyles((theme) => ({
     containerImg: {
       display: 'flex',
       flexDirection: 'column',
-      height: 'fit-content',
-      gap: '30px',
+      height: '425px',
+      gap: '20px',
       width: '384px',
+    },
+    imgUpload: {
+      width: '100%',
+      maxWidth: '384px',
+      height: '384px',
+      borderRadius: '50%',
     },
     paper: {
       display: 'flex',

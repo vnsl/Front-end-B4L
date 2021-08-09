@@ -3,30 +3,33 @@
     width: 100vw;
 }
 
-/* .logo {
-    position: absolute;
+.logo {
+    display: flex;
+    align-items: center;
     height: 250px;
+    gap: 50px
 }
-
-.logo img {
-    z-index: 2;
-    top: -50%;
-    left: 10%;
-    box-sizing: border-box;
-    border: 6px solid #FFFFFF;
-    border-radius: 50%;
-} */
 
 .header-text {
     width: 65vw;
     position: relative;
-    color: blueviolet;
+    color: white;
     z-index: 3;
     top: -50%;
     left: 35%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
+}
+
+.header-text h1 {
+    color: white;
+    text-shadow: 2px 2px 3px black;
+}
+
+.logo p {
+    margin-right: 100px;
+    text-shadow: 2px 2px 3px black;
 }
 
 .imagem {

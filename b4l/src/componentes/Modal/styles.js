@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
       width: '100%',
       maxWidth: '384px',
       height: '384px',
-      borderRadius: '50%',
+      borderRadius: '16px',
     },
     paper: {
       display: 'flex',

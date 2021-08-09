@@ -115,7 +115,7 @@ function getStepContent(step, register, categorias, control) {
             return;
           }
           
-          if (!data.restaurante.idCategoria) {
+          if (!data.restaurante.categoria_id) {
             setErro('Selecione uma categoria');
             return;
           }
