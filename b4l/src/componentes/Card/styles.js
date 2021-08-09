@@ -16,6 +16,7 @@ export default makeStyles({
     cardContent: {
       display: 'flex',
       flexDirection: 'column',
+      alignItems: 'start',
       gap: 10,
     },
     media: {

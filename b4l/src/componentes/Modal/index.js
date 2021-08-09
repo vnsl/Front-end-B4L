@@ -67,6 +67,8 @@ export default function CustomModal(props) {
     setCarregando(true);
     setErro('');
 
+    let imagemProduto = "";
+
     if(baseImage) {
       const envio = {
         imagem: baseImage
@@ -83,9 +85,7 @@ export default function CustomModal(props) {
         })
         
         const dados = await resposta.json();
-        props.setImgProduto(dados);
-
-        console.log(props.imgProduto);
+        imagemProduto = dados;
         
         if (!resposta.ok) {
           return setErro(dados);
@@ -102,7 +102,7 @@ export default function CustomModal(props) {
       preco: data.preco,
       permite_obserservacoes: data.permite_observacoes,
       ativo: produtoAtivo,
-      imagem: props.imgProduto
+      imagem: imagemProduto,
     }
 
     try {
@@ -170,6 +170,8 @@ export default function CustomModal(props) {
             }
           }
 
+          let imagemProduto = "";
+
           if(baseImage) {
             const envio = {
               imagem: baseImage
@@ -185,8 +187,10 @@ export default function CustomModal(props) {
               })
               
               const dados = await resposta.json();
-              props.setImgProduto(dados);
+              imagemProduto = dados;
           }
+
+          
 
           const produto = {
             nome: data.nome ?? nome,
@@ -194,7 +198,7 @@ export default function CustomModal(props) {
             preco: data.preco ?? preco,
             permite_obserservacoes: data.permite_observacoes ?? permite_observacoes,
             ativo: produtoAtivo,
-            imagem: props.imgProduto,
+            imagem: imagemProduto,
           }
 
 

@@ -77,13 +77,12 @@ export default function CustomCard(produto) {
       <div className={'eita'}>
         {erro && <Alert severity="error">{erro}</Alert>}
         <AlertDialog handleExcluir={handleExcluir} open={open} setOpen={setOpen} handleClickOpen={handleClickOpen} handleClose={handleClose} />
-        {/* <Button onClick={handleExcluir}>Excluir produto do catalogo</Button> */}
         <CustomModal className='modal' acao='Editar produto' produtoInfo={produto.produto} recarregar={produto.recarregar} ativo={produto.ativo} imgProduto={imgProduto} setImgProduto={setImgProduto} />
       </div>
       {carregando && <Loading/>}
       <CardActionArea className={classes.cardActionArea, 'adc-blur'}>
         <CardContent className={classes.cardContent}>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography variant="h5" component="h2" >
             {nome}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
