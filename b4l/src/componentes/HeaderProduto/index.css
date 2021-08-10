@@ -6,7 +6,7 @@
 .logo {
     display: flex;
     align-items: center;
-    height: 250px;
+    height: 100px;
     gap: 50px
 }
 

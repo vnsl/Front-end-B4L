@@ -67,17 +67,24 @@ function Produtos() {
             <Header recarregar={() => setCarregar(true)}/>
                 <div className='container-produtos'>
                     {produtos.length > 0?(
-                      <div className='cards'>
-                        {/* {produtos?.map(produto => <p>{produto.preco}</p>)} */}
-                        {produtos.map(produto => <CardMarket key={produto.id} produto={produto} recarregar={() => setCarregar(true)}/>)}
+                      <div>
+                        <div className="container-modal" >
+                          <CustomModal className="modal" acao='Novo produto' recarregar={() => setCarregar(true)}/>
+                        </div>                        
+                        <div className='cards'>
+                          {produtos.map(produto => <CardMarket key={produto.id} produto={produto} recarregar={() => setCarregar(true)}/>)}
+                        </div>
                       </div>
                       ) :(
-                      <div className="standard-text">
-                        <p>Você não tem nenhum produto no seu cardápio.</p>
-                        <p>Gostaria de adicionar um novo produto.</p>
-                      </div>)
+                      <div>
+                        <div className="standard-text">
+                          <p>Você não tem nenhum produto no seu cardápio.</p>
+                          <p>Gostaria de adicionar um novo produto.</p>
+                        </div>
+                        <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
+                      </div>
+                      )
                     }
-                    <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
                 </div>
 
         </div>
