@@ -58,6 +58,12 @@ export default function CustomModal(props) {
   };
 
   const handleClose = () => {
+    if(props.acao === "Editar produto") {
+      setValue("nome", nome);
+      setValue("descricao", descricao)
+      setValue("preco", preco)
+    }
+
     setOpen(false);
   };
 

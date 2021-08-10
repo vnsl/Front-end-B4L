@@ -69,6 +69,14 @@ export default function ModalEditarUsuario(props) {
   };
 
   const handleClose = () => {
+    setValue('nome', nome);
+    setValue('email', email);
+    setValue('restaurante.nome', nome_restaurante);
+    setValue('restaurante.categoria_id', categoria_id);
+    setValue('restaurante.descricao', descricao);
+    setValue('restaurante.taxa_entrega', taxa_entrega);
+    setValue('restaurante.tempo_entrega_minutos', tempo_entrega_minutos);
+    setValue('restaurante.valor_minimo_pedido', valor_minimo_pedido);
     setOpen(false);
   };
 
