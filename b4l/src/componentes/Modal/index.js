@@ -23,10 +23,10 @@ export default function CustomModal(props) {
   const { token } = useAuth();
 
   const recarregar = props.recarregar;
-
-  const imagemModal = baseImage ? baseImage : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
   
   const { id, nome, preco, descricao, ativo, permite_observacoes, imagem } = props.produtoInfo ?? '';
+
+  const imagemModal = imagem ? imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
 
   const defaultValues = {
     nome: "",
