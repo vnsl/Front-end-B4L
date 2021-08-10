@@ -29,7 +29,7 @@ export default function ModalEditarUsuario(props) {
   const restaurante = userPersistido.restaurante;
   const { id: id_restaurante, nome: nome_restaurante, categoria_id, descricao, taxa_entrega, tempo_entrega_minutos, valor_minimo_pedido, imagem } = restaurante;
 
-  const imagemPerfil = baseImage ? baseImage : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
+  const imagemPerfil = imagem ? imagem : (baseImage ? baseImage : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg');
 
   const defaultValues = {
     nome: '',
