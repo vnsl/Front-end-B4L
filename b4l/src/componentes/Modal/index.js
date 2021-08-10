@@ -239,64 +239,65 @@ export default function CustomModal(props) {
   const body = (
     <form className={classes.paper}>
         <div className={classes.content}>
-          <div className={classes.fields}>
-              <h2 id="custom-modal-title">{props.acao}</h2>
-               <Controller
-                  name="nome"
-                  control={control}
-                  defaultValue={nome}
-                  render={({ field }) => <TextField 
-                    variant="outlined" 
-                    className='textarea' 
-                    label="Nome" 
-                    type='text' 
-                    {...field}
-                    
-                  />}
-                />
-                <Controller 
-                  name="descricao"
-                  control={control}
-                  render={({field})=>
-                  <TextField 
-                    defaultValue={descricao}
-                    variant="outlined" 
-                    className='textarea' 
-                    label="Descrição" 
-                    type='text' 
-                    {...field}
+          <div className={classes.leftContent}>
+            <div className={classes.fields}>
+                <h2 id="custom-modal-title">{props.acao}</h2>
+                <Controller
+                    name="nome"
+                    control={control}
+                    defaultValue={nome}
+                    render={({ field }) => <TextField 
+                      variant="outlined" 
+                      className='textarea' 
+                      label="Nome" 
+                      type='text' 
+                      {...field}
+                      
+                    />}
                   />
-                  }
-                />
-                <InputDinheiro control={control} name='preco' label='Preço'/>
-              
-              {carregando && <Loading/>}
-              {erro && <Alert severity="error">{erro}</Alert>}
-          </div>
-          <div className={classes.containerImg} >
-            <img className={classes.imgUpload} src={imagemModal} alt="" />
-            <UploadImage setBaseImage={setBaseImage} />
-          </div>
-        </div>
-        <div className={classes.containerSwitches}>
-          <Switch acao='Ativar produto' setProdutoAtivo={setProdutoAtivo} produtoAtivo={produtoAtivo}/>
-          <Switch acao='Permitir observações' setProdutoAtivo={setObservacoes} produtoAtivo={observacoes}/>
-        </div>
-        <div className={classes.containerBotoes}>
-            <div className={classes.botoes}>
-                <Button type="button" color="secondary" onClick={handleClose}>
-                    Cancelar
-                </Button>
-                {props.acao === 'Novo produto' ? 
-                  <Button variant="contained" type="submit" color="secondary"  onClick={handleSubmit(cadastrarProduto)}>
-                  Adicionar produto ao cardápio
-                  </Button> :
-                  <Button variant="contained" type="submit" color="secondary" onClick={handleSubmit(onSubmit)}>
-                  Salvar alterações
-                  </Button>
-                }
+                  <Controller 
+                    name="descricao"
+                    control={control}
+                    render={({field})=>
+                    <TextField 
+                      defaultValue={descricao}
+                      variant="outlined" 
+                      className='textarea' 
+                      label="Descrição" 
+                      type='text' 
+                      {...field}
+                    />
+                    }
+                  />
+                  <InputDinheiro control={control} name='preco' label='Preço'/>
                 
+                {carregando && <Loading/>}
+                {erro && <Alert severity="error">{erro}</Alert>}
             </div>
+            <div className={classes.containerSwitches}>
+              <Switch acao='Ativar produto' setProdutoAtivo={setProdutoAtivo} produtoAtivo={produtoAtivo}/>
+              <Switch acao='Permitir observações' setProdutoAtivo={setObservacoes} produtoAtivo={observacoes}/>
+            </div>
+          </div>
+          <div className={classes.rightContent}>
+            <div className={classes.containerImg} >
+              <img className={classes.imgUpload} src={imagemModal} alt="" />
+              <UploadImage setBaseImage={setBaseImage} />
+            </div>
+            <div className={classes.botoes}>
+              <Button className={classes.botaoCancelar} type="button" color="secondary" onClick={handleClose}>
+                  Cancelar
+              </Button>
+              {props.acao === 'Novo produto' ? 
+                <Button className={classes.botaoAdicionar} variant="contained" type="submit" color="secondary"  onClick={handleSubmit(cadastrarProduto)}>
+                  Adicionar produto ao cardápio
+                </Button> :
+                <Button variant="contained" type="submit" color="secondary" onClick={handleSubmit(onSubmit)}>
+                  Salvar alterações
+                </Button>
+              }               
+            </div>                 
+          </div>                   
         </div>
     </form>
   );
@@ -304,7 +305,7 @@ export default function CustomModal(props) {
   return (
     <div>
       {props.acao === 'Novo produto' ? 
-        <Button className={classes.botaomodal} variant="contained" type="button" color="secondary" onClick={handleOpen}>
+        <Button className={classes.botaoOpenModal} variant="contained" type="button" color="secondary" onClick={handleOpen}>
         Adicionar produto ao cardápio
         </Button> :
         <Button variant="contained" type="button" color="secondary" onClick={handleOpen}>

@@ -1,4 +1,4 @@
-import React , { useState, useEffect } from 'react';
+import React , { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -23,7 +23,7 @@ function Login() {
     const [erro, setErro] = useState('');
     const [carregando, setCarregando] = useState(false);
 
-    const { logar, setCategorias } = useAuth();
+    const { logar } = useAuth();
 
     async function onSubmit(data) {
         setCarregando(true);
@@ -54,6 +54,7 @@ function Login() {
               'Content-type': 'application/json',
             }
           });
+
           const categorias = await respostaCategorias.json();          
           
           logar(dados.token, dados.usuario, categorias);
@@ -64,17 +65,17 @@ function Login() {
     };
 
   return (
-    <div className="card">
+    <div className={classes.card}>
         <form 
-        className={classes.root} 
-        noValidate 
-        autoComplete="off"
-        onSubmit={handleSubmit(onSubmit)}
+          className={classes.root} 
+          noValidate 
+          autoComplete="off"
+          onSubmit={handleSubmit(onSubmit)}
         >
-            <div className="container-login">
-                <Typography variant="h3" >Login</Typography>
+            <div className={classes.containerLogin} >
+                <Typography variant="h3" className={classes.title} >Login</Typography>
                 {carregando && <Loading/>}
-                <div className="login">
+                <div className={classes.login}>
                   <Controller
                     name='email'
                     control={control}
@@ -88,9 +89,9 @@ function Login() {
                   />
                   <InputSenha label='Senha' name='senha' control={control}/>
                   
-                  <Button variant='contained' type='submit'>Entrar</Button>
+                  <Button className={classes.botao} variant='contained' type='submit'>Entrar</Button>
                   {erro && <Alert severity="error">{erro}</Alert>}
-                  <Typography>Ainda não tem uma conta? <Link to='/cadastro'>Cadastre-se</Link></Typography>
+                  <Typography className="bottom-text" >Ainda não tem uma conta? <Link to='/cadastro'>Cadastre-se</Link></Typography>
                 </div>
             </div>
         </form>

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useForm, Controller } from 'react-hook-form';
 import Alert from '@material-ui/lab/Alert';
@@ -23,7 +22,6 @@ export default function ModalEditarUsuario(props) {
   const [open, setOpen] = useState(false);
   const [ erro, setErro ] = useState('');
   const [baseImage, setBaseImage] = useState('');
-  const [imagemEnvio, setImagemEnvio] = useState('');
   const [ carregando, setCarregando ] = useState(false);
   const { token, categoriasPersistidas, userPersistido, setUserPersistido } = useAuth();
   
