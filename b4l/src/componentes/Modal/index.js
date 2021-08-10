@@ -198,7 +198,7 @@ export default function CustomModal(props) {
             preco: data.preco ?? preco,
             permite_obserservacoes: data.permite_observacoes ?? permite_observacoes,
             ativo: produtoAtivo,
-            imagem: imagemProduto,
+            imagem: imagemProduto ?? imagem,
           }
 
 
