@@ -10,9 +10,11 @@ export default makeStyles({
     },
     cardActionArea: {
       display: 'flex',
-      margin: 32,
       justifyContent: 'space-between',
+      height: 238,
+      padding: 20,      
     },
+
     cardContent: {
       display: 'flex',
       flexDirection: 'column',
