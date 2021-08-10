@@ -26,7 +26,7 @@ export default function CustomModal(props) {
   
   const { id, nome, preco, descricao, ativo, permite_observacoes, imagem } = props.produtoInfo ?? '';
 
-  const imagemModal = imagem? imagem: (baseImage ? baseImage : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg');
+  const imagemModal = baseImage? baseImage: (imagem ? imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg');
 
   const defaultValues = {
     nome: "",
@@ -102,7 +102,7 @@ export default function CustomModal(props) {
       preco: data.preco,
       permite_obserservacoes: data.permite_observacoes,
       ativo: produtoAtivo,
-      imagem: imagemProduto,
+      imagem: imagemProduto ?? imagemModal,
     }
 
     try {
