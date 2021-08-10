@@ -27,7 +27,6 @@ export default makeStyles((theme) => ({
     content: {
       display: 'flex',
       justifyContent: 'space-between',
-      // alignItems: 'center',
       gap: 20,
       padding: '0 50px 30px 30px',
     },
@@ -61,7 +60,7 @@ export default makeStyles((theme) => ({
       maxWidth: '384px',
       height: '384px',
       borderRadius: '16px',
-      boxShadow: `0px 2px 8px rgba(50, 50, 50, 0.4)`
+      boxShadow: theme.shadows[5],
     },
     botoes: {
       display: 'flex',

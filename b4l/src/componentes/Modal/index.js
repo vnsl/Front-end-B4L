@@ -285,14 +285,27 @@ export default function CustomModal(props) {
               <UploadImage setBaseImage={setBaseImage} />
             </div>
             <div className={classes.botoes}>
-              <Button className={classes.botaoCancelar} type="button" color="secondary" onClick={handleClose}>
-                  Cancelar
+              <Button 
+                type="button" 
+                color="secondary" 
+                onClick={handleClose}>
+                Cancelar
               </Button>
               {props.acao === 'Novo produto' ? 
-                <Button className={classes.botaoAdicionar} variant="contained" type="submit" color="secondary"  onClick={handleSubmit(cadastrarProduto)}>
+                <Button 
+                  className={classes.botaoAdicionar} 
+                  variant="contained" 
+                  type="submit" 
+                  color="secondary"  
+                  onClick={handleSubmit(cadastrarProduto)}>
                   Adicionar produto ao cardápio
                 </Button> :
-                <Button variant="contained" type="submit" color="secondary" onClick={handleSubmit(onSubmit)}>
+                <Button 
+                  className={classes.botaoAdicionar}
+                  variant="contained" 
+                  type="submit" 
+                  color="secondary" 
+                  onClick={handleSubmit(onSubmit)}>
                   Salvar alterações
                 </Button>
               }               

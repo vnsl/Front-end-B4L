@@ -174,83 +174,84 @@ export default function ModalEditarUsuario(props) {
   const body = (
     <div className={classes.paper}>
         <div className={classes.content}>
-          <div className={classes.fields}>
-            <h2>Editar usuário</h2>
-            <div className={classes.dadosUsuario}>
-              <InputText name='nome' label='Usuário' control={control} defaultValue={nome}/>
-              <InputText name='email' label='Email' control={control} defaultValue={email}/>
-              <InputText name='restaurante.nome' label='Nome do restaurante' control={control} defaultValue={nome_restaurante}/>
-              <Controller
-                name='restaurante.categoria_id'
-                control={control}
-                render={({ field }) => <TextField 
-                    variant="outlined" 
-                    className='textarea' 
-                    label="Categoria"
-                    defaultValue={categoria_id} 
-                    select 
-                    type='number'
-                    {...field}>
-                        {categoriasPersistidas.map((opcao) => (
-                            <MenuItem key={opcao.id} value={opcao.id}>
-                            {opcao.nome}
-                            </MenuItem>
-                        ))}
-                    
-                    </TextField>}
-              />        
-              <Controller
-                name='restaurante.descricao'
-                control={control}
-                render={({ field }) => <TextField 
-                    variant="outlined" 
-                    style={{marginBottom: '40px'}}
-                    multiline 
-                    rows={3} 
-                    helperText="Máx: 50 caracteres"  
-                    className='textarea'
-                    defaultValue={descricao} 
-                    label="Descrição"  
-                    type='text'   
-                    {...field}       
-                /> }
-              />
-              <InputDinheiro name='restaurante.taxa_entrega' label='Taxa de entrega' control={control} defaultValue={taxa_entrega}/>
-              <InputText name='restaurante.tempo_entrega_minutos' label="Tempo estimado de entrega" control={control} defaultValue={tempo_entrega_minutos}/>
-              <InputDinheiro name='restaurante.valor_minimo_pedido' label='Valor mínimo do pedido' control={control} defaultValue={valor_minimo_pedido}/>
-              <InputSenha name='senha' label='Senha atual' control={control} />
-              <InputSenha name='nova_senha' label='Nova senha' control={control} />
-              <InputSenha name='nova_senha_repetida' label='Repita a nova senha' control={control} />
+          <div className={classes.leftContent}>
+            <div className={classes.fields}>
+              <h2>Editar usuário</h2>
+              <div className={classes.dadosUsuario}>
+                <InputText name='nome' label='Usuário' control={control} defaultValue={nome}/>
+                <InputText name='email' label='Email' control={control} defaultValue={email}/>
+                <InputText name='restaurante.nome' label='Nome do restaurante' control={control} defaultValue={nome_restaurante}/>
+                <Controller
+                  name='restaurante.categoria_id'
+                  control={control}
+                  render={({ field }) => <TextField 
+                      variant="outlined" 
+                      className='textarea' 
+                      label="Categoria"
+                      defaultValue={categoria_id} 
+                      select 
+                      type='number'
+                      {...field}>
+                          {categoriasPersistidas.map((opcao) => (
+                              <MenuItem key={opcao.id} value={opcao.id}>
+                              {opcao.nome}
+                              </MenuItem>
+                          ))}
+                      
+                      </TextField>}
+                />        
+                <Controller
+                  name='restaurante.descricao'
+                  control={control}
+                  render={({ field }) => <TextField 
+                      variant="outlined" 
+                      style={{marginBottom: '40px'}}
+                      multiline 
+                      rows={3} 
+                      helperText="Máx: 50 caracteres"  
+                      className='textarea'
+                      defaultValue={descricao} 
+                      label="Descrição"  
+                      type='text'   
+                      {...field}       
+                  /> }
+                />
+                <InputDinheiro name='restaurante.taxa_entrega' label='Taxa de entrega' control={control} defaultValue={taxa_entrega}/>
+                <InputText name='restaurante.tempo_entrega_minutos' label="Tempo estimado de entrega" control={control} defaultValue={tempo_entrega_minutos}/>
+                <InputDinheiro name='restaurante.valor_minimo_pedido' label='Valor mínimo do pedido' control={control} defaultValue={valor_minimo_pedido}/>
+                <InputSenha name='senha' label='Senha atual' control={control} />
+                <InputSenha name='nova_senha' label='Nova senha' control={control} />
+                <InputSenha name='nova_senha_repetida' label='Repita a nova senha' control={control} />
+              </div>
+              
+              {carregando && <Loading/>}
+              {erro && <Alert severity="error">{erro}</Alert>}
             </div>
-            
-            {carregando && <Loading/>}
-            {erro && <Alert severity="error">{erro}</Alert>}
           </div>
-          {/* <div className={classes.containerImg} style={{ backgroundImage: `url(${baseImage})`, backgroundSize: 'cover' , borderRadius: '50%' }}  >
-            <UploadImage setBaseImage={setBaseImage} />
-          </div> */}
-          <div className={classes.containerImg} >
-            <img className={classes.imgUpload} src={imagemPerfil} alt="" />
-            <UploadImage setBaseImage={setBaseImage} />
-          </div>
-        </div>
-        <div className={classes.containerBotoes}>
+          <div className={classes.rightContent}>  
+            <div className={classes.containerImg} >
+              <img className={classes.imgUpload} src={imagemPerfil} alt="" />
+              <UploadImage setBaseImage={setBaseImage} />
+            </div>
             <div className={classes.botoes}>
-                <Button 
+                  <Button 
+                    className={classes.botaoCancelar} 
                     type="button" 
                     color="secondary" 
                     onClick={handleClose}>
-                      Cancelar
-                </Button>
-                <Button 
-                  variant="contained" 
-                  type="button" 
-                  color="secondary" 
-                  onClick={handleSubmit(onSubmit)}>
+                    Cancelar
+                  </Button>
+                  <Button 
+                    className={classes.botaoAlterar} 
+                    variant="contained" 
+                    type="button" 
+                    color="secondary" 
+                    onClick={handleSubmit(onSubmit)}>
                     Salvar alterações
-                </Button>                
+                  </Button>                
             </div>
-        </div>
+          </div>                        
+        </div>        
     </div>
   );
 
