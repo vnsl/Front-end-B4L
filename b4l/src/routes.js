@@ -6,12 +6,18 @@ import {
 } from "react-router-dom";
 
 import React from "react";
+
 import Login from "./paginas/Login";
 import Cadastro from "./paginas/Cadastro";
 import Produtos from "./paginas/Produtos";
 
+import LoginConsumidor from "./paginas/LoginConsumidor";
+import CadastroConsumidor from "./paginas/CadastroConsumidor";
+import Restaurantes from "./paginas/Restaurantes";
+
 import { AuthProvider } from './context/AuthContext';
 import useAuth from './hook/useAuth';
+
 
 function RotasProtegidas(props) {
     const { token } = useAuth();
@@ -30,10 +36,13 @@ function Routes() {
                 <Switch>
                     <Route path="/" exact component={Login}/>
                     <Route path="/cadastro" component={Cadastro}/>
-                    {/* <Route path="/produtos" exact component={Produtos}/> */}
+                    
+                    <Route path="/loginconsumidor" exact component={LoginConsumidor}/>  
+                    <Route path="/cadastroconsumidor" component={CadastroConsumidor}/>
 
                     <RotasProtegidas>
                         <Route path="/produtos" exact component={Produtos}/>
+                        <Route path="/restaurantes" exact component={Restaurantes}/>  
                     </RotasProtegidas>
                 </Switch>
             </Router>

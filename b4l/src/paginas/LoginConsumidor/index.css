@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+
+
+h3 {
+    font-family: 'Baloo 2', cursive !important;
+}
+
+.textarea {
+    width: 408px;
+    height: 100px;
+}
+
+.bottom-text {
+    color: #6F7377;
+    font-family: 'Montserrat', sans-serif !important;
+}
