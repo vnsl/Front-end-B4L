@@ -3,8 +3,8 @@
     position:relative;
 }
 .adc-blur {
-  transition: all 250ms ease;
-  display: flex !important;
+    transition: all 250ms ease;
+    display: flex !important;
 }
 .cabelo:hover .adc-blur {
     filter: blur(4px)

@@ -26,12 +26,18 @@ function UploadImage({ setBaseImage }) {
   };
 
   return (
-    <input
-        type="file"
-        onChange={(e) => {
-          uploadImage(e);
-        }}
-    />
+    <div>
+      <label className="label-arquivo" htmlFor="arquivo">Selecione a imagem do produto</label>
+      <input
+          type="file"
+          name="arquivo"
+          id="arquivo"
+          accept="image/*"
+          onChange={(e) => {
+            uploadImage(e);
+          }}
+      />
+    </div>
   );
 }
 

@@ -23,10 +23,10 @@ export default function CustomModal(props) {
   const { token } = useAuth();
 
   const recarregar = props.recarregar;
-
-  const imagemModal = baseImage ? baseImage : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
   
   const { id, nome, preco, descricao, ativo, permite_observacoes, imagem } = props.produtoInfo ?? '';
+
+  const imagemModal = baseImage? baseImage: (imagem ? imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg');
 
   const defaultValues = {
     nome: "",
@@ -58,6 +58,12 @@ export default function CustomModal(props) {
   };
 
   const handleClose = () => {
+    if(props.acao === "Editar produto") {
+      setValue("nome", nome);
+      setValue("descricao", descricao)
+      setValue("preco", preco)
+    }
+
     setOpen(false);
   };
 
@@ -66,6 +72,8 @@ export default function CustomModal(props) {
   async function cadastrarProduto(data) {
     setCarregando(true);
     setErro('');
+
+    let imagemProduto = "";
 
     if(baseImage) {
       const envio = {
@@ -83,9 +91,7 @@ export default function CustomModal(props) {
         })
         
         const dados = await resposta.json();
-        props.setImgProduto(dados);
-
-        console.log(props.imgProduto);
+        imagemProduto = dados;
         
         if (!resposta.ok) {
           return setErro(dados);
@@ -102,7 +108,7 @@ export default function CustomModal(props) {
       preco: data.preco,
       permite_obserservacoes: data.permite_observacoes,
       ativo: produtoAtivo,
-      imagem: props.imgProduto
+      imagem: imagemProduto ?? imagemModal,
     }
 
     try {
@@ -170,6 +176,8 @@ export default function CustomModal(props) {
             }
           }
 
+          let imagemProduto = "";
+
           if(baseImage) {
             const envio = {
               imagem: baseImage
@@ -185,8 +193,10 @@ export default function CustomModal(props) {
               })
               
               const dados = await resposta.json();
-              props.setImgProduto(dados);
+              imagemProduto = dados;
           }
+
+          
 
           const produto = {
             nome: data.nome ?? nome,
@@ -194,7 +204,7 @@ export default function CustomModal(props) {
             preco: data.preco ?? preco,
             permite_obserservacoes: data.permite_observacoes ?? permite_observacoes,
             ativo: produtoAtivo,
-            imagem: props.imgProduto,
+            imagem: imagemProduto ?? imagem,
           }
 
 
@@ -235,64 +245,78 @@ export default function CustomModal(props) {
   const body = (
     <form className={classes.paper}>
         <div className={classes.content}>
-          <div className={classes.fields}>
-              <h2 id="custom-modal-title">{props.acao}</h2>
-               <Controller
-                  name="nome"
-                  control={control}
-                  defaultValue={nome}
-                  render={({ field }) => <TextField 
-                    variant="outlined" 
-                    className='textarea' 
-                    label="Nome" 
-                    type='text' 
-                    {...field}
-                    
-                  />}
-                />
-                <Controller 
-                  name="descricao"
-                  control={control}
-                  render={({field})=>
-                  <TextField 
-                    defaultValue={descricao}
-                    variant="outlined" 
-                    className='textarea' 
-                    label="Descrição" 
-                    type='text' 
-                    {...field}
+          <div className={classes.leftContent}>
+            <div className={classes.fields}>
+                <h2 id="custom-modal-title">{props.acao}</h2>
+                <Controller
+                    name="nome"
+                    control={control}
+                    defaultValue={nome}
+                    render={({ field }) => <TextField 
+                      variant="outlined" 
+                      className='textarea' 
+                      label="Nome" 
+                      type='text' 
+                      {...field}
+                      
+                    />}
                   />
-                  }
-                />
-                <InputDinheiro control={control} name='preco' label='Preço'/>
-              
-              {carregando && <Loading/>}
-              {erro && <Alert severity="error">{erro}</Alert>}
-          </div>
-          <div className={classes.containerImg} >
-            <img className={classes.imgUpload} src={imagemModal} alt="" />
-            <UploadImage setBaseImage={setBaseImage} />
-          </div>
-        </div>
-        <div className={classes.containerSwitches}>
-          <Switch acao='Ativar produto' setProdutoAtivo={setProdutoAtivo} produtoAtivo={produtoAtivo}/>
-          <Switch acao='Permitir observações' setProdutoAtivo={setObservacoes} produtoAtivo={observacoes}/>
-        </div>
-        <div className={classes.containerBotoes}>
-            <div className={classes.botoes}>
-                <Button type="button" color="secondary" onClick={handleClose}>
-                    Cancelar
-                </Button>
-                {props.acao === 'Novo produto' ? 
-                  <Button variant="contained" type="submit" color="secondary"  onClick={handleSubmit(cadastrarProduto)}>
-                  Adicionar produto ao cardápio
-                  </Button> :
-                  <Button variant="contained" type="submit" color="secondary" onClick={handleSubmit(onSubmit)}>
-                  Salvar alterações
-                  </Button>
-                }
+                  <Controller 
+                    name="descricao"
+                    control={control}
+                    render={({field})=>
+                    <TextField 
+                      defaultValue={descricao}
+                      variant="outlined" 
+                      className='textarea' 
+                      label="Descrição" 
+                      type='text' 
+                      {...field}
+                    />
+                    }
+                  />
+                  <InputDinheiro control={control} name='preco' label='Preço'/>
                 
+                {carregando && <Loading/>}
+                {erro && <Alert severity="error">{erro}</Alert>}
             </div>
+            <div className={classes.containerSwitches}>
+              <Switch acao='Ativar produto' setProdutoAtivo={setProdutoAtivo} produtoAtivo={produtoAtivo}/>
+              <Switch acao='Permitir observações' setProdutoAtivo={setObservacoes} produtoAtivo={observacoes}/>
+            </div>
+          </div>
+          <div className={classes.rightContent}>
+            <div className={classes.containerImg} >
+              <img className={classes.imgUpload} src={imagemModal} alt="" />
+              <UploadImage setBaseImage={setBaseImage} />
+            </div>
+            <div className={classes.botoes}>
+              <Button 
+                type="button" 
+                color="secondary" 
+                onClick={handleClose}>
+                Cancelar
+              </Button>
+              {props.acao === 'Novo produto' ? 
+                <Button 
+                  className={classes.botaoAdicionar} 
+                  variant="contained" 
+                  type="submit" 
+                  color="secondary"  
+                  onClick={handleSubmit(cadastrarProduto)}>
+                  Adicionar produto ao cardápio
+                </Button> :
+                <Button 
+                  className={classes.botaoAdicionar}
+                  variant="contained" 
+                  type="submit" 
+                  color="secondary" 
+                  onClick={handleSubmit(onSubmit)}>
+                  Salvar alterações
+                </Button>
+              }               
+            </div>                 
+          </div>                   
         </div>
     </form>
   );
@@ -300,7 +324,7 @@ export default function CustomModal(props) {
   return (
     <div>
       {props.acao === 'Novo produto' ? 
-        <Button className={classes.botaomodal} variant="contained" type="button" color="secondary" onClick={handleOpen}>
+        <Button className={classes.botaoOpenModal} variant="contained" type="button" color="secondary" onClick={handleOpen}>
         Adicionar produto ao cardápio
         </Button> :
         <Button variant="contained" type="button" color="secondary" onClick={handleOpen}>
