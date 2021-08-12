@@ -1,42 +1,123 @@
-import React, { useState, useEffect } from 'react';
-import StepperHorizontal from '../../componentes/Stepper';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useHistory, Link } from 'react-router-dom';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Alert from '@material-ui/lab/Alert';
+
+import CadastroFormConsumidor from '../../componentes/CadastroFormConsumidor';
 import Loading from '../../componentes/Loading';
+import ImagemApp from "../../assets/imagem-app.svg";
 
 import './index.css';
 
-import useAuth from '../../hook/useAuth';
+const useStyles = makeStyles((theme) => ({
+  button: {
+    marginRight: theme.spacing(1),
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
+    borderRadius: 20,
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+}));
 
 function CadastroConsumidor() {
+    const classes = useStyles();
     const [carregando, setCarregando] = useState(false);
+    const [ erro, setErro ] = useState('');
+    const { handleSubmit, control } = useForm();
+    const history = useHistory();   
 
-    const { setCategorias } = useAuth();
+    async function onSubmit(data) {
+      setErro('');
 
-    async function listarCategorias() {
-        setCarregando(true);
+      if (!data.nome) {
+        setErro('Nome é obrigatório');
+        return;
+      }
+      
+      if (!data.email) {
+        setErro('Email é obrigatório');
+        return;
+      }
+  
+      if (!data.telefone) {
+        setErro('Telefone é obrigatório');
+        return;
+      }
+      
+      if (!data.senha) {
+        setErro('Senha é obrigatória');
+        return;
+      }
+      
+      if (data.senha !== data.senhaRepetida) {
+        setErro('Senhas não conferem.');
+        return;
+      }
+
+      setCarregando(true);
+      
+      try {
         
-        const resposta = await fetch('http://localhost:3000/categorias', {
-          method: 'GET',
+        const resposta = await fetch('http://localhost:3001/consumidores', {
+          method: 'POST',
+          body: JSON.stringify(data),
           headers: {
-            'Content-type': 'application/json',
+            'Content-type': 'application/json'
           }
-        });
-        const categorias = await resposta.json();
+        })
         
-        setCategorias(categorias);
+        const dados = await resposta.json();
+        
         setCarregando(false);
-      };
-    
-      useEffect(() => {
-        listarCategorias();
-      }, []);
+        
+        if (!resposta.ok) {
+          setErro(dados);
+          return;
+        }
+        
+        history.push('/loginconsumidor');
+      } catch (error) {
+        setErro(error.message)
+      }
+    };
 
     return (
-        <div className='container-cadastro'>
-            {carregando && <Loading/>}
-            <div className='caixa'>
-                <StepperHorizontal/>
-            </div>
+      <div className="main-screen">
+        <div className="div-img">
+          <img src={ImagemApp} alt="" />
         </div>
+        <div className="caixa-consumidor">
+          <div className="content">
+            <div className="title">
+              <h1>Cadastro</h1>
+            </div>
+            <div className="container-form">
+              <CadastroFormConsumidor control={control} />
+            </div>
+            {carregando && <Loading/>}
+            {erro && <Alert severity="error">{erro}</Alert>}
+            <div className="container-botoes">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit(onSubmit)}
+                className={classes.button}
+              >
+                Criar conta
+              </Button> 
+            </div>
+            <Typography className="cadastrado" >Já tem uma conta? <Link to='/loginconsumidor'>Login</Link></Typography>
+          </div>
+        </div>
+      </div>
+      
     )
 }
 

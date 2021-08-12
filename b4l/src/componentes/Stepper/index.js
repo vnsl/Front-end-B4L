@@ -6,14 +6,10 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useForm, Controller } from 'react-hook-form';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
 import { Link } from 'react-router-dom';
 
 import Loading from '../Loading';
 import Alert from '@material-ui/lab/Alert';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import InputSenha from '../InputSenha/index';
 
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../hook/useAuth';
