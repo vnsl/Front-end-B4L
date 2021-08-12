@@ -20,7 +20,7 @@ import useAuth from './hook/useAuth';
 
 
 function RotasProtegidasProprietario(props) {
-    const { token } = useAuth();
+    const { token, userPersistido } = useAuth();
 
     return (
         <Route 
