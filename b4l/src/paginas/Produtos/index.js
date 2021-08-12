@@ -52,7 +52,6 @@ function Produtos() {
             return history.push('/produtos');
           }
         } catch (error) {
-          console.log({error})
           return setErro(error.message);
         }
         
