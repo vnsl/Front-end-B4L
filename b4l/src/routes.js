@@ -19,12 +19,22 @@ import { AuthProvider } from './context/AuthContext';
 import useAuth from './hook/useAuth';
 
 
-function RotasProtegidas(props) {
+function RotasProtegidasProprietario(props) {
     const { token } = useAuth();
 
     return (
         <Route 
             render={() => (token ? props.children : <Redirect to='/' />)}
+        />
+    );
+}
+
+function RotasProtegidasConsumidor(props) {
+    const { token } = useAuth();
+
+    return (
+        <Route 
+            render={() => (token ? props.children : <Redirect to='/loginconsumidor' />)}
         />
     );
 }
@@ -39,11 +49,13 @@ function Routes() {
                     
                     <Route path="/loginconsumidor" exact component={LoginConsumidor}/>  
                     <Route path="/cadastroconsumidor" component={CadastroConsumidor}/>
-                    <Route path="/restaurantes" exact component={Restaurantes}/>  
 
-                    <RotasProtegidas>
+                    <RotasProtegidasProprietario>
+                        <Route path="/restaurantes" exact component={Restaurantes}/>  
                         <Route path="/produtos" exact component={Produtos}/>
-                    </RotasProtegidas>
+                    </RotasProtegidasProprietario>
+                    <RotasProtegidasConsumidor>
+                    </RotasProtegidasConsumidor>
                 </Switch>
             </Router>
         </AuthProvider>
