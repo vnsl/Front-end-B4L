@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import Loading from '../../componentes/Loading';
 import InputSenha from '../../componentes/InputSenha';
-import { ReactComponent as BarrilLogo } from '../../assets/logo-consumidor.svg';
-import { ReactComponent as Fundo } from '../../assets/fundo-login-consumidor.svg';
+import { ReactComponent as BarrilLogo } from '../../assets/logo-barril.svg';
 
 import './index.css';
 
@@ -67,9 +66,10 @@ function LoginConsumidor() {
           onSubmit={handleSubmit(onSubmit)}
         >
             <div className={classes.containerLogin} >
-              <BarrilLogo/>
-              <Fundo/>
-                <Typography variant="h3" className={classes.title} >Login</Typography>
+                <div className="title">
+                  <Typography variant="h3" className={classes.title} >Login</Typography>
+                  <BarrilLogo style={{ marginRight: '20px'}} />
+                </div>
                 {carregando && <Loading/>}
                 <div className={classes.login}>
                   <Controller

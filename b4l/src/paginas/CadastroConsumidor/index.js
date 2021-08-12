@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, Link } from 'react-router-dom';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/lab/Alert';
@@ -12,19 +11,7 @@ import Loading from '../../componentes/Loading';
 import ImagemApp from "../../assets/imagem-app.svg";
 
 import './index.css';
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    marginRight: theme.spacing(1),
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4),
-    borderRadius: 20,
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-}));
+import useStyles from './styles';
 
 function CadastroConsumidor() {
     const classes = useStyles();
@@ -106,14 +93,13 @@ function CadastroConsumidor() {
             <div className="container-botoes">
               <Button
                 variant="contained"
-                color="primary"
                 onClick={handleSubmit(onSubmit)}
                 className={classes.button}
               >
                 Criar conta
               </Button> 
             </div>
-            <Typography className="cadastrado" >Já tem uma conta? <Link to='/loginconsumidor'>Login</Link></Typography>
+            <Typography className="bottom-text" >Já tem uma conta? <Link to='/loginconsumidor'>Login</Link></Typography>
           </div>
         </div>
       </div>

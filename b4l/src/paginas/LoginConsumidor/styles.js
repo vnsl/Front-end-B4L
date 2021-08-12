@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
-import BgImage from "../../assets/bg-login.png";
+import BgConsumidor from "../../assets/fundo-login-consumidor.svg";
+import Forma from "../../assets/illustration.svg"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -9,18 +10,17 @@ const useStyles = makeStyles((theme) => ({
         gap: '15px'
     },
     card: {
-      background: `url(${BgImage})`,
+      background: `url(${BgConsumidor})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
-      height: '100vh'
+      height: '100vh',
     },
     containerLogin: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       gap: 30,
-      position: 'relative',
       width: 488,
       height: 612,
       backgroundColor: 'white',
