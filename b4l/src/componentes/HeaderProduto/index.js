@@ -7,11 +7,13 @@ import useAuth from '../../hook/useAuth';
 
 import background from '../../assets/bg-pizzaria.png';
 import novo from '../../assets/logo-pizarria.png';
+import { useHistory } from 'react-router-dom';
 
 export default function Header(props) {
     const { deslogar, userPersistido, categoriasPersistidas } = useAuth();
     const [banner, setBanner] = useState('');
     const [logo, setLogo] = useState();
+    const history = useHistory();
 
     function atualizarBanner() {
         const filtro = categoriasPersistidas.filter((categoria) => categoria.id ===  userPersistido.restaurante.categoria_id);
@@ -22,6 +24,12 @@ export default function Header(props) {
     useEffect(() => {
         atualizarBanner();
     }, [userPersistido]);
+
+    function logout() {
+        deslogar();
+        history.push('/');
+    }
+    
 
     return (
         <div className='header'>

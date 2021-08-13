@@ -15,50 +15,63 @@ import LoginConsumidor from "./paginas/LoginConsumidor";
 import CadastroConsumidor from "./paginas/CadastroConsumidor";
 import Restaurantes from "./paginas/Restaurantes";
 
-import { AuthProvider } from './context/AuthContext';
+// import { AuthProvider } from './context/AuthContext';
 import useAuth from './hook/useAuth';
 
 
-function RotasProtegidasProprietario(props) {
-    const { token, userPersistido } = useAuth();
 
-    return (
-        <Route 
-            render={() => (token ? props.children : <Redirect to='/' />)}
-        />
-    );
-}
 
-function RotasProtegidasConsumidor(props) {
-    const { token } = useAuth();
-
-    return (
-        <Route 
-            render={() => (token ? props.children : <Redirect to='/loginconsumidor' />)}
-        />
-    );
-}
-
+    
 function Routes() {
-    return (
-        <AuthProvider>
-            <Router>
-                <Switch>
-                    <Route path="/" exact component={Login}/>
-                    <Route path="/cadastro" component={Cadastro}/>
-                    
-                    <Route path="/loginconsumidor" exact component={LoginConsumidor}/>  
-                    <Route path="/cadastroconsumidor" component={CadastroConsumidor}/>
+    const { token, consumidor } = useAuth();
 
-                    <RotasProtegidasProprietario>
-                        <Route path="/restaurantes" exact component={Restaurantes}/>  
-                        <Route path="/produtos" exact component={Produtos}/>
-                    </RotasProtegidasProprietario>
+    function RotasProtegidasProprietario(props) {
+        // const { token } = useAuth();
+    
+        return (
+            // <Route 
+            //     render={() => (token ? props.children : <Redirect to='/' />)}
+            // />
+            token ? <Route path="/produtos" component={Produtos}/> : <Redirect to='/'/>
+        );
+    }
+    
+    function RotasProtegidasConsumidor(props) {
+        
+        return (
+            // <Route 
+            // render={() => (token ? props.children : <Redirect to='/loginconsumidor' />)}
+            // />
+            consumidor ? props.children : <Redirect to='/loginconsumidor' />
+        );
+        }
+
+    return (
+        <Router>
+            <Switch>
+                <Route path="/" exact component={Login}/>
+                <Route path="/cadastro" component={Cadastro}/>
+                
+                <Route path="/loginconsumidor" exact component={LoginConsumidor}/>  
+                <Route path="/cadastroconsumidor" component={CadastroConsumidor}/>
+
+                {consumidor && <Route path="/restaurantes" component={Restaurantes}/>}
+                {token && <Route path="/produtos" component={Produtos}/>}
+
+                {/* <Switch>
                     <RotasProtegidasConsumidor>
+                        <Route path="/restaurantes" component={Restaurantes}/>  
                     </RotasProtegidasConsumidor>
-                </Switch>
-            </Router>
-        </AuthProvider>
+                </Switch> */}
+                
+                {/* <Switch>
+                    <RotasProtegidasProprietario>
+                        <Route path="/produtos" component={Produtos}/>
+                    </RotasProtegidasProprietario>
+                </Switch> */}
+                
+            </Switch>
+        </Router>
     )
 }
 

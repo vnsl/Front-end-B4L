@@ -8,11 +8,18 @@ import useAuth from '../../hook/useAuth';
 import background from '../../assets/bg-pizzaria.png';
 import novo from '../../assets/logo-pizarria.png';
 import { ReactComponent as Barril } from '../../assets/logo-barril.svg';
+import { useHistory } from 'react-router-dom';
 
 export default function Header(props) {
     const { deslogar, userPersistido } = useAuth();
     const [banner, setBanner] = useState('');
     const [logo, setLogo] = useState();
+    const history = useHistory();
+
+    function logout() {
+        deslogar();
+        history.push('/loginconsumidor')
+    }
 
     return (
         <div className='header'>
@@ -24,7 +31,7 @@ export default function Header(props) {
                     <h1>José</h1>
                     <div>
                         <Barril fill="white"/>
-                        <p onClick={deslogar}>Logout</p>
+                        <p onClick={logout}>Logout</p>
                     </div>
                 </div>
             </div>

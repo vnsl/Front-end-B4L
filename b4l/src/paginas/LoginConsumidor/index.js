@@ -24,7 +24,7 @@ function LoginConsumidor() {
     const [erro, setErro] = useState('');
     const [carregando, setCarregando] = useState(false);
 
-    const { logar } = useAuth();
+    const { logar, setConsumidor } = useAuth();
 
     async function onSubmit(data) {
         setCarregando(true);
@@ -49,6 +49,7 @@ function LoginConsumidor() {
           }          
           
           logar(dados.token, dados.consumidor);
+          setConsumidor(true);
 
           history.push('/restaurantes');
 
