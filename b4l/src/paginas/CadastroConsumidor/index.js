@@ -81,7 +81,7 @@ function CadastroConsumidor() {
           <img src={ImagemApp} alt="" />
         </div>
         <div className="caixa-consumidor">
-          <div className="content">
+          <div className="content-consumidor">
             <div className="title">
               <h1>Cadastro</h1>
             </div>

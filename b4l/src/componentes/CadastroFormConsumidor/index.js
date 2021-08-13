@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { Controller } from 'react-hook-form';
 import InputSenha from '../InputSenha';
 import InputText from '../InputText';
+import InputTelefone from '../InputTelefone';
 
 export default function CadastroFormConsumidor({control}) {
     return (
@@ -21,7 +22,7 @@ export default function CadastroFormConsumidor({control}) {
                 {...field}
                 />}
             />   
-            <InputText name='telefone' label='Telefone' control={control}/> 
+            <InputTelefone name='telefone' control={control} />
             <InputSenha name='senha' label='Senha' control={control}/>
             <InputSenha name='senhaRepetida' label='Repira a senha' control={control}/>              
         </form>
