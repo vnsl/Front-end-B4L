@@ -18,11 +18,29 @@ import Restaurantes from "./paginas/Restaurantes";
 // import { AuthProvider } from './context/AuthContext';
 import useAuth from './hook/useAuth';
 
-function PrivateRoute({ component: Component, ...rest }) {
+function PrivateRoute1({ component: Component, ...rest }) {
     return (
         <Route
             {...rest}
-            render={props => localStorage.getItem('token') ? (
+            render={props => localStorage.getItem('TOKEN') ? (
+                <Component {...props} />
+            ) : (
+                <Redirect
+                    to={{
+                        pathname: '/',
+                        state: { from: props.location }
+                    }}
+                />
+            )
+            }
+        />
+    )
+};
+function PrivateRoute2({ component: Component, ...rest }) {
+    return (
+        <Route
+            {...rest}
+            render={props => localStorage.getItem('TOKEN') ? (
                 <Component {...props} />
             ) : (
                 <Redirect
@@ -39,33 +57,11 @@ function PrivateRoute({ component: Component, ...rest }) {
 
     
 function Routes() {
-    const { token, consumidor } = useAuth();
-
-    function RotasProtegidasProprietario(props) {
-        // const { token } = useAuth();
-    
-        return (
-            // <Route 
-            //     render={() => (token ? props.children : <Redirect to='/' />)}
-            // />
-            token ? <Route path="/produtos" component={Produtos}/> : <Redirect to='/'/>
-        );
-    }
-    
-    function RotasProtegidasConsumidor(props) {
-        
-        return (
-            // <Route 
-            // render={() => (token ? props.children : <Redirect to='/loginconsumidor' />)}
-            // />
-            consumidor ? props.children : <Redirect to='/loginconsumidor' />
-        );
-        }
-
     return (
         <Router>
             <Switch>
                 <Route path="/" exact component={Login}/>
+                <Route path="/login" exact component={Login}/>
                 <Route path="/cadastro" component={Cadastro}/>
                 
                 <Route path="/loginconsumidor" exact component={LoginConsumidor}/>  
@@ -73,8 +69,9 @@ function Routes() {
 
                 {/* {consumidor && <Route path="/restaurantes" component={Restaurantes}/>} */}
                 {/* {token && <Route path="/produtos" component={Produtos}/>} */}
+                <PrivateRoute1 exact path='/produtos' component={Produtos}/>
+                <PrivateRoute2 exact path='/restaurantes' component={Restaurantes}/>
 
-                <PrivateRoute exact path='/restaurantes' component={Restaurantes}/>
 
                 {/* <Switch>
                     <RotasProtegidasConsumidor>

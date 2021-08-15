@@ -38,7 +38,7 @@ export default function Header(props) {
                 <ModalEditarUsuario className='modal' logo={logo} usuario={userPersistido} recarregar={props.recarregar}/>
                 <div className='header-text'>
                     <h1>{userPersistido.restaurante.nome}</h1>
-                    <p onClick={deslogar}>Logout</p>
+                    <p onClick={logout}>Logout</p>
                 </div>
             </div>
         </div>
