@@ -18,8 +18,24 @@ import Restaurantes from "./paginas/Restaurantes";
 // import { AuthProvider } from './context/AuthContext';
 import useAuth from './hook/useAuth';
 
-
-
+function PrivateRoute({ component: Component, ...rest }) {
+    return (
+        <Route
+            {...rest}
+            render={props => localStorage.getItem('token') ? (
+                <Component {...props} />
+            ) : (
+                <Redirect
+                    to={{
+                        pathname: '/loginconsumidor',
+                        state: { from: props.location }
+                    }}
+                />
+            )
+            }
+        />
+    )
+};
 
     
 function Routes() {
@@ -55,8 +71,10 @@ function Routes() {
                 <Route path="/loginconsumidor" exact component={LoginConsumidor}/>  
                 <Route path="/cadastroconsumidor" component={CadastroConsumidor}/>
 
-                {consumidor && <Route path="/restaurantes" component={Restaurantes}/>}
-                {token && <Route path="/produtos" component={Produtos}/>}
+                {/* {consumidor && <Route path="/restaurantes" component={Restaurantes}/>} */}
+                {/* {token && <Route path="/produtos" component={Produtos}/>} */}
+
+                <PrivateRoute exact path='/restaurantes' component={Restaurantes}/>
 
                 {/* <Switch>
                     <RotasProtegidasConsumidor>
