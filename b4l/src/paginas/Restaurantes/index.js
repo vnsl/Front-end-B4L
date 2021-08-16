@@ -52,13 +52,20 @@ function Restaurantes() {
             return history.push('/restaurantes');
           }
         } catch (error) {
-          console.log({error})
           return setErro(error.message);
         }
         
       }
       carregarRestaurantes();
     }, [token, carregar]);
+    
+    const restaurantesFiltrados = restaurantes.filter((restaurante) => {
+      if (busca === '') {
+        return restaurante;
+      } else if (restaurante.nome.toLowerCase().includes(busca.toLowerCase())) {
+        return restaurante;
+      }
+    });
 
     return (
         <div className='content'>
@@ -66,18 +73,13 @@ function Restaurantes() {
             <Header />
                 <div className='container-restaurantes'>
                   <input className='pesquisa' type='text' placeholder='Buscar' onChange={(event) => { setBusca(event.target.value) }}/>
-                  {restaurantes.length === 0 && 
+                  {restaurantesFiltrados.length === 0 && 
                   <div className="standard-text-consumidor">
                     <p>Não há restaurantes cadastrados.</p>
                   </div>}
                   <div className='cards'>
-                    {restaurantes.filter((restaurante) => {
-                      if (busca === '') {
-                        return restaurante;
-                      } else if (restaurante.nome.toLowerCase().includes(busca.toLowerCase())) {
-                        return restaurante;
-                      }
-                    }).map(restaurante => <Card key={restaurante.id} restaurante={restaurante} recarregar={() => setCarregar(true)}/>)}
+                    {restaurantesFiltrados.map(restaurante => <Card key={restaurante.id} restaurante={restaurante} recarregar={() => setCarregar(true)}/>)
+                    }
                   </div>         
                 </div>
         </div>
