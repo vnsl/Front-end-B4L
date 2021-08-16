@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ModalEditarUsuario from '../../componentes/ModalEditarUsuario';
+import ModalUsuario from '../../componentes/ModalEditarUsuarioConsumidor';
 
 import './index.css';
 
@@ -25,10 +25,10 @@ export default function Header(props) {
         <div className='header'>
             <img className='imagem' src={banner ? banner : background} alt=''/>
             <div className='logo'>
-                {/* <ModalEditarUsuario className='modal' logo={logo} usuario={userPersistido} recarregar={props.recarregar}/> */}
+                <ModalUsuario className='modal' logo={logo} usuario={userPersistido} recarregar={props.recarregar}/>
                 <div className='header-text'>
                     {/* <h1>{userPersistido.nome}</h1> */}
-                    <h1>José</h1>
+                    <h1>{userPersistido.nome}</h1>
                     <div>
                         <Barril fill="white"/>
                         <p onClick={logout}>Logout</p>
