@@ -27,7 +27,7 @@
     box-shadow: 0px 4px 16px rgba(50, 50, 50, 0.15);
 }
 
-.content {
+.content-consumidor {
     display: flex;
     flex-direction: column;
     padding: 100px;
