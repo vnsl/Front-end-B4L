@@ -9,6 +9,7 @@ import Alert from '@material-ui/lab/Alert';
 import CadastroFormConsumidor from '../../componentes/CadastroFormConsumidor';
 import Loading from '../../componentes/Loading';
 import ImagemApp from "../../assets/imagem-app.svg";
+import ImagemBarril from "../../assets/logo-consumidor.svg";
 
 import './index.css';
 import useStyles from './styles';
@@ -83,7 +84,10 @@ function CadastroConsumidor() {
     return (
       <div className="main-screen">
         <div className="div-img">
-          <img src={ImagemApp} alt="" />
+          <div className="container-img-barril">
+            <img className="img-barril" src={ImagemBarril} alt="" />
+          </div>
+          <img className="img-app" src={ImagemApp} alt="" />
         </div>
         <div className="caixa-consumidor">
           <div className="content-consumidor">
