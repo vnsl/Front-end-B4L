@@ -76,11 +76,11 @@ function Produtos() {
                       </div>
                       ) :(
                       <div>
+                        <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
                         <div className="standard-text">
                           <p>Você não tem nenhum produto no seu cardápio.</p>
                           <p>Gostaria de adicionar um novo produto.</p>
                         </div>
-                        <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
                       </div>
                       )
                     }
