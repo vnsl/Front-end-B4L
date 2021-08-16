@@ -33,8 +33,13 @@ function CadastroConsumidor() {
         return;
       }
   
-      if (!data.telefone) {
+      if (!data.telefone || data.telefone.includes(' ')) {
         setErro('Telefone é obrigatório');
+        return;
+      }
+
+      if (data.telefone.length <= 13) {
+        setErro('Telefone deve conter o DDD, seguido de 9 dígitos');
         return;
       }
       

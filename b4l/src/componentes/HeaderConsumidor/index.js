@@ -27,7 +27,6 @@ export default function Header(props) {
             <div className='logo'>
                 <ModalUsuario className='modal' logo={logo} usuario={userPersistido} recarregar={props.recarregar}/>
                 <div className='header-text'>
-                    {/* <h1>{userPersistido.nome}</h1> */}
                     <h1>{userPersistido.nome}</h1>
                     <div>
                         <Barril fill="white"/>

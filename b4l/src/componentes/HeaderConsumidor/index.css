@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     height: 100px;
-    gap: 50px
+    gap: 30px
 }
 
 .header-text {
@@ -16,7 +16,7 @@
     position: relative;
     color: white;
     z-index: 3;
-    top: -50%;
+    top: -80%;
     left: 35%;
     display: flex;
     justify-content: space-between;

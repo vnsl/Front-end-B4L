@@ -24,7 +24,7 @@ function TextMaskCustom(props) {
       ref={(ref) => {
         inputRef(ref ? ref.inputElement : null);
       }}
-      mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+      mask={['(', /\d/, /\d/, ')', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
       placeholderChar={'\u2000'}
       showMask
       variant="outlined"
@@ -39,7 +39,7 @@ TextMaskCustom.propTypes = {
 export default function InputTelefone(props) {
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    textmask: '(0  )    -    ',
+    textmask: '(  )    -    ',
   });
 
   const handleChange = (event) => {
