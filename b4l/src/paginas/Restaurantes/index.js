@@ -66,6 +66,10 @@ function Restaurantes() {
             <Header />
                 <div className='container-restaurantes'>
                   <input className='pesquisa' type='text' placeholder='Buscar' onChange={(event) => { setBusca(event.target.value) }}/>
+                  {restaurantes.length === 0 && 
+                  <div className="standard-text-consumidor">
+                    <p>Não há restaurantes cadastrados.</p>
+                  </div>}
                   <div className='cards'>
                     {restaurantes.filter((restaurante) => {
                       if (busca === '') {
