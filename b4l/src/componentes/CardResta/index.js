@@ -14,15 +14,20 @@ import AlertDialog from '../../componentes/ModalConfirmarExclusao';
 import useStyles from './styles';
 import './index.css';
 
-export default function CustomCard(restaurante) {
+export default function CustomCard({ restaurante, setOpen }) {
   const classes = useStyles();
-  const { id, nome, descricao, imagem, categoria_id} = restaurante.restaurante;
+  const { id, nome, descricao, imagem, categoria_id} = restaurante;
   const [carregando, setCarregando] = useState(false);
+
+  const handleOpen = () => {
+      setOpen(true);
+    };
+
 
   const imagemCard = imagem ? imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
   
   return (
-    <Card key={id} className={`${classes.root} ${'cabelo'}`}>
+    <Card key={id} className={`${classes.root} ${'cabelo'}`} onClick={handleOpen} >
       {carregando && <Loading/>}
       <CardActionArea className={`${classes.cardActionArea}`}>
         <CardContent className={classes.cardContent}>

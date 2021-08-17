@@ -1,0 +1,72 @@
+.card-detalhe-pedido {
+    display: flex;
+    flex-direction: column;
+    width: 625px;
+    height: 820px;
+    background-color: white;
+    border-radius: 16px;
+    margin: 40px auto 0 auto;
+}
+
+.header-card img {
+    width: 625px;
+    height: 337px;
+}
+
+.imagem-produto {
+    position: absolute;
+    background-color: gray;
+    height: 119px;
+    width: 119px;
+    border-radius: 50%;
+    top: 315px;
+    left: 760px;
+}
+
+.text-content {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    gap: 35px;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detalhes {
+    display: flex;
+    justify-content: space-between;
+}
+
+.preco-total {
+    display: flex;
+    align-items: center;
+    padding: 8px 35px;
+    background: linear-gradient(0deg, rgba(13, 138, 79, 0.1), rgba(13, 138, 79, 0.1)), #FFFFFF;
+    border-radius: 4px;
+}
+
+.botoes {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
+}
+
+.quantidade {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    gap: 30px;
+    font-weight: bold;
+}
+
+.bottom-link {
+    text-align: center;
+    font-size: 13px !important;
+}
+
+span {
+    font-weight: bold;
+}

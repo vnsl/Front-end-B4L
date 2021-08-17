@@ -7,6 +7,7 @@ import Loading from '../../componentes/Loading';
 import './index.css';
 
 import Header from '../../componentes/HeaderConsumidor';
+// import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
 
 function Restaurantes() {
     const { token } = useAuth();
@@ -15,8 +16,9 @@ function Restaurantes() {
     const [busca, setBusca] = useState('');
     const [carregando, setCarregando] = useState(false);
     const [carregar, setCarregar] = useState(false);
+    // const [open, setOpen] = useState(false);
     const history = useHistory();
-
+    
     useEffect(() => {
       setCarregar(false);
       async function carregarRestaurantes() {
@@ -42,10 +44,6 @@ function Restaurantes() {
             return setErro(dados);
           };
 
-          // if (erro) {
-          //   return setErro(dados);
-          // }
-          
           setRestaurantes(dados);
 
           if(dados.length === 0) {
@@ -71,17 +69,17 @@ function Restaurantes() {
         <div className='content'>
             {carregando && <Loading/>}
             <Header />
-                <div className='container-restaurantes'>
-                  <input className='pesquisa' type='text' placeholder='Buscar' onChange={(event) => { setBusca(event.target.value) }}/>
-                  {restaurantesFiltrados.length === 0 && 
-                  <div className="standard-text-consumidor">
-                    <p>Não há restaurantes cadastrados.</p>
-                  </div>}
-                  <div className='cards'>
-                    {restaurantesFiltrados.map(restaurante => <Card key={restaurante.id} restaurante={restaurante} recarregar={() => setCarregar(true)}/>)
-                    }
-                  </div>         
-                </div>
+            <div className='container-restaurantes'>
+              <input className='pesquisa' type='text' placeholder='Buscar' onChange={(event) => { setBusca(event.target.value) }}/>
+              {restaurantesFiltrados.length === 0 && 
+              <div className="standard-text-consumidor">
+                <p>Não há restaurantes cadastrados.</p>
+              </div>}
+              <div className='cards'>
+                {restaurantesFiltrados.map(restaurante => <Card key={restaurante.id} setOpen={setOpen} restaurante={restaurante} recarregar={() => setCarregar(true)}/>)}
+              </div>
+              {/* <ModalDetalhePedido open={open} setOpen={setOpen} />          */}
+            </div>    
         </div>
     )
 }
