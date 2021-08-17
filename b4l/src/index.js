@@ -3,9 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Routes from './routes';
 
+import { AuthProvider } from './context/AuthContext';
+
 ReactDOM.render(
   <React.StrictMode>
-    <Routes />
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

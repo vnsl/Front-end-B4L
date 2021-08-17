@@ -1,0 +1,25 @@
+
+.cabelo {
+    position:relative;
+}
+.adc-blur {
+    transition: all 250ms ease;
+    display: flex !important;
+}
+.cabelo:hover .adc-blur {
+    filter: blur(4px)
+}
+.eita {
+    position: absolute;
+    width: 100%;
+    height:100%;
+    display: none;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    transition: all 250ms ease;
+    z-index: 200;
+}
+.cabelo:hover .eita {
+    display: flex;
+}

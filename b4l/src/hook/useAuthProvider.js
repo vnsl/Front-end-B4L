@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useLocalStorage } from 'react-use';
 
-
 export default function useAuthProvider() {
     const [tokenPersistido, setTokenPersistido, removeTokenPersistido] = useLocalStorage('TOKEN', null);
     const [userPersistido, setUserPersistido, removeUserPersistido] = useLocalStorage('USER', '');
@@ -9,6 +8,7 @@ export default function useAuthProvider() {
 
     const [token, setToken] = useState(tokenPersistido);
     const [categorias, setCategorias] = useState([]);
+    const [consumidor, setConsumidor] = useState(false);
 
     const logar = (token, user, categorias) => {
         setToken(token);
@@ -21,6 +21,7 @@ export default function useAuthProvider() {
         removeTokenPersistido();
         removeUserPersistido();
         removeCategoriasPersistidas();
+        setConsumidor(false);
         setToken(null);
     }
 
@@ -32,6 +33,8 @@ export default function useAuthProvider() {
         setUserPersistido,
         setCategorias,
         categoriasPersistidas,
-        categorias
+        categorias,
+        consumidor, 
+        setConsumidor
     };
 };
