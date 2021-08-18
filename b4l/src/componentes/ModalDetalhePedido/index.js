@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import Loading from '../Loading';
 import useStyles from './styles';
+import { ReactComponent as ImagemCarrinho } from '../../assets/carrinho.svg';
 
 import useAuth from '../../hook/useAuth';
 import { useHistory, Link } from 'react-router-dom';
@@ -15,16 +16,22 @@ import './index.css';
 export default function ModalDetalhePedido(props) {
   const classes = useStyles();
   const history = useHistory();
+  
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
-  const [ qtdProduto, setQtdProduto ] = useState(1);
-  const [carrinho, setCarrinho] = useState('');
+ 
   const { token } = useAuth();
 
   const recarregar = props.recarregar;
   
   const { id, nome, preco, descricao, ativo, permite_observacoes, imagem } = props.produtoInfo ?? '';
- 
+  
+  // *** tem que pegar um pedido_id persistido
+
+  const [ qtdProduto, setQtdProduto ] = useState(1);
+  const [ valorTotalProduto, setValorTotalProduto ] = useState(preco);
+  const [carrinho, setCarrinho] = useState([]);
+  
 
   const handleClose = () => {
     props.setOpen(false);
@@ -34,21 +41,23 @@ export default function ModalDetalhePedido(props) {
     const novaQtd = qtdProduto + valor;
     
     if(novaQtd < 1) return;
-
+    
     setQtdProduto(novaQtd);
+    setValorTotalProduto(qtdProduto*preco);
   }
 
   function adicionarProdutoAoCarrinho() {
-    /* const detalhePedido = {
-      // pedido_id: pedido_id, *** tem que pegar um pedido_id persistido
+    const detalhePedido = {
+      // pedido_id: pedido_id, 
       produto_id: id,
       quantidade_produto: qtdProduto,
-      valor_total_produto: valor_total_produto
-    } */
+      // valor_total_produto: valor_total_produto
+    }
 
     setCarregando(true);
     setErro('');
     // setCarrinho(detalhePedido);
+    props.setCarrinhoVisivel(true);
   }
 
   return (
@@ -66,7 +75,7 @@ export default function ModalDetalhePedido(props) {
           <div className="imagem-produto">
             
           </div>
-          <div className="text-content">
+          {!props.carrinhoVisivel && <div className="text-content">
             <Typography variant="h4" color="textSecondary" component="p">
               {/* {nome} */}
               Nome do produto
@@ -92,7 +101,7 @@ export default function ModalDetalhePedido(props) {
               </Typography>
               <div className="preco-total">
               <Typography variant="h5" color="textSecondary" component="p" style={{ maxWidth: '270px' }}>
-                {/* {preco} */}
+                {/* {valorTotalProduto} */}
                 R$ 99.99
               </Typography>
               </div>
@@ -124,8 +133,16 @@ export default function ModalDetalhePedido(props) {
                   Adicionar ao Carrinho
               </Button>
             </div>
-            <Typography className="bottom-link" ><Link to='/revisaopedido'>Ir para a revisão do pedido</Link></Typography>
-          </div>           
+          </div>}   
+          {props.carrinhoVisivel && <div className="img-carrinho">
+            <ImagemCarrinho />
+            <Typography variant="body2" color="textSecondary" component="p">
+                <span>
+                  Produto adicionado ao pedido!
+                </span>
+              </Typography>
+          </div>}
+          <Typography className="bottom-link" ><Link to='/revisaopedido'>Ir para a revisão do pedido</Link></Typography>
         </div>
       </Modal>
     </div>

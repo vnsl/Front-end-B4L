@@ -14,6 +14,7 @@ import Produtos from "./paginas/Produtos";
 import LoginConsumidor from "./paginas/LoginConsumidor";
 import CadastroConsumidor from "./paginas/CadastroConsumidor";
 import Restaurantes from "./paginas/Restaurantes";
+import RestaurantesCopia from "./paginas/RestaurantesCopia";
 
 // import { AuthProvider } from './context/AuthContext';
 import useAuth from './hook/useAuth';
@@ -70,7 +71,8 @@ function Routes() {
                 {/* {consumidor && <Route path="/restaurantes" component={Restaurantes}/>} */}
                 {/* {token && <Route path="/produtos" component={Produtos}/>} */}
                 <PrivateRoute1 exact path='/produtos' component={Produtos}/>
-                <PrivateRoute2 exact path='/restaurantes' component={Restaurantes}/>
+                {/* <PrivateRoute2 exact path='/restaurantes' component={Restaurantes}/> */}
+                <PrivateRoute2 exact path='/restaurantes' component={RestaurantesCopia}/>
 
 
                 {/* <Switch>

@@ -62,6 +62,14 @@
     font-weight: bold;
 }
 
+.img-carrinho {
+    display: flex;
+    height: 50%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .bottom-link {
     text-align: center;
     font-size: 13px !important;

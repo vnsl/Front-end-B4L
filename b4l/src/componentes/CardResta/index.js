@@ -14,13 +14,14 @@ import AlertDialog from '../../componentes/ModalConfirmarExclusao';
 import useStyles from './styles';
 import './index.css';
 
-export default function CustomCard({ restaurante, setOpen }) {
+export default function CustomCard({ restaurante, setOpen, setCarrinhoVisivel }) {
   const classes = useStyles();
   const { id, nome, descricao, imagem, categoria_id} = restaurante;
   const [carregando, setCarregando] = useState(false);
-
+  
   const handleOpen = () => {
       setOpen(true);
+      setCarrinhoVisivel(false);
     };
 
 

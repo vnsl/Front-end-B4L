@@ -7,14 +7,17 @@ import Loading from '../../componentes/Loading';
 import './index.css';
 
 import Header from '../../componentes/HeaderConsumidor';
+import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
 
-function Restaurantes() {
+function RestaurantesCopia() {
     const { token } = useAuth();
     const [erro, setErro] = useState('');
     const [restaurantes, setRestaurantes] = useState([]);
     const [busca, setBusca] = useState('');
     const [carregando, setCarregando] = useState(false);
     const [carregar, setCarregar] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
     const history = useHistory();
     
     useEffect(() => {
@@ -74,11 +77,12 @@ function Restaurantes() {
                 <p>Não há restaurantes cadastrados.</p>
               </div>}
               <div className='cards'>
-                {restaurantesFiltrados.map(restaurante => <Card key={restaurante.id} restaurante={restaurante} recarregar={() => setCarregar(true)}/>)}
+                {restaurantesFiltrados.map(restaurante => <Card key={restaurante.id} setOpen={setOpen} setCarrinhoVisivel={setCarrinhoVisivel} restaurante={restaurante} recarregar={() => setCarregar(true)}/>)}
               </div>
+              <ModalDetalhePedido open={open} setOpen={setOpen} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} />         
             </div>    
         </div>
     )
 }
 
-export default Restaurantes;
+export default RestaurantesCopia;
