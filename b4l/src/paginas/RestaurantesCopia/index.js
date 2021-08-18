@@ -8,6 +8,7 @@ import './index.css';
 
 import Header from '../../componentes/HeaderConsumidor';
 import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
+import ModalResumoPedido from '../../componentes/ModalResumoPedido';
 
 function RestaurantesCopia() {
     const { token } = useAuth();
@@ -17,8 +18,19 @@ function RestaurantesCopia() {
     const [carregando, setCarregando] = useState(false);
     const [carregar, setCarregar] = useState(false);
     const [open, setOpen] = useState(false);
+    const [openModalResumo, setOpenModalResumo] = useState(false);
+
     const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
     const history = useHistory();
+
+    const handleOpenModalResumo = () => {
+      handleClose();
+      setOpenModalResumo(true);
+    }
+
+    const handleClose = () => {
+      setOpen(false);
+    };
     
     useEffect(() => {
       setCarregar(false);
@@ -79,7 +91,8 @@ function RestaurantesCopia() {
               <div className='cards'>
                 {restaurantesFiltrados.map(restaurante => <Card key={restaurante.id} setOpen={setOpen} setCarrinhoVisivel={setCarrinhoVisivel} restaurante={restaurante} recarregar={() => setCarregar(true)}/>)}
               </div>
-              <ModalDetalhePedido open={open} setOpen={setOpen} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} />         
+              <ModalDetalhePedido open={open} setOpen={setOpen} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} handleOpenModalResumo={handleOpenModalResumo} handleClose={handleClose} />         
+              <ModalResumoPedido openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} />         
             </div>    
         </div>
     )
