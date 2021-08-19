@@ -5,6 +5,7 @@ import Alert from '@material-ui/lab/Alert';
 import Loading from '../Loading';
 import useStyles from './styles';
 import { ReactComponent as ImagemCarrinho } from '../../assets/carrinho.svg';
+import { ReactComponent as BotaoFecharModal } from '../../assets/botao-close-modal.svg';
 
 import useAuth from '../../hook/useAuth';
 import { useHistory, Link } from 'react-router-dom';
@@ -28,11 +29,11 @@ export default function ModalResumoPedido(props) {
   
   const [ endereco, setEndereco ] = useState('');
 
-  // tem que pegar um pedido_id persistido
   // tem que pegar o endereço persistido
   
   const handleCloseModalResumo = () => {
     props.setOpenModalResumo(false);
+    props.setOpenModalDetalhe(false);
   };
   
   return (
@@ -44,6 +45,7 @@ export default function ModalResumoPedido(props) {
         aria-describedby="custom-modal-description"
       >
         <div className="card-resumo-pedido">
+        <BotaoFecharModal style={{ cursor: "pointer"}} onClick={handleCloseModalResumo} />
           <div className="nome-restaurante">
             <ImagemCarrinho style={{ width: '48px'}} />
             <Typography variant="h4" color="textSecondary" component="p">

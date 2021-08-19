@@ -12,6 +12,7 @@
 .header-card img {
     width: 625px;
     height: 337px;
+    border-radius: 16px 16px 0 0;
 }
 
 .imagem-produto {
@@ -21,7 +22,7 @@
     width: 119px;
     border-radius: 50%;
     top: 315px;
-    left: 760px;
+    left: 960px;
 }
 
 .text-content {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -6,20 +6,22 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
+import { useHistory } from 'react-router-dom';
 
 import useStyles from './styles';
 
-export default function CustomCard({ produto, setOpen, setCarrinhoVisivel }) {
+export default function CustomCard({ produto, restaurante, handleOpenModalResumo, openModalDetalhe, setOpenModalDetalhe, handleClose}) {
   const classes = useStyles();
   const { id, nome, descricao, preco, imagem } = produto;
-
-  const handleOpen = () => {
-    setOpen(true);
-    setCarrinhoVisivel(false);
-  };
+  const history = useHistory();
 
   const imagemCard = imagem ? imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
   
+  const handleOpen = () => {
+    setOpenModalDetalhe(true);
+  };
+
   return (
     <Card key={id} className={`${classes.root}`} onClick={handleOpen} >
       <CardActionArea className={`${classes.cardActionArea}`}>
@@ -42,6 +44,7 @@ export default function CustomCard({ produto, setOpen, setCarrinhoVisivel }) {
           title={nome}
         />
       </CardActionArea>
+      <ModalDetalhePedido restaurante={restaurante} produto={produto} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleOpenModalResumo={handleOpenModalResumo} handleClose={handleClose} />
     </Card>
   );
 }

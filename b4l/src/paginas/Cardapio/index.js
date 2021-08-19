@@ -9,7 +9,7 @@ import Loading from '../../componentes/Loading';
 import './index.css';
 
 import Header from '../../componentes/HeaderCardapio';
-import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
+import ModalResumoPedido from '../../componentes/ModalResumoPedido';
 
 function Produtos() {
     const { token } = useAuth();
@@ -17,10 +17,23 @@ function Produtos() {
     const [informacao, setInformacao] = useState({});
     const [cardapio, setCardapio] = useState([]);
     const [carregando, setCarregando] = useState(false);
-    const [open, setOpen] = useState(false);
     const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
+    const [openModalDetalhe, setOpenModalDetalhe] = useState(false);
+    const [openModalResumo, setOpenModalResumo] = useState(false);
     const history = useHistory();
     const location = useLocation();
+
+    const handleOpenModalResumo = () => {
+      handleClose();
+      setOpenModalResumo(true);
+    }
+
+    const handleClose = () => {
+      setOpenModalDetalhe(false);
+      history.push(`/cardapio/${informacao.id}`);
+    }
+ 
+    console.log(openModalDetalhe);
 
     useEffect(() => {
       async function carregarRestaurante() {
@@ -38,7 +51,6 @@ function Produtos() {
         });
         
           const dados = await resposta.json();
-          // console.log(dados);
           setCarregando(false);
           
           if (!resposta.ok) {
@@ -73,7 +85,7 @@ function Produtos() {
                       <div>
                                             
                         <div className='cards'>
-                          {cardapio.map(produto => <CardMarket key={produto.id} setOpen={setOpen} setCarrinhoVisivel={setCarrinhoVisivel} produto={produto} />)}
+                          {cardapio.map(produto => <CardMarket key={produto.id} setCarrinhoVisivel={setCarrinhoVisivel} handleOpenModalResumo={handleOpenModalResumo} produto={produto} restaurante={informacao} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleClose={handleClose} />)}
                         </div>
                       </div>
                       ) :(
@@ -81,15 +93,13 @@ function Produtos() {
                         
                         <div className="standard-text">
                           <p>Você não tem nenhum produto no seu cardápio.</p>
-                          <p>Gostaria de adicionar um novo produto.</p>
                           <h1>Não existem produtos ativos!</h1>
                         </div>
                       </div>
                       )
                     }
                 </div>
-                <ModalDetalhePedido open={open} setOpen={setOpen} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} />     
-        
+                <ModalResumoPedido restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} setOpenModalDetalhe={setOpenModalDetalhe} />
         </div>
     )
     
