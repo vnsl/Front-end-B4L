@@ -5,6 +5,7 @@ import CardMarket from '../../componentes/CardShow';
 import useAuth from '../../hook/useAuth';
 import { useHistory, useLocation } from 'react-router-dom';
 import Loading from '../../componentes/Loading';
+import { ReactComponent as NoProducts } from '../../assets/resta-noitems.svg';
 
 import './index.css';
 
@@ -81,23 +82,32 @@ function Produtos() {
             
             <Header restaurante={informacao} />
                 <div className='container-produtos'>
-                    {cardapio.length > 0?(
-                      <div>
-                                            
-                        <div className='cards'>
-                          {cardapio.map(produto => <CardMarket key={produto.id} setCarrinhoVisivel={setCarrinhoVisivel} handleOpenModalResumo={handleOpenModalResumo} produto={produto} restaurante={informacao} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleClose={handleClose} />)}
-                        </div>
+                  <button 
+                    className='botao-retorno' 
+                    onClick={() => {
+                      history.push('/restaurantes');
+                    }}
+                  >
+                    Restaurantes
+                  </button>
+                  <div className='informacoes'>
+                    <p>Pedido Mínimo: R$ {informacao.valor_minimo_pedido},00</p>
+                    <p>Tempo de Entrega: {informacao.tempo_entrega_minutos} min</p>
+                    <p> Descrição: {informacao.descricao}</p>
+                  </div>
+                  {cardapio.length > 0?(
+                    <div>               
+                      <div className='cards'>
+                        {cardapio.map(produto => <CardMarket key={produto.id} produto={produto} setCarrinhoVisivel={setCarrinhoVisivel} handleOpenModalResumo={handleOpenModalResumo} restaurante={informacao} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleClose={handleClose} />)}
                       </div>
-                      ) :(
-                      <div>
-                        
-                        <div className="standard-text">
-                          <p>Você não tem nenhum produto no seu cardápio.</p>
-                          <h1>Não existem produtos ativos!</h1>
-                        </div>
+                    </div>
+                    ) :(
+                      <div className="sem-produtos">
+                        <NoProducts/>
+                        <h1>Desculpe, estamos sem produtos ativos</h1>
                       </div>
-                      )
-                    }
+                    )
+                  }
                 </div>
                 <ModalResumoPedido restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} setOpenModalDetalhe={setOpenModalDetalhe} />
         </div>
