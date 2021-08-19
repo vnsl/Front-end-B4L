@@ -31,11 +31,8 @@ export default function ModalDetalhePedido(props) {
   const [ qtdProduto, setQtdProduto ] = useState(1);
   const [ valorTotalProduto, setValorTotalProduto ] = useState(preco);
   const [carrinho, setCarrinho] = useState([]);
-  
 
-  const handleClose = () => {
-    props.setOpen(false);
-  };
+  
 
   function handleQuantidade(valor) {
     const novaQtd = qtdProduto + valor;
@@ -64,7 +61,7 @@ export default function ModalDetalhePedido(props) {
     <div>
       <Modal
         open={props.open}
-        onClose={handleClose}
+        onClose={props.handleClose}
         aria-labelledby="custom-modal-title"
         aria-describedby="custom-modal-description"
       >
@@ -142,7 +139,7 @@ export default function ModalDetalhePedido(props) {
                 </span>
               </Typography>
           </div>}
-          <Typography className="bottom-link" ><Link to='/revisaopedido'>Ir para a revisão do pedido</Link></Typography>
+          <Typography className="bottom-link" onClick={props.handleOpenModalResumo} >Ir para a revisão do pedido</Typography>
         </div>
       </Modal>
     </div>
