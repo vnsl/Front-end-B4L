@@ -9,6 +9,7 @@ import Loading from '../../componentes/Loading';
 import './index.css';
 
 import Header from '../../componentes/HeaderCardapio';
+import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
 
 function Produtos() {
     const { token } = useAuth();
@@ -16,6 +17,8 @@ function Produtos() {
     const [informacao, setInformacao] = useState({});
     const [cardapio, setCardapio] = useState([]);
     const [carregando, setCarregando] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
     const history = useHistory();
     const location = useLocation();
 
@@ -70,7 +73,7 @@ function Produtos() {
                       <div>
                                             
                         <div className='cards'>
-                          {cardapio.map(produto => <CardMarket key={produto.id} produto={produto} />)}
+                          {cardapio.map(produto => <CardMarket key={produto.id} setOpen={setOpen} setCarrinhoVisivel={setCarrinhoVisivel} produto={produto} />)}
                         </div>
                       </div>
                       ) :(
@@ -85,6 +88,7 @@ function Produtos() {
                       )
                     }
                 </div>
+                <ModalDetalhePedido open={open} setOpen={setOpen} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} />     
         
         </div>
     )

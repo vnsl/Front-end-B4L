@@ -17,7 +17,7 @@ export default function Header(props) {
 
     let imagemBanner = [];
 
-    async function listarCategorias() {
+    /* async function listarCategorias() {
         const resposta = await fetch('http://localhost:3000/categorias', {
             method: 'GET',
             headers: {
@@ -34,7 +34,7 @@ export default function Header(props) {
 
     useEffect(() => {
         listarCategorias();
-    }, []);
+    }, []); */
 
     
     function logout() {
@@ -42,7 +42,7 @@ export default function Header(props) {
         history.push('/');
     }
 
-    console.log(allCategorias);
+    console.log(props.restaurante);
     // const imgBanner = banner ? banner : background
     const logo = props.restaurante.imagem ? props.restaurante.imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg'
     

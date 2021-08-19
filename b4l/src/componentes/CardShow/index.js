@@ -9,14 +9,19 @@ import Typography from '@material-ui/core/Typography';
 
 import useStyles from './styles';
 
-export default function CustomCard(produto) {
+export default function CustomCard({ produto, setOpen, setCarrinhoVisivel }) {
   const classes = useStyles();
-  const { id, nome, descricao, preco, imagem } = produto.produto;
+  const { id, nome, descricao, preco, imagem } = produto;
+
+  const handleOpen = () => {
+    setOpen(true);
+    setCarrinhoVisivel(false);
+  };
 
   const imagemCard = imagem ? imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
   
   return (
-    <Card key={id} className={`${classes.root}`}>
+    <Card key={id} className={`${classes.root}`} onClick={handleOpen} >
       <CardActionArea className={`${classes.cardActionArea}`}>
         <CardContent className={classes.cardContent}>
           <Typography variant="h5" component="h2" >
