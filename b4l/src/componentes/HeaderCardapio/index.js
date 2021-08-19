@@ -11,30 +11,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function Header(props) {
     const { deslogar } = useAuth();
-    const [banner, setBanner] = useState('');
     const history = useHistory();
-    const [allCategorias, setAllCategorias] = useState([]);
-
-    let imagemBanner = [];
-
-    async function listarCategorias() {
-        const resposta = await fetch('http://localhost:3000/categorias', {
-            method: 'GET',
-            headers: {
-            'Content-type': 'application/json',
-            }
-        });
-
-        const categorias = await resposta.json();
-        console.log(categorias);
-        setAllCategorias(categorias);
-        const filtro = categorias.filter((categoria) => categoria.id === props.restaurante.categoria_id);
-        imagemBanner = filtro[0].img_categoria;
-        };    
-
-    useEffect(() => {
-        listarCategorias();
-    }, []);
 
     
     function logout() {
@@ -42,13 +19,12 @@ export default function Header(props) {
         history.push('/');
     }
 
-    console.log(allCategorias);
-    // const imgBanner = banner ? banner : background
-    const logo = props.restaurante.imagem ? props.restaurante.imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg'
+    const banner = props.restaurante.img_categoria ? props.restaurante.img_categoria : background;
+    const logo = props.restaurante.imagem ? props.restaurante.imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
     
     return (
         <div className='header'>
-            <img className='imagem' src={background} alt=''/>
+            <img className='imagem' src={banner} alt=''/>
             <div className='logo'>
                 <img 
                     className='logo' 
