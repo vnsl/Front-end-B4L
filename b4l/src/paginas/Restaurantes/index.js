@@ -54,7 +54,7 @@ function Restaurantes() {
       }
       carregarRestaurantes();
     }, [token, carregar]);
-    
+
     const restaurantesFiltrados = restaurantes.filter((restaurante) => {
       if (busca === '') {
         return restaurante;
@@ -67,16 +67,18 @@ function Restaurantes() {
         <div className='content'>
             {carregando && <Loading/>}
             <Header />
-            <div className='container-restaurantes'>
-              <input className='pesquisa' type='text' placeholder='Buscar' onChange={(event) => { setBusca(event.target.value) }}/>
-              {restaurantesFiltrados.length === 0 && 
-              <div className="standard-text-consumidor">
-                <p>Não há restaurantes cadastrados.</p>
-              </div>}
-              <div className='cards'>
-                {restaurantesFiltrados.map(restaurante => <Card key={restaurante.id} restaurante={restaurante} recarregar={() => setCarregar(true)}/>)}
-              </div>
-            </div>    
+                <div className='container-restaurantes'>
+                  <input className='pesquisa' type='text' placeholder='Buscar' onChange={(event) => { setBusca(event.target.value) }}/>
+                  {restaurantesFiltrados.length === 0 && 
+                  <div className="standard-text-consumidor">
+                    <p>Não há restaurantes cadastrados.</p>
+                  </div>}
+                  <div className='cards'>
+                    {restaurantesFiltrados.map(restaurante => 
+                      <Card key={restaurante.id} restaurante={restaurante} recarregar={() => setCarregar(true)}/>
+                    )}
+                  </div>         
+                </div>
         </div>
     )
 }

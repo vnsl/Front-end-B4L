@@ -1,0 +1,21 @@
+.dados-restaurante {
+    margin-top: 20px !important;
+}
+
+.logo {
+    background-color: white;
+    position: absolute;
+    height: 250px;
+}
+
+.logo img {
+    z-index: 2;
+    top: -60%;
+    left: 10%;
+    width: 176px;
+    height: 176px;
+    box-sizing: border-box;
+    border: 6px solid #FFFFFF;
+    border-radius: 50%;
+    cursor: pointer;
+}

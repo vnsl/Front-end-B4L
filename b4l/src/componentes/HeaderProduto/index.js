@@ -19,7 +19,6 @@ export default function Header(props) {
         const filtro = categoriasPersistidas.filter((categoria) => categoria.id ===  userPersistido.restaurante.categoria_id);
         setBanner(filtro[0].img_categoria);
         setLogo(userPersistido.restaurante.imagem);
-
     }
     useEffect(() => {
         atualizarBanner();
