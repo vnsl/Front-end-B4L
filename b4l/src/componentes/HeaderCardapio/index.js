@@ -16,7 +16,7 @@ export default function Header(props) {
     
     function logout() {
         deslogar();
-        history.push('/');
+        history.push('/loginconsumidor');
     }
 
     const banner = props.restaurante.img_categoria ? props.restaurante.img_categoria : background;
