@@ -1,4 +1,6 @@
 .card-detalhe-pedido {
+    position: relative;
+    z-index: -1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,7 +8,7 @@
     height: 820px;
     background-color: white;
     border-radius: 16px;
-    margin: 40px auto 0 auto;
+    margin: 40px 500px;
 }
 
 .header-card img {
@@ -15,14 +17,21 @@
     border-radius: 16px 16px 0 0;
 }
 
-.imagem-produto {
+.botao-fechar {
     position: absolute;
-    background-color: gray;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.imagem-restaurante img {
+    position: absolute;
+    /* background-color: gray; */
     height: 119px;
     width: 119px;
     border-radius: 50%;
-    top: 315px;
-    left: 960px;
+    top: 280px;
+    left: 460px;
 }
 
 .text-content {

@@ -10,7 +10,12 @@ import { ReactComponent as NoProducts } from '../../assets/resta-noitems.svg';
 import './index.css';
 
 import Header from '../../componentes/HeaderCardapio';
+import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
 import ModalResumoPedido from '../../componentes/ModalResumoPedido';
+
+function persistirCarrinho(carrinho) {
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+}
 
 function Produtos() {
     const { token } = useAuth();
@@ -18,23 +23,66 @@ function Produtos() {
     const [informacao, setInformacao] = useState({});
     const [cardapio, setCardapio] = useState([]);
     const [carregando, setCarregando] = useState(false);
-    const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
     const [openModalDetalhe, setOpenModalDetalhe] = useState(false);
     const [openModalResumo, setOpenModalResumo] = useState(false);
+    const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
+    
+    const carrinhoPersistido = localStorage.getItem("carrinho") ? JSON.parse(localStorage.getItem("carrinho")) : [];
+    
+    const [carrinho, setCarrinho] = useState(carrinhoPersistido);
+    const [custoTotalCarrinho, setCustoTotalCarrinho] = useState(0);
+    
+    const [dadosProduto, setDadosProduto] = useState({});
     const history = useHistory();
     const location = useLocation();
 
+
     const handleOpenModalResumo = () => {
-      handleClose();
+      setOpenModalDetalhe(false);
       setOpenModalResumo(true);
     }
+    
+    useEffect(() => {
+      persistirCarrinho(carrinho);
+    }, [carrinho]);
 
-    const handleClose = () => {
-      setOpenModalDetalhe(false);
-      history.push(`/cardapio/${informacao.id}`);
+    function adicionarProdutoAoCarrinho(produtoAtualizado) {
+
+      const novosProdutos = [...carrinho]
+      const produtoNoCarrinho = novosProdutos.find(
+        ({ produto_id }) => produto_id === produtoAtualizado.id,
+      );
+
+      if (produtoNoCarrinho) {
+        produtoNoCarrinho.quantidade_produto = produtoAtualizado.quantidade;
+        produtoNoCarrinho.custo_total_produto = produtoAtualizado.valor_total;
+        setCarrinho(novosProdutos);
+        
+        const novoCustoTotalCarrinho = novosProdutos.reduce(
+          (acc, valorAtual) => acc + Number(valorAtual.custo_total_produto), 0);       
+        
+        setCustoTotalCarrinho(novoCustoTotalCarrinho);
+        setErro('');
+        setCarrinhoVisivel(true);
+        return;
+      }
+
+      novosProdutos.push({
+        produto_id: produtoAtualizado.id,
+        nome: produtoAtualizado.nome,
+        imagem: produtoAtualizado.imagem,
+        quantidade_produto: produtoAtualizado.quantidade,
+        custo_total_produto: produtoAtualizado.valor_total 
+      });
+      setCarrinho(novosProdutos);
+      const novoCustoTotalCarrinho = novosProdutos.reduce(
+        (acc, valorAtual) => acc + valorAtual.custo_total_produto, 0); 
+
+      setCustoTotalCarrinho(novoCustoTotalCarrinho); 
+      
+      setErro('');
+      setCarrinhoVisivel(true);
     }
- 
-    console.log(openModalDetalhe);
 
     useEffect(() => {
       async function carregarRestaurante() {
@@ -66,7 +114,7 @@ function Produtos() {
           setCardapio(dados.cardapio);
   
           if(dados.length === 0) {
-            return history.push('/resturantes');
+            return history.push('/restaurantes');
           }
         } catch (error) {
           return setErro(error.message);
@@ -98,7 +146,7 @@ function Produtos() {
                   {cardapio.length > 0?(
                     <div>               
                       <div className='cards'>
-                        {cardapio.map(produto => <CardMarket key={produto.id} produto={produto} setCarrinhoVisivel={setCarrinhoVisivel} handleOpenModalResumo={handleOpenModalResumo} restaurante={informacao} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleClose={handleClose} />)}
+                        {cardapio.map(produto => <CardMarket key={produto.id} produto={produto} handleOpenModalResumo={handleOpenModalResumo} restaurante={informacao} setOpenModalDetalhe={setOpenModalDetalhe} setDadosProduto={setDadosProduto} setCarrinhoVisivel={setCarrinhoVisivel} />)}
                       </div>
                     </div>
                     ) :(
@@ -109,7 +157,8 @@ function Produtos() {
                     )
                   }
                 </div>
-                <ModalResumoPedido restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} setOpenModalDetalhe={setOpenModalDetalhe} />
+                <ModalDetalhePedido restaurante={informacao} produto={dadosProduto} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleOpenModalResumo={handleOpenModalResumo} carrinho={carrinho} setCarrinho={setCarrinho} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} adicionarProdutoAoCarrinho={adicionarProdutoAoCarrinho} />
+                <ModalResumoPedido carrinho={carrinho} custoTotalCarrinho={custoTotalCarrinho} restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} />
         </div>
     )
     

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Modal from '@material-ui/core/Modal';
+import CardCarrinho from '../../componentes/CardCarrinho';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import Loading from '../Loading';
@@ -33,7 +34,6 @@ export default function ModalResumoPedido(props) {
   
   const handleCloseModalResumo = () => {
     props.setOpenModalResumo(false);
-    props.setOpenModalDetalhe(false);
   };
   
   return (
@@ -49,8 +49,7 @@ export default function ModalResumoPedido(props) {
           <div className="nome-restaurante">
             <ImagemCarrinho style={{ width: '48px'}} />
             <Typography variant="h4" color="textSecondary" component="p">
-              {/* {nomeRestaurante} */}
-              Nome do restaurante
+              {props.restaurante.nome}
             </Typography>
           </div>
           <div className="container-endereco">
@@ -58,14 +57,15 @@ export default function ModalResumoPedido(props) {
               Adicionar Endereco
             </Typography>
           </div>
-          <Typography variant="body1" color="textSecondary" component="p">
+          <Typography variant="body1" color="textSecondary" component="p" style={{ display: 'flex', gap: 5 }} >
             <span>
               Tempo de Entrega:
             </span>
-            {/* {tempo_entrega} */}
+            {props.restaurante.tempo_entrega_minutos}
+            min
           </Typography>
           <div className="carrinho-cheio">
-            {/* fazer map do objeto contendo produtos, que é gerado no modal anterior e salvo em estado*/}
+            {props.carrinho.map(itemCarrinho => <CardCarrinho key={itemCarrinho.id} itemCarrinho={itemCarrinho} />)}
           </div>
           <div className="resumo-valores">
             <hr />
@@ -76,7 +76,7 @@ export default function ModalResumoPedido(props) {
                 </span>
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                  R$ 299,97
+                R$ {props.custoTotalCarrinho}
               </Typography>
             </div>
             <div className="text-container-bottom">
@@ -86,7 +86,7 @@ export default function ModalResumoPedido(props) {
                 </span>
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                  R$ 8,90
+                  R$ {props.restaurante.taxa_entrega}
               </Typography>
             </div>
             <div className="total-pedido text-container-bottom">
@@ -96,7 +96,7 @@ export default function ModalResumoPedido(props) {
                 </span>
               </Typography>
               <Typography variant="h5" color="textSecondary" component="p">
-                R$ 308,87
+                R$ {props.custoTotalCarrinho + props.restaurante.taxa_entrega}
               </Typography>
             </div>
           </div>

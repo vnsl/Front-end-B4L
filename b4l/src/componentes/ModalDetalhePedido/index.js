@@ -27,12 +27,24 @@ export default function ModalDetalhePedido(props) {
   
   const [ qtdProduto, setQtdProduto ] = useState(1);
   const [ valorTotalProduto, setValorTotalProduto ] = useState(preco);
-  const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
-  // const [carrinho, setCarrinho] = useState([]);
+  const [produtoAtualizado, setProdutoAtualizado] = useState({});
+  
+  // const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
+  
 
   useEffect(() => {
     setValorTotalProduto(qtdProduto*preco);  
   }, [qtdProduto, preco])
+
+  useEffect(() => {
+    setProdutoAtualizado({
+      id: id,
+      nome,
+      imagem,
+      quantidade: qtdProduto,
+      valor_total: valorTotalProduto 
+    })
+  }, [id, qtdProduto, valorTotalProduto]);
 
   function handleQuantidade(unidade) {
     const novaQtd = qtdProduto + unidade;
@@ -42,37 +54,29 @@ export default function ModalDetalhePedido(props) {
     setQtdProduto(novaQtd);
   }
 
-  function adicionarProdutoAoCarrinho() {
-    const detalhePedido = {
-      produto_id: id,
-      quantidade_produto: qtdProduto,
-      // valor_total_produto: valor_total_produto
-    }
+  const handleClose = () => {
+    props.setCarrinhoVisivel(false);
+    props.setOpenModalDetalhe(false);
 
-    setCarregando(true);
-    setErro('');
-    // setCarrinho(detalhePedido);
-    setCarrinhoVisivel(true);
   }
-
   
   return (
     <div>
       <Modal
         open={props.openModalDetalhe}
-        onClose={props.handleClose}
+        onClose={handleClose}
         aria-labelledby="custom-modal-title"
         aria-describedby="custom-modal-description"
       >
         <div className="card-detalhe-pedido" >
           <div className="header-card">
             <img src={imagem} alt="" />
-            <BotaoFecharModal style={{ cursor: "pointer"}} onClick={props.handleClose} />
+            <BotaoFecharModal className="botao-fechar" onClick={handleClose} />
           </div>
-          <div className="imagem-produto">
-            
+          <div className="imagem-restaurante" >
+            <img src={props.restaurante.imagem} alt="" />
           </div>
-          {!carrinhoVisivel && <div className="text-content">
+          {!props.carrinhoVisivel && <div className="text-content">
             <Typography variant="h4" color="textSecondary" component="p">
               {nome}
             </Typography>
@@ -98,12 +102,12 @@ export default function ModalDetalhePedido(props) {
                 {descricao}
               </Typography>
               <div className="preco-total">
-              <Typography variant="h5" color="textSecondary" component="p" style={{ display: "flex", gap: "5px", fontWeight: "bold" }}>
-                R$
-                <div>
-                  {valorTotalProduto}
-                </div>
-              </Typography>
+                <Typography variant="h5" color="textSecondary" component="p" style={{ display: "flex", gap: "5px", fontWeight: "bold" }}>
+                  R$
+                  <div>
+                    {valorTotalProduto}
+                  </div>
+                </Typography>
               </div>
 
             </div>
@@ -129,12 +133,12 @@ export default function ModalDetalhePedido(props) {
                 className={classes.botaoCarrinho} 
                 type="button" 
                 color="secondary" 
-                onClick={adicionarProdutoAoCarrinho}>
+                onClick={() => props.adicionarProdutoAoCarrinho(produtoAtualizado)}>
                   Adicionar ao Carrinho
               </Button>
             </div>
           </div>}   
-          {carrinhoVisivel && <div className="img-carrinho">
+          {props.carrinhoVisivel && <div className="img-carrinho">
             <ImagemCarrinho />
             <Typography variant="body2" color="textSecondary" component="p">
                 <span>

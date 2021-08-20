@@ -6,20 +6,24 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
+// import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
 import { useHistory } from 'react-router-dom';
 
 import useStyles from './styles';
 
-export default function CustomCard({ produto, restaurante, handleOpenModalResumo, openModalDetalhe, setOpenModalDetalhe, handleClose}) {
+export default function CustomCard({ produto, setOpenModalDetalhe, setDadosProduto, setCarrinhoVisivel }) {
   const classes = useStyles();
   const { id, nome, descricao, preco, imagem } = produto;
+  // const [openModalDetalhe, setOpenModalDetalhe] = useState(false);
+  // const [carrinho, setCarrinho] = useState([]);
   const history = useHistory();
 
   const imagemCard = imagem ? imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg';
   
   const handleOpen = () => {
+    setCarrinhoVisivel(false);
     setOpenModalDetalhe(true);
+    setDadosProduto(produto);
   };
 
   return (
@@ -44,7 +48,7 @@ export default function CustomCard({ produto, restaurante, handleOpenModalResumo
           title={nome}
         />
       </CardActionArea>
-      <ModalDetalhePedido restaurante={restaurante} produto={produto} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleOpenModalResumo={handleOpenModalResumo} handleClose={handleClose} />
+      {/* <ModalDetalhePedido restaurante={restaurante} produto={produto} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleOpenModalResumo={handleOpenModalResumo} carrinho={carrinho} setCarrinho={setCarrinho} /> */}
     </Card>
   );
 }
