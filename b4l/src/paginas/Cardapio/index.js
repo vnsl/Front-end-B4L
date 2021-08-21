@@ -7,6 +7,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import Loading from '../../componentes/Loading';
 import { ReactComponent as NoProducts } from '../../assets/resta-noitems.svg';
 
+import Teste from '../../componentes/ModalEndereco';
+
 import './index.css';
 
 import Header from '../../componentes/HeaderCardapio';
@@ -90,6 +92,7 @@ function Produtos() {
                   >
                     Restaurantes
                   </button>
+                  <Teste/>
                   <div className='informacoes'>
                     <p>Pedido Mínimo: R$ {informacao.valor_minimo_pedido},00</p>
                     <p>Tempo de Entrega: {informacao.tempo_entrega_minutos} min</p>
