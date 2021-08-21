@@ -13,7 +13,6 @@ export default function Header(props) {
     const { deslogar } = useAuth();
     const history = useHistory();
 
-    
     function logout() {
         deslogar();
         history.push('/loginconsumidor');
