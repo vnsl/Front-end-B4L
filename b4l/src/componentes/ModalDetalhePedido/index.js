@@ -16,7 +16,6 @@ import './index.css';
 export default function ModalDetalhePedido(props) {
   const classes = useStyles();
   
-  const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
  
   const { token } = useAuth();
@@ -25,7 +24,7 @@ export default function ModalDetalhePedido(props) {
   
   const { id, nome, preco, descricao, imagem } = props.produto ?? '';
   
-  const [ qtdProduto, setQtdProduto ] = useState(1);
+  const [ qtdProduto, setQtdProduto ] = useState(0);
   const [ valorTotalProduto, setValorTotalProduto ] = useState(preco);
   const [produtoAtualizado, setProdutoAtualizado] = useState({});
   
@@ -137,6 +136,7 @@ export default function ModalDetalhePedido(props) {
                   Adicionar ao Carrinho
               </Button>
             </div>
+            {props.erro && <Alert severity="error">{props.erro}</Alert>}
           </div>}   
           {props.carrinhoVisivel && <div className="img-carrinho">
             <ImagemCarrinho />

@@ -45,7 +45,7 @@ export default function ModalResumoPedido(props) {
         aria-describedby="custom-modal-description"
       >
         <div className="card-resumo-pedido">
-        <BotaoFecharModal style={{ cursor: "pointer"}} onClick={handleCloseModalResumo} />
+          <BotaoFecharModal className="botao-fechar-resumo" onClick={handleCloseModalResumo} />
           <div className="nome-restaurante">
             <ImagemCarrinho style={{ width: '48px'}} />
             <Typography variant="h4" color="textSecondary" component="p">
@@ -66,6 +66,7 @@ export default function ModalResumoPedido(props) {
           </Typography>
           <div className="carrinho-cheio">
             {props.carrinho.map(itemCarrinho => <CardCarrinho key={itemCarrinho.id} itemCarrinho={itemCarrinho} />)}
+            <Typography className="bottom-link" onClick={handleCloseModalResumo} >Adicionar mais itens ao pedido</Typography>
           </div>
           <div className="resumo-valores">
             <hr />

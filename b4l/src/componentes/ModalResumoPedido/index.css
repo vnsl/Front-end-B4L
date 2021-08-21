@@ -1,13 +1,21 @@
 .card-resumo-pedido {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 625px;
-    height: 820px;
+    height: 80%;
     background-color: white;
     border-radius: 16px;
-    margin: 40px auto 0 auto;
+    margin: 40px auto;
     padding: 70px;
     gap: 18px;
+}
+
+.botao-fechar-resumo {
+    position: absolute;
+    top: 70px;
+    right: 70px;
+    cursor: pointer;
 }
 
 .nome-restaurante {

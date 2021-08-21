@@ -48,6 +48,13 @@ function Produtos() {
 
     function adicionarProdutoAoCarrinho(produtoAtualizado) {
 
+      if (produtoAtualizado.quantidade === 0) {
+        setErro("Informe a quantidade desejada antes de prosseguir.");
+        return;
+      }
+
+      setErro('');
+
       const novosProdutos = [...carrinho]
       const produtoNoCarrinho = novosProdutos.find(
         ({ produto_id }) => produto_id === produtoAtualizado.id,
@@ -157,7 +164,7 @@ function Produtos() {
                     )
                   }
                 </div>
-                <ModalDetalhePedido restaurante={informacao} produto={dadosProduto} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleOpenModalResumo={handleOpenModalResumo} carrinho={carrinho} setCarrinho={setCarrinho} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} adicionarProdutoAoCarrinho={adicionarProdutoAoCarrinho} />
+                <ModalDetalhePedido restaurante={informacao} produto={dadosProduto} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleOpenModalResumo={handleOpenModalResumo} carrinho={carrinho} setCarrinho={setCarrinho} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} adicionarProdutoAoCarrinho={adicionarProdutoAoCarrinho} erro={erro} />
                 <ModalResumoPedido carrinho={carrinho} custoTotalCarrinho={custoTotalCarrinho} restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} />
         </div>
     )
