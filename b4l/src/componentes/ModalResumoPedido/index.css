@@ -12,10 +12,10 @@ h4 {
     display: flex;
     flex-direction: column;
     width: 625px;
-    height: 80%;
+    height: 820px;
     background-color: white;
     border-radius: 16px;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 70px;
     gap: 18px;
 }
@@ -41,6 +41,17 @@ h4 {
 
 span {
     font-weight: bold;
+}
+
+.carrinho-cheio {
+    overflow: auto;
+    height: 90%;
+}
+
+.adicionar-itens {
+    text-align: center;
+    font-size: 13px !important;
+    text-decoration: underline;
 }
 
 .resumo-valores {

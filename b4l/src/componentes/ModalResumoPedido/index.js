@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Modal from '@material-ui/core/Modal';
 import CardCarrinho from '../../componentes/CardCarrinho';
+import ModalEndereco from '../../componentes/ModalEndereco';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import Loading from '../Loading';
@@ -23,18 +24,20 @@ export default function ModalResumoPedido(props) {
   const [ carregando, setCarregando ] = useState(false);
 
   const { token } = useAuth();
-
-  const recarregar = props.recarregar;
-  
-  const { id, nome, preco, descricao, ativo, permite_observacoes, imagem } = props.produtoInfo ?? '';
   
   const [ endereco, setEndereco ] = useState('');
 
   // tem que pegar o endereço persistido
-  
+
+  // incluir um useEffect para atualizar um estado que vai enviar os dados para o back
+
   const handleCloseModalResumo = () => {
     props.setOpenModalResumo(false);
   };
+
+ /*  const finalizarPedido = () => {
+
+  } */
   
   return (
     <div>
@@ -53,9 +56,7 @@ export default function ModalResumoPedido(props) {
             </Typography>
           </div>
           <div className="container-endereco">
-            <Typography variant="body2" color="textPrimary" component="p">
-              Adicionar Endereco
-            </Typography>
+            <ModalEndereco />
           </div>
           <Typography variant="body1" color="textSecondary" component="p" style={{ display: 'flex', gap: 5 }} >
             <span>
@@ -66,8 +67,8 @@ export default function ModalResumoPedido(props) {
           </Typography>
           <div className="carrinho-cheio">
             {props.carrinho.map(itemCarrinho => <CardCarrinho key={itemCarrinho.id} itemCarrinho={itemCarrinho} />)}
-            <Typography className="bottom-link" onClick={handleCloseModalResumo} >Adicionar mais itens ao pedido</Typography>
           </div>
+            <Typography className="adicionar-itens" onClick={handleCloseModalResumo} >Adicionar mais itens ao pedido</Typography>
           <div className="resumo-valores">
             <hr />
             <div className="text-container-bottom">
@@ -106,7 +107,7 @@ export default function ModalResumoPedido(props) {
               className={classes.botaoConfirmarPedido} 
               type="button" 
               color="secondary" 
-              // onClick={confirmarPedido}
+              // onClick={finalizarPedido}
             >
               Confirmar Pedido
             </Button>

@@ -5,10 +5,10 @@
     flex-direction: column;
     align-items: center;
     width: 625px;
-    height: 80%;
+    height: 820px;
     background-color: white;
     border-radius: 16px;
-    margin: 40px auto;
+    margin: 20px auto;
 }
 
 .header-card img {

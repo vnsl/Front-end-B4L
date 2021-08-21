@@ -46,9 +46,6 @@ export default function ModalEndereco() {
   return (
     <div className='modal-endereco'>
       <p onClick={handleOpen}>Adicionar Endereço</p>
-      {/* <button type='button' onClick={handleOpen}>
-        TESTE
-      </button> */}
       <Modal
         className='try'
         open={open}
