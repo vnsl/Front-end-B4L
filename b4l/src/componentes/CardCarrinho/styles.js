@@ -14,11 +14,17 @@ export default makeStyles({
       gap: 5,
       height: '100%',
     },
-    custoTotalProduto: {
+    containerCustoTotalProduto: {
       display: 'flex',
-      padding: '5px',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 78,
+      height: 18,
       background: 'linear-gradient(0deg, rgba(13, 138, 79, 0.1), rgba(13, 138, 79, 0.1)), #FFFFFF',
       borderRadius: '4px'
+    },
+    custoTotalProduto: {
+      fontSize: '10px',
     },
     cardContent: {
       display: 'flex',

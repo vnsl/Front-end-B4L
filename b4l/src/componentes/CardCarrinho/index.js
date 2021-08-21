@@ -36,8 +36,8 @@ export default function CardCarrinho({ itemCarrinho }) {
               {unidade}
             </div>
           </Typography>
-          <div className={classes.custoTotalProduto}>
-            <Typography variant="body2" color="textPrimary" component="p">
+          <div className={classes.containerCustoTotalProduto}>
+            <Typography className={classes.custoTotalProduto} variant="body2" color="textPrimary" component="p">
               R$ {(itemCarrinho.custo_total_produto).toFixed([2]) }
             </Typography>
           </div>          

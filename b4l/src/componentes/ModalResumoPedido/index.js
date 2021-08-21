@@ -48,7 +48,7 @@ export default function ModalResumoPedido(props) {
           <BotaoFecharModal className="botao-fechar-resumo" onClick={handleCloseModalResumo} />
           <div className="nome-restaurante">
             <ImagemCarrinho style={{ width: '48px'}} />
-            <Typography variant="h4" color="textSecondary" component="p">
+            <Typography variant="h4" color="textSecondary" component="h4">
               {props.restaurante.nome}
             </Typography>
           </div>

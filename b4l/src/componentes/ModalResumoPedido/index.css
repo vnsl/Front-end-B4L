@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+
+
+h4 {
+    font-family: 'Baloo 2', cursive !important;
+    font-weight: bold !important;
+    color: rgba(18, 18, 18, 0,8) !important;
+}
+
 .card-resumo-pedido {
     position: relative;
     display: flex;
