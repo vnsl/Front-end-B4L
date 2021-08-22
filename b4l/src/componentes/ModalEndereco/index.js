@@ -15,7 +15,7 @@ import { Typography } from '@material-ui/core';
 
 import './index.css';
 
-export default function ModalEndereco() {
+export default function ModalEndereco({ openModalResumo }) {
   const classes = useStyles();
   
   const [ erro, setErro ] = useState('');
@@ -45,7 +45,7 @@ export default function ModalEndereco() {
 
   return (
     <div className='modal-endereco'>
-      <p onClick={handleOpen}>Adicionar Endereço</p>
+      <p onClick={handleOpen}> {openModalResumo && "Adicionar Endereço"}</p>
       <Modal
         className='try'
         open={open}

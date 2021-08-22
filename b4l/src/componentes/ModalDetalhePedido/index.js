@@ -24,7 +24,7 @@ export default function ModalDetalhePedido(props) {
   
   const { id, nome, preco, descricao, imagem } = props.produto ?? '';
   
-  const [ qtdProduto, setQtdProduto ] = useState(0);
+  // const [ qtdProduto, props.setQtdProduto ] = useState(0);
   const [ valorTotalProduto, setValorTotalProduto ] = useState(preco);
   const [produtoAtualizado, setProdutoAtualizado] = useState({});
   
@@ -32,31 +32,30 @@ export default function ModalDetalhePedido(props) {
   
 
   useEffect(() => {
-    setValorTotalProduto(qtdProduto*preco);  
-  }, [qtdProduto, preco])
+    setValorTotalProduto(props.qtdProduto*preco);  
+  }, [props.qtdProduto, preco])
 
   useEffect(() => {
     setProdutoAtualizado({
       id: id,
       nome,
       imagem,
-      quantidade: qtdProduto,
+      quantidade: props.qtdProduto,
       valor_total: valorTotalProduto 
     })
-  }, [id, qtdProduto, valorTotalProduto]);
+  }, [id, props.qtdProduto, valorTotalProduto]);
 
   function handleQuantidade(unidade) {
-    const novaQtd = qtdProduto + unidade;
+    const novaQtd = props.qtdProduto + unidade;
     
     if(novaQtd < 1) return;
     
-    setQtdProduto(novaQtd);
+    props.setQtdProduto(novaQtd);
   }
 
   const handleClose = () => {
     props.setCarrinhoVisivel(false);
     props.setOpenModalDetalhe(false);
-
   }
   
   return (
@@ -119,7 +118,7 @@ export default function ModalDetalhePedido(props) {
                 >
                   -
                 </Button>
-                {qtdProduto}
+                {props.qtdProduto}
                 <Button 
                   className={classes.botaoQuantidade} 
                   type="button" 

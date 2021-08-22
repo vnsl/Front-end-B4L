@@ -8,6 +8,7 @@ import Loading from '../Loading';
 import useStyles from './styles';
 import { ReactComponent as ImagemCarrinho } from '../../assets/carrinho.svg';
 import { ReactComponent as BotaoFecharModal } from '../../assets/botao-close-modal.svg';
+import { ReactComponent as IconeSucesso } from '../../assets/icone-sucesso.svg';
 
 import useAuth from '../../hook/useAuth';
 import { useHistory, Link } from 'react-router-dom';
@@ -27,12 +28,14 @@ export default function ModalResumoPedido(props) {
   
   const [ endereco, setEndereco ] = useState('');
 
+
   // tem que pegar o endereço persistido
 
   // incluir um useEffect para atualizar um estado que vai enviar os dados para o back
 
   const handleCloseModalResumo = () => {
     props.setOpenModalResumo(false);
+    props.setPedidoConcluido(false);
   };
 
  /*  const finalizarPedido = () => {
@@ -48,70 +51,78 @@ export default function ModalResumoPedido(props) {
         aria-describedby="custom-modal-description"
       >
         <div className="card-resumo-pedido">
-          <BotaoFecharModal className="botao-fechar-resumo" onClick={handleCloseModalResumo} />
+          <BotaoFecharModal fill="red" className="botao-fechar-resumo" onClick={handleCloseModalResumo} />
           <div className="nome-restaurante">
             <ImagemCarrinho style={{ width: '48px'}} />
             <Typography variant="h4" color="textSecondary" component="h4">
               {props.restaurante.nome}
             </Typography>
           </div>
-          <div className="container-endereco">
-            <ModalEndereco />
-          </div>
-          <Typography variant="body1" color="textSecondary" component="p" style={{ display: 'flex', gap: 5 }} >
-            <span>
-              Tempo de Entrega:
-            </span>
-            {props.restaurante.tempo_entrega_minutos}
-            min
-          </Typography>
-          <div className="carrinho-cheio">
-            {props.carrinho.map(itemCarrinho => <CardCarrinho key={itemCarrinho.id} itemCarrinho={itemCarrinho} />)}
-          </div>
-            <Typography className="adicionar-itens" onClick={handleCloseModalResumo} >Adicionar mais itens ao pedido</Typography>
-          <div className="resumo-valores">
-            <hr />
-            <div className="text-container-bottom">
-              <Typography variant="body2" color="textSecondary" component="p">
+          {!props.pedidoConcluido && 
+            <div className="conteudo-cartao" >
+              <div className="container-endereco">
+                <ModalEndereco openModalResumo={props.openModalResumo} />
+              </div>
+              <Typography variant="body1" color="textSecondary" component="p" style={{ display: 'flex', gap: 5 }} >
                 <span>
-                  Subtotal
+                  Tempo de Entrega:
                 </span>
+                {props.restaurante.tempo_entrega_minutos}
+                min
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                R$ {props.custoTotalCarrinho}
-              </Typography>
+              <div className="carrinho-cheio">
+                {props.carrinho.map(itemCarrinho => <CardCarrinho key={itemCarrinho.id} itemCarrinho={itemCarrinho} excluirProduto={props.excluirProduto} />)}
+              </div>
+                <Typography className="adicionar-itens" onClick={handleCloseModalResumo} >Adicionar mais itens ao pedido</Typography>
+              <div className="resumo-valores">
+                <hr />
+                <div className="text-container-bottom">
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Subtotal
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    <span>
+                      R$ { (props.custoTotalCarrinho).toFixed([2]) }
+                    </span>
+                  </Typography>
+                </div>
+                <div className="text-container-bottom">
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Taxa de entrega
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    <span>
+                      R$ { props.restaurante.taxa_entrega && (props.restaurante.taxa_entrega).toFixed([2]) }
+                    </span>
+                  </Typography>
+                </div>
+                <div className="total-pedido text-container-bottom">
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Total
+                  </Typography>
+                  <Typography variant="h5" color="textSecondary" component="p">
+                    <span>
+                      R$ { (props.custoTotalCarrinho + props.restaurante.taxa_entrega).toFixed([2]) }
+                    </span>
+                  </Typography>
+                </div>
+              </div>
+              <div className="container-botao">
+                <Button 
+                  className={classes.botaoConfirmarPedido} 
+                  type="button" 
+                  color="secondary" 
+                  onClick={() => props.finalizarPedido(props.restaurante.id)}
+                >
+                  Confirmar Pedido
+                </Button>
+              </div>
             </div>
-            <div className="text-container-bottom">
-              <Typography variant="body2" color="textSecondary" component="p">
-                <span>
-                  Taxa de entrega
-                </span>
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                  R$ {props.restaurante.taxa_entrega}
-              </Typography>
-            </div>
-            <div className="total-pedido text-container-bottom">
-              <Typography variant="body2" color="textSecondary" component="p">
-                <span>
-                  Total
-                </span>
-              </Typography>
-              <Typography variant="h5" color="textSecondary" component="p">
-                R$ {props.custoTotalCarrinho + props.restaurante.taxa_entrega}
-              </Typography>
-            </div>
-          </div>
-          <div className="container-botao">
-            <Button 
-              className={classes.botaoConfirmarPedido} 
-              type="button" 
-              color="secondary" 
-              // onClick={finalizarPedido}
-            >
-              Confirmar Pedido
-            </Button>
-          </div>
+          }
+          {props.pedidoConcluido && 
+            <IconeSucesso />
+          }
+          {}
         </div>
       </Modal>
     </div>

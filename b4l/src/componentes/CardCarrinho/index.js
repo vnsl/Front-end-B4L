@@ -7,10 +7,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
+import { ReactComponent as BotaoExcluirProduto } from '../../assets/icone-lixeira.svg';
 
 import useStyles from './styles';
 
-export default function CardCarrinho({ itemCarrinho }) {
+export default function CardCarrinho({ itemCarrinho, excluirProduto }) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -30,18 +31,19 @@ export default function CardCarrinho({ itemCarrinho }) {
           <Typography variant="h5" component="h5" style={{ fontSize: '20px'}} >
             {itemCarrinho.nome}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p" style={{ display: 'flex', gap: 5 }} >
+          <Typography variant="body2" color="textSecondary" component="p" style={{ display: 'flex', gap: 5, cursor: 'default' }} >
             {itemCarrinho.quantidade_produto} 
             <div>
               {unidade}
             </div>
           </Typography>
           <div className={classes.containerCustoTotalProduto}>
-            <Typography className={classes.custoTotalProduto} variant="body2" color="textPrimary" component="p">
+            <Typography className={classes.custoTotalProduto} variant="body2" color="textPrimary" component="p" style={{ cursor: 'default' }} >
               R$ {(itemCarrinho.custo_total_produto).toFixed([2]) }
             </Typography>
-          </div>          
+          </div>  
         </CardContent>
+        <BotaoExcluirProduto fill="red" className={classes.botaoExcluir} onClick={() => excluirProduto(itemCarrinho.produto_id)} />
         
       </CardActionArea>
     </Card>

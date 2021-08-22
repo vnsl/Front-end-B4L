@@ -6,6 +6,7 @@ import useAuth from '../../hook/useAuth';
 import { useHistory, useLocation } from 'react-router-dom';
 import Loading from '../../componentes/Loading';
 import { ReactComponent as NoProducts } from '../../assets/resta-noitems.svg';
+import { ReactComponent as IconeSucesso } from '../../assets/sucess-icon.svg';
 
 import Teste from '../../componentes/ModalEndereco';
 
@@ -15,8 +16,9 @@ import Header from '../../componentes/HeaderCardapio';
 import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
 import ModalResumoPedido from '../../componentes/ModalResumoPedido';
 
-function persistirCarrinho(carrinho) {
+function persistirCarrinho(carrinho, custoTotalCarrinho) {
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  localStorage.setItem("custoTotalCarrinho", custoTotalCarrinho);
 }
 
 function Produtos() {
@@ -30,10 +32,14 @@ function Produtos() {
     const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
     
     const carrinhoPersistido = localStorage.getItem("carrinho") ? JSON.parse(localStorage.getItem("carrinho")) : [];
-    
+    const custoTotalCarrinhoPersistido = localStorage.getItem("custoTotalCarrinho") ? Number(localStorage.getItem("custoTotalCarrinho")) : 0;
+
     const [carrinho, setCarrinho] = useState(carrinhoPersistido);
-    const [custoTotalCarrinho, setCustoTotalCarrinho] = useState(0);
-    
+    const [ qtdProduto, setQtdProduto ] = useState(0);
+    const [custoTotalCarrinho, setCustoTotalCarrinho] = useState(custoTotalCarrinhoPersistido);
+    const [pedido, setPedido] = useState({});
+    const [pedidoConcluido, setPedidoConcluido] = useState(false);
+
     const [dadosProduto, setDadosProduto] = useState({});
     const history = useHistory();
     const location = useLocation();
@@ -45,8 +51,8 @@ function Produtos() {
     }
     
     useEffect(() => {
-      persistirCarrinho(carrinho);
-    }, [carrinho]);
+      persistirCarrinho(carrinho, custoTotalCarrinho);
+    }, [carrinho, custoTotalCarrinho]);
 
     function adicionarProdutoAoCarrinho(produtoAtualizado) {
 
@@ -73,6 +79,7 @@ function Produtos() {
         setCustoTotalCarrinho(novoCustoTotalCarrinho);
         setErro('');
         setCarrinhoVisivel(true);
+        setQtdProduto(0);
         return;
       }
 
@@ -91,6 +98,54 @@ function Produtos() {
       
       setErro('');
       setCarrinhoVisivel(true);
+      setQtdProduto(0);
+    }
+
+    function excluirProduto (idProduto) {
+
+      const novosProdutos = [...carrinho]
+      const produtoNoCarrinho = novosProdutos.findIndex(
+        ({ produto_id }) => produto_id === idProduto,
+      );
+
+      novosProdutos.splice(produtoNoCarrinho, 1)
+      
+      setCarrinho(novosProdutos);
+        
+      const novoCustoTotalCarrinho = novosProdutos.reduce(
+        (acc, valorAtual) => acc + Number(valorAtual.custo_total_produto), 0);       
+        
+      setCustoTotalCarrinho(novoCustoTotalCarrinho);
+      setErro('');
+      return;
+    }
+
+    async function finalizarPedido(id) {
+      try {
+        setCarregando(true);
+        setErro('');
+
+        const resposta = await fetch(`http://localhost:3001/pedido/${id}`, {
+          method: 'GET',
+          body: JSON.stringify(),
+          headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+      });
+      
+        const dados = await resposta.json();
+        setCarregando(false);
+        
+        if (!resposta.ok) {
+          return setErro(dados);
+        };
+      
+        setPedido(dados);
+        setPedidoConcluido(true);
+      } catch (error) {
+        return setErro(error.message);
+      }
     }
 
     useEffect(() => {
@@ -167,8 +222,8 @@ function Produtos() {
                     )
                   }
                 </div>
-                <ModalDetalhePedido restaurante={informacao} produto={dadosProduto} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} handleOpenModalResumo={handleOpenModalResumo} carrinho={carrinho} setCarrinho={setCarrinho} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} adicionarProdutoAoCarrinho={adicionarProdutoAoCarrinho} erro={erro} />
-                <ModalResumoPedido carrinho={carrinho} custoTotalCarrinho={custoTotalCarrinho} restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} />
+                <ModalDetalhePedido restaurante={informacao} produto={dadosProduto} openModalDetalhe={openModalDetalhe} qtdProduto={qtdProduto} setQtdProduto={setQtdProduto} setOpenModalDetalhe={setOpenModalDetalhe} handleOpenModalResumo={handleOpenModalResumo} carrinho={carrinho} setCarrinho={setCarrinho} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} adicionarProdutoAoCarrinho={adicionarProdutoAoCarrinho} erro={erro} />
+                <ModalResumoPedido carrinho={carrinho} custoTotalCarrinho={custoTotalCarrinho} restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} pedidoConcluido={pedidoConcluido} setPedidoConcluido={setPedidoConcluido} excluirProduto={excluirProduto} finalizarPedido={finalizarPedido} />
         </div>
     )
     

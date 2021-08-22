@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     height: 100px;
-    gap: 50px
+    gap: 50px;
 }
 
 .header-text {

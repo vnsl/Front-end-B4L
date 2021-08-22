@@ -17,7 +17,13 @@ h4 {
     border-radius: 16px;
     margin: 20px auto;
     padding: 70px;
-    gap: 18px;
+}
+
+.conteudo-cartao {
+    display: flex;
+    flex-direction: column;
+    height: 88%;
+    gap: 20px;
 }
 
 .botao-fechar-resumo {
@@ -45,13 +51,14 @@ span {
 
 .carrinho-cheio {
     overflow: auto;
-    height: 90%;
+    height: 45%;
 }
 
 .adicionar-itens {
     text-align: center;
     font-size: 13px !important;
     text-decoration: underline;
+    margin-bottom: 10px !important;
 }
 
 .resumo-valores {

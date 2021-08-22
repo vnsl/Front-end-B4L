@@ -6,13 +6,20 @@ export default makeStyles({
       width: '100%',
       height: 80,
       marginBottom: 30,
-      boxShadow: 'none'
+      boxShadow: 'none',
     },
     cardActionArea: {
       display: 'flex',
       justifyContent: 'left',
+      alignItems: 'center',
       gap: 5,
       height: '100%',
+      cursor: 'default',
+    },
+    botaoExcluir: {
+      marginLeft: 'auto',
+      marginRight: 10,
+      cursor: 'pointer'
     },
     containerCustoTotalProduto: {
       display: 'flex',
