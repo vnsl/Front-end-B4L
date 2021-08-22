@@ -8,7 +8,7 @@ import Loading from '../Loading';
 import useStyles from './styles';
 import { ReactComponent as ImagemCarrinho } from '../../assets/carrinho.svg';
 import { ReactComponent as BotaoFecharModal } from '../../assets/botao-close-modal.svg';
-import { ReactComponent as IconeSucesso } from '../../assets/icone-sucesso.svg';
+import sucesso from '../../assets/sucess-icon.png';
 
 import useAuth from '../../hook/useAuth';
 import { useHistory, Link } from 'react-router-dom';
@@ -24,9 +24,10 @@ export default function ModalResumoPedido(props) {
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
 
-  const { token } = useAuth();
+  const { token, userPersistido } = useAuth();
   
-  const [ endereco, setEndereco ] = useState('');
+  const [ endereco, setEndereco ] = useState();
+  const [ enderecoEffect, setEnderecoEffect ] = useState(endereco);
 
 
   // tem que pegar o endereço persistido
@@ -37,7 +38,11 @@ export default function ModalResumoPedido(props) {
     props.setOpenModalResumo(false);
     props.setPedidoConcluido(false);
   };
-  
+
+  useEffect( () => {
+    setEnderecoEffect(endereco);
+  }, [setEndereco, endereco])
+
   return (
     <div>
       <Modal
@@ -57,7 +62,15 @@ export default function ModalResumoPedido(props) {
           {!props.pedidoConcluido && 
             <div className="conteudo-cartao" >
               <div className="container-endereco">
-                <ModalEndereco openModalResumo={props.openModalResumo} />
+                {enderecoEffect ? 
+                  <div>
+                    <p>Endereço de Entrega: 
+                      <p>{enderecoEffect.endereco}</p>
+                      <p>{enderecoEffect.cep}</p>
+                      <p>{enderecoEffect.complemento}</p>
+                    </p> 
+                  </div> :
+                <ModalEndereco openModalResumo={props.openModalResumo} setEndereco={setEndereco} />}
               </div>
               <Typography variant="body1" color="textSecondary" component="p" style={{ display: 'flex', gap: 5 }} >
                 <span>
@@ -116,7 +129,27 @@ export default function ModalResumoPedido(props) {
             </div>
           }
           {props.pedidoConcluido && 
-            <IconeSucesso />
+            <div className="container-sucesso" >
+              <div className="container-imagem" >
+                <img src={sucesso} alt="" />
+                <Typography variant="body1" color="textSecondary" component="p" style={{ textAlign: 'center', fontWeight: 'bold' }} >
+                  Pedido Confirmado!
+                  <br />
+                  Agora é só aguardar o seu pedido.
+                </Typography>
+              </div>        
+              <div className="container-botao">
+                <Button 
+                  className={classes.botaoConfirmarPedido} 
+                  type="button" 
+                  color="secondary" 
+                  onClick={handleCloseModalResumo}
+                >
+                  Voltar ao cardápio
+                </Button>
+              </div>
+            </div>
+            
           }
           {}
         </div>
