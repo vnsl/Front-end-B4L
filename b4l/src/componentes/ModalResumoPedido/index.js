@@ -37,10 +37,6 @@ export default function ModalResumoPedido(props) {
     props.setOpenModalResumo(false);
     props.setPedidoConcluido(false);
   };
-
- /*  const finalizarPedido = () => {
-
-  } */
   
   return (
     <div>

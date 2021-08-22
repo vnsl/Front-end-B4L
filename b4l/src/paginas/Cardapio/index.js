@@ -35,15 +35,15 @@ function Produtos() {
     const custoTotalCarrinhoPersistido = localStorage.getItem("custoTotalCarrinho") ? Number(localStorage.getItem("custoTotalCarrinho")) : 0;
 
     const [carrinho, setCarrinho] = useState(carrinhoPersistido);
-    const [ qtdProduto, setQtdProduto ] = useState(0);
     const [custoTotalCarrinho, setCustoTotalCarrinho] = useState(custoTotalCarrinhoPersistido);
-    const [pedido, setPedido] = useState({});
+
+    const [ qtdProduto, setQtdProduto ] = useState(0);
+    // const [pedido, setPedido] = useState(pedidoPersistido);
     const [pedidoConcluido, setPedidoConcluido] = useState(false);
 
     const [dadosProduto, setDadosProduto] = useState({});
     const history = useHistory();
     const location = useLocation();
-
 
     const handleOpenModalResumo = () => {
       setOpenModalDetalhe(false);
@@ -132,7 +132,7 @@ function Produtos() {
             'Content-type': 'application/json',
             'Authorization': `Bearer ${token}`
           }
-      });
+        });
       
         const dados = await resposta.json();
         setCarregando(false);
@@ -140,9 +140,36 @@ function Produtos() {
         if (!resposta.ok) {
           return setErro(dados);
         };
-      
-        setPedido(dados);
-        setPedidoConcluido(true);
+
+        const listaDeProdutos = [...carrinho];
+
+        const listaEditada = listaDeProdutos.map(produto => {
+        return {
+            pedido_id: dados.id,
+            produto_id: produto.produto_id,
+            quantidade_produto: produto.quantidade_produto,
+            valor_total_produto: produto.custo_total_produto
+        }
+    });
+        
+        const pedidoFinalizado = {
+          listaEditada        
+        }
+
+        const respostaPedido = await fetch('http://localhost:3001/finalizar_pedido', {
+          method: 'POST',
+          body: JSON.stringify(pedidoFinalizado),
+          headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        })
+
+        const dadosPedido = await respostaPedido.json();
+
+        setCarregando(false);
+        setCarrinho([]);
+        setPedidoConcluido(true);        
       } catch (error) {
         return setErro(error.message);
       }
