@@ -6,7 +6,7 @@ import Loading from '../Loading';
 import useStyles from './styles';
 import { ReactComponent as ImagemCarrinho } from '../../assets/carrinho.svg';
 import { ReactComponent as BotaoFecharModal } from '../../assets/botao-close-modal.svg';
-import { ReactComponent as Sucesso } from '../../assets/sucess-icon.svg';
+import sucesso from '../../assets/sucess-icon.png';
 import { useForm, Controller } from 'react-hook-form';
 import useAuth from '../../hook/useAuth';
 import { useHistory, Link } from 'react-router-dom';
@@ -15,7 +15,7 @@ import { Typography } from '@material-ui/core';
 
 import './index.css';
 
-export default function ModalEndereco({ openModalResumo }) {
+export default function ModalEndereco({ openModalResumo, setEndereco }) {
   const classes = useStyles();
   
   const [ erro, setErro ] = useState('');
@@ -23,7 +23,6 @@ export default function ModalEndereco({ openModalResumo }) {
   const [ open, setOpen ] = useState(false);
   const { token, userPersistido } = useAuth();
   const { handleSubmit, control } = useForm();
-  const [ endereco, setEndereco ] = useState('');
   const [ adicionado, setAdicionado ] = useState(false);
   
   function handleOpen() {
@@ -34,13 +33,42 @@ export default function ModalEndereco({ openModalResumo }) {
     setOpen(false);
   }
 
-  function cadastrarEndereco(data) {
-    console.log(data);
-    setAdicionado(true);
-  }
+  async function cadastrarEndereco(data) {
+  
+    const enderecoEnvio = {
+      cep: data.cep,
+      endereco: data.endereco,
+      complemento: data.complemento,
+    }
+    
+    setCarregando(true);
+    setErro('');
+    
+    try {
+      const resposta = await fetch('http://localhost:3001/endereco', {
+        method: 'POST',
+        body: JSON.stringify(enderecoEnvio),
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      
+      const dados = await resposta.json();
+      
+      setCarregando(false);
+      
+      if (!resposta.ok) {
+        return setErro(dados);
+      }
+      
+      setEndereco(enderecoEnvio);
+      setAdicionado(true);
+      
+    } catch (error) {
+      setErro(error.message)
+    }
 
-  function voltando() {
-    setAdicionado(false);
   }
 
   return (
@@ -80,13 +108,13 @@ export default function ModalEndereco({ openModalResumo }) {
             </div>
           </form>}
           { adicionado && <div>
-            <Sucesso/>
+            <img src={sucesso} />
             <h2>Endereço adicionado com sucesso!</h2>
             <Button 
                 className={classes.botaoConfirmarPedido} 
                 type="button" 
                 color="secondary"
-                onClick={voltando}
+                onClick={handleClose}
               >
               Voltar para o carrinho
               </Button>

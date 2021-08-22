@@ -24,9 +24,10 @@ export default function ModalResumoPedido(props) {
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
 
-  const { token } = useAuth();
+  const { token, userPersistido } = useAuth();
   
-  const [ endereco, setEndereco ] = useState('');
+  const [ endereco, setEndereco ] = useState();
+  const [ enderecoEffect, setEnderecoEffect ] = useState(endereco);
 
 
   // tem que pegar o endereço persistido
@@ -38,10 +39,10 @@ export default function ModalResumoPedido(props) {
     props.setPedidoConcluido(false);
   };
 
- /*  const finalizarPedido = () => {
+  useEffect( () => {
+    setEnderecoEffect(endereco);
+  }, [setEndereco, endereco])
 
-  } */
-  
   return (
     <div>
       <Modal
@@ -61,7 +62,15 @@ export default function ModalResumoPedido(props) {
           {!props.pedidoConcluido && 
             <div className="conteudo-cartao" >
               <div className="container-endereco">
-                <ModalEndereco openModalResumo={props.openModalResumo} />
+                {enderecoEffect ? 
+                  <div>
+                    <p>Endereço de Entrega: 
+                      <p>{enderecoEffect.endereco}</p>
+                      <p>{enderecoEffect.cep}</p>
+                      <p>{enderecoEffect.complemento}</p>
+                    </p> 
+                  </div> :
+                <ModalEndereco openModalResumo={props.openModalResumo} setEndereco={setEndereco} />}
               </div>
               <Typography variant="body1" color="textSecondary" component="p" style={{ display: 'flex', gap: 5 }} >
                 <span>
