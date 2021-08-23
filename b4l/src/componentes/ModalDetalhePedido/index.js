@@ -6,6 +6,8 @@ import Loading from '../Loading';
 import useStyles from './styles';
 import { ReactComponent as ImagemCarrinho } from '../../assets/carrinho.svg';
 import { ReactComponent as BotaoFecharModal } from '../../assets/botao-close-modal.svg';
+import { ReactComponent as IconeDinheiro } from '../../assets/icone-dinheiro.svg';
+import { ReactComponent as IconeTempo } from '../../assets/icone-tempo.svg';
 
 import useAuth from '../../hook/useAuth';
 
@@ -81,6 +83,7 @@ export default function ModalDetalhePedido(props) {
             </Typography>
             <div className="info">
               <Typography variant="body2" color="textSecondary" component="p" style={{ display: "flex", gap: "5px" }}>
+                <IconeDinheiro/>
                 <span>
                   Pedido Mínimo: 
                 </span>
@@ -90,10 +93,12 @@ export default function ModalDetalhePedido(props) {
                 </div>
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p" style={{ display: "flex", gap: "5px" }}>
+                <IconeTempo/>
                 <span>
                   Tempo de Entrega
                 </span>
                 {props.restaurante.tempo_entrega_minutos}
+                min
               </Typography>
             </div>
             <div className="detalhes">
