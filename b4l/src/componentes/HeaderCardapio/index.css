@@ -1,13 +1,15 @@
 .header {
     display: block;
     width: 100vw;
+    background-color: #F9F9F9;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    height: 100px;
+    height: 120px;
     gap: 50px;
+    background-color: #F9F9F9;
 }
 
 .header-text {
@@ -15,7 +17,7 @@
     position: relative;
     color: white;
     z-index: 3;
-    top: -50%;
+    top: -70%;
     left: 35%;
     display: flex;
     justify-content: space-between;
