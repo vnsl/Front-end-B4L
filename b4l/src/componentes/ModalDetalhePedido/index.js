@@ -39,6 +39,7 @@ export default function ModalDetalhePedido(props) {
 
   useEffect(() => {
     setProdutoAtualizado({
+      restaurante_id: props.restaurante.id,
       id: id,
       nome,
       imagem,

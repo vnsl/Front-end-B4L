@@ -41,7 +41,6 @@ function Produtos() {
     const [custoTotalCarrinho, setCustoTotalCarrinho] = useState(custoTotalCarrinhoPersistido);
 
     const [ qtdProduto, setQtdProduto ] = useState(1);
-    // const [pedido, setPedido] = useState(pedidoPersistido);
     const [pedidoConcluido, setPedidoConcluido] = useState(false);
 
     const [dadosProduto, setDadosProduto] = useState({});
@@ -49,7 +48,6 @@ function Produtos() {
     const location = useLocation();
 
     const handleOpenModalResumo = () => {
-      console.log(userPersistido);
       setOpenModalDetalhe(false);
       setOpenModalResumo(true);
     }
@@ -73,6 +71,12 @@ function Produtos() {
       );
 
       if (produtoNoCarrinho) {
+
+        if (produtoNoCarrinho.restaurante_id !== produtoAtualizado.restaurante_id) {
+          setErro("O pedido deve ser feito para apenas um restaurante.");
+          return;
+        }
+
         produtoNoCarrinho.quantidade_produto = produtoAtualizado.quantidade;
         produtoNoCarrinho.custo_total_produto = produtoAtualizado.valor_total;
         setCarrinho(novosProdutos);
@@ -88,6 +92,7 @@ function Produtos() {
       }
 
       novosProdutos.push({
+        restaurante_id: produtoAtualizado.restaurante_id,
         produto_id: produtoAtualizado.id,
         nome: produtoAtualizado.nome,
         imagem: produtoAtualizado.imagem,
@@ -242,6 +247,15 @@ function Produtos() {
       'direction': 'ltr'
     }
 
+    function mudarRestaurante() {
+      if(carrinho.length > 0) {
+        console.log("tem item");
+        setCarrinho([]);
+      } else {
+        history.push('/restaurantes');
+      }
+    }
+
     return (
         <div className='content-produtos'>
             {carregando && <Loading/>}
@@ -253,18 +267,18 @@ function Produtos() {
                       className={classes.botaoRestaurantes} 
                       type="button" 
                       color="secondary" 
-                      onClick={() => {
-                        history.push('/restaurantes');
-                      }}>
+                      onClick={mudarRestaurante}>
                         Restaurantes
                     </Button>
-                    <Button 
-                      className={classes.botaoRevisarCarrinho} 
-                      type="button" 
-                      color="secondary" 
-                      onClick={handleOpenModalResumo}>
-                        Revisar Pedido
-                    </Button>
+                    {carrinho.length > 0 && 
+                      <Button 
+                        className={classes.botaoRevisarCarrinho} 
+                        type="button" 
+                        color="secondary" 
+                        onClick={handleOpenModalResumo}>
+                          Revisar Pedido
+                      </Button>
+                    }
                   </div>                  
                   <div className='informacoes'>
                     <div className="container-tempo-e-dinheiro" >
