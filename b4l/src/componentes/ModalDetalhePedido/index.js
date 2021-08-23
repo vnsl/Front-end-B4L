@@ -54,6 +54,7 @@ export default function ModalDetalhePedido(props) {
   }
 
   const handleClose = () => {
+    props.setQtdProduto(1);
     props.setCarrinhoVisivel(false);
     props.setOpenModalDetalhe(false);
   }

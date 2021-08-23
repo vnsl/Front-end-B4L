@@ -12,11 +12,12 @@ h4 {
     display: flex;
     flex-direction: column;
     width: 625px;
-    height: 820px;
+    height: 90%;
     background-color: #F9F9F9;
     border-radius: 16px;
     margin: 20px auto;
     padding: 70px;
+    overflow-y: auto;
 }
 
 .conteudo-cartao {
@@ -51,13 +52,21 @@ span {
 
 .carrinho-cheio {
     overflow: auto;
-    height: 45%;
+    height: 55%;
+}
+
+.carrinho-vazio {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .adicionar-itens {
     text-align: center;
     font-size: 13px !important;
     text-decoration: underline;
+    margin-top: 20px !important;
     margin-bottom: 10px !important;
 }
 

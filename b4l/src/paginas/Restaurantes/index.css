@@ -24,12 +24,11 @@
     color: black;
 }
 
-h2 {
+h5 {
     color: var(--cor-vermelho);
     font-family: 'Baloo 2', cursive !important;
     font-weight: 700 !important;
     font-size: 32px !important;
-    margin-bottom: 68px !important;
 }
 
 .standard-text-consumidor {

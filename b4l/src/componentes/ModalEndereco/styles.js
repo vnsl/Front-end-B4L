@@ -7,7 +7,7 @@ export default makeStyles((theme) => ({
       color: 'white',
       borderRadius: 20,
       backgroundColor: `var(--cor-vermelho)`,
-      marginTop: 20,
+      margin: '20px 0',
       padding: '5px 30px'
     },   
   }));

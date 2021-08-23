@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import CustomModal from '../../componentes/Modal';
-// import ModalEditarUsuario from '../../componentes/ModalEditarUsuario';
+import Button from '@material-ui/core/Button';
 import CardMarket from '../../componentes/CardShow';
 import useAuth from '../../hook/useAuth';
 import { useHistory, useLocation } from 'react-router-dom';
 import Loading from '../../componentes/Loading';
 import { ReactComponent as NoProducts } from '../../assets/resta-noitems.svg';
-import { ReactComponent as IconeSucesso } from '../../assets/sucess-icon.svg';
-
-import Teste from '../../componentes/ModalEndereco';
+import { ReactComponent as IconeDinheiro } from '../../assets/icone-dinheiro.svg';
+import { ReactComponent as IconeTempo } from '../../assets/icone-tempo.svg';
+import { Typography } from '@material-ui/core';
 
 import './index.css';
+import useStyles from './styles';
 
 import Header from '../../componentes/HeaderCardapio';
 import ModalDetalhePedido from '../../componentes/ModalDetalhePedido';
@@ -22,7 +23,8 @@ function persistirCarrinho(carrinho, custoTotalCarrinho) {
 }
 
 function Produtos() {
-    const { token } = useAuth();
+    const classes = useStyles();
+    const { token, userPersistido } = useAuth();
     const [erro, setErro] = useState('');
     const [informacao, setInformacao] = useState({});
     const [cardapio, setCardapio] = useState([]);
@@ -30,14 +32,15 @@ function Produtos() {
     const [openModalDetalhe, setOpenModalDetalhe] = useState(false);
     const [openModalResumo, setOpenModalResumo] = useState(false);
     const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
-    
+    const [verMais, setVerMais] = useState(false);
+
     const carrinhoPersistido = localStorage.getItem("carrinho") ? JSON.parse(localStorage.getItem("carrinho")) : [];
     const custoTotalCarrinhoPersistido = localStorage.getItem("custoTotalCarrinho") ? Number(localStorage.getItem("custoTotalCarrinho")) : 0;
 
     const [carrinho, setCarrinho] = useState(carrinhoPersistido);
     const [custoTotalCarrinho, setCustoTotalCarrinho] = useState(custoTotalCarrinhoPersistido);
 
-    const [ qtdProduto, setQtdProduto ] = useState(0);
+    const [ qtdProduto, setQtdProduto ] = useState(1);
     // const [pedido, setPedido] = useState(pedidoPersistido);
     const [pedidoConcluido, setPedidoConcluido] = useState(false);
 
@@ -46,6 +49,7 @@ function Produtos() {
     const location = useLocation();
 
     const handleOpenModalResumo = () => {
+      console.log(userPersistido);
       setOpenModalDetalhe(false);
       setOpenModalResumo(true);
     }
@@ -120,8 +124,20 @@ function Produtos() {
       return;
     }
 
-    async function finalizarPedido(id) {
+    async function finalizarPedido(id, custoCarrinho, enderecoEffect) {
       try {
+        setCarregando(true);
+
+        if (!enderecoEffect) {
+          setErro("Não é possível prosseguir sem um endereço cadastrado.");
+          return;
+        }
+
+        if (custoCarrinho === 0) {
+          setErro("Não é possível prosseguir sem produtos.");
+          return;
+        }        
+        
         setCarregando(true);
         setErro('');
 
@@ -169,6 +185,7 @@ function Produtos() {
 
         setCarregando(false);
         setCarrinho([]);
+        setCustoTotalCarrinho(0);
         setPedidoConcluido(true);        
       } catch (error) {
         return setErro(error.message);
@@ -215,25 +232,70 @@ function Produtos() {
       carregarRestaurante();
     }, []);
 
+    const estiloDescricao = {
+      'textAlign': 'left',
+      'width': '450px',
+      'display': 'inline-block',
+      'whiteSpace': 'nowrap',
+      'overflow': 'hidden',
+      'textOverflow': 'ellipsis',
+      'direction': 'ltr'
+    }
+
     return (
         <div className='content-produtos'>
             {carregando && <Loading/>}
             
             <Header restaurante={informacao} />
                 <div className='container-produtos'>
-                  <button 
-                    className='botao-retorno' 
-                    onClick={() => {
-                      history.push('/restaurantes');
-                    }}
-                  >
-                    Restaurantes
-                  </button>
-                  <Teste/>
+                  <div className="container-botoes-topo">
+                    <Button 
+                      className={classes.botaoRestaurantes} 
+                      type="button" 
+                      color="secondary" 
+                      onClick={() => {
+                        history.push('/restaurantes');
+                      }}>
+                        Restaurantes
+                    </Button>
+                    <Button 
+                      className={classes.botaoRevisarCarrinho} 
+                      type="button" 
+                      color="secondary" 
+                      onClick={handleOpenModalResumo}>
+                        Revisar Pedido
+                    </Button>
+                  </div>                  
                   <div className='informacoes'>
-                    <p>Pedido Mínimo: R$ {informacao.valor_minimo_pedido},00</p>
-                    <p>Tempo de Entrega: {informacao.tempo_entrega_minutos} min</p>
-                    <p> Descrição: {informacao.descricao}</p>
+                    <div className="container-tempo-e-dinheiro" >
+                      <div className="dinheiro">
+                        <IconeDinheiro />
+                        <Typography variant="body2" color="textSecondary" component="p" style={{ maxWidth: 525}} >
+                          <span style={{ marginRight: 5}} >
+                            Pedido Mínimo: 
+                          </span>
+                          R$ {(informacao.valor_minimo_pedido).toFixed([2])}
+                        </Typography>
+                      </div>
+                      <div className="tempo">
+                        <IconeTempo />
+                        <Typography variant="body2" color="textSecondary" component="p" style={{ maxWidth: 525}} >
+                          <span style={{ marginRight: 5}} >
+                            Tempo de Entrega: 
+                          </span>
+                          {informacao.tempo_entrega_minutos}
+                          min
+                        </Typography>
+                      </div>
+                    </div>
+                    {informacao.descricao && <div className="texto-descricao">
+                      <Typography variant="body2" color="textSecondary" component="p" style={!verMais ? estiloDescricao : {maxWidth: 450, textAlign: 'left'}} >
+                        {informacao.descricao}
+                      </Typography>
+                      <Typography variant="body2" color="textPrimary" component="p" style={{fontWeight: 'bold', color: 'var(--cor-vermelho)'}} onClick={() => setVerMais(!verMais)} >
+                        {!verMais ? "ver mais" : "ver menos"}
+                      </Typography>
+                    </div>}                    
                   </div>
                   {cardapio.length > 0?(
                     <div>               
@@ -250,7 +312,7 @@ function Produtos() {
                   }
                 </div>
                 <ModalDetalhePedido restaurante={informacao} produto={dadosProduto} openModalDetalhe={openModalDetalhe} qtdProduto={qtdProduto} setQtdProduto={setQtdProduto} setOpenModalDetalhe={setOpenModalDetalhe} handleOpenModalResumo={handleOpenModalResumo} carrinho={carrinho} setCarrinho={setCarrinho} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} adicionarProdutoAoCarrinho={adicionarProdutoAoCarrinho} erro={erro} />
-                <ModalResumoPedido carrinho={carrinho} custoTotalCarrinho={custoTotalCarrinho} restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} pedidoConcluido={pedidoConcluido} setPedidoConcluido={setPedidoConcluido} excluirProduto={excluirProduto} finalizarPedido={finalizarPedido} />
+                <ModalResumoPedido carrinho={carrinho} custoTotalCarrinho={custoTotalCarrinho} restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} pedidoConcluido={pedidoConcluido} setPedidoConcluido={setPedidoConcluido} excluirProduto={excluirProduto} finalizarPedido={finalizarPedido} erro={erro} setErro={setErro} />
         </div>
     )
     

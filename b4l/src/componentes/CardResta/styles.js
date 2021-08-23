@@ -11,15 +11,16 @@ export default makeStyles({
     cardActionArea: {
       display: 'flex',
       justifyContent: 'space-between',
-      height: 238,
-      padding: 20,      
+      height: '100%',
+      padding: 20,    
+      gap: 10   
     },
-
     cardContent: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'start',
-      gap: 10,
+      height: '100%',
+      gap: 10
     },
     media: {
       minWidth: 174,  

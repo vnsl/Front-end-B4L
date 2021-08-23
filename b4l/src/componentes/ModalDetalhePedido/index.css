@@ -5,10 +5,11 @@
     flex-direction: column;
     align-items: center;
     width: 625px;
-    height: 820px;
+    height: 90%;
     background-color: #F9F9F9;
     border-radius: 16px;
     margin: 20px auto;
+    overflow-y: auto;
 }
 
 .header-card img {
@@ -26,7 +27,7 @@
 
 .imagem-restaurante img {
     position: absolute;
-    /* background-color: gray; */
+    background-color: gray;
     height: 119px;
     width: 119px;
     border-radius: 50%;
@@ -85,6 +86,7 @@
 .bottom-link {
     text-align: center;
     font-size: 13px !important;
+    margin-bottom: 20px !important;
 }
 
 span {

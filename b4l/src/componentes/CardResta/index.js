@@ -33,10 +33,10 @@ export default function CustomCard({ restaurante }) {
       {carregando && <Loading/>}
       <CardActionArea className={`${classes.cardActionArea}`}>
         <CardContent className={classes.cardContent}>
-          <Typography variant="h5" component="h2" >
+          <Typography variant="h5" component="h5" >
             {nome}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" color="textSecondary" component="p" style={{ width: '300px', height: '100px', overflowY: 'auto', textAlign: 'left'}} >
             {descricao}
           </Typography>
           <CardActions>

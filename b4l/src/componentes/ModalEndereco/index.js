@@ -46,7 +46,7 @@ export default function ModalEndereco({ openModalResumo, setEndereco }) {
     
     try {
       const resposta = await fetch('http://localhost:3001/endereco', {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(enderecoEnvio),
         headers: {
           'Content-type': 'application/json',
