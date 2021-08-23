@@ -274,7 +274,7 @@ function Produtos() {
                           <span style={{ marginRight: 5}} >
                             Pedido Mínimo: 
                           </span>
-                          R$ {(informacao.valor_minimo_pedido).toFixed([2])}
+                          R$ {informacao.valor_minimo_pedido ? (informacao.valor_minimo_pedido).toFixed([2]) : 0}
                         </Typography>
                       </div>
                       <div className="tempo">
