@@ -327,7 +327,7 @@ export default function CustomModal(props) {
         <Button className={classes.botaoOpenModal} variant="contained" type="button" color="secondary" onClick={handleOpen}>
         Adicionar produto ao cardápio
         </Button> :
-        <Button variant="contained" type="button" color="secondary" onClick={handleOpen}>
+        <Button variant="contained" type="button" color="secondary" onClick={handleOpen} style={{marginTop: 10}} >
           Editar produto
         </Button>
       }

@@ -16,7 +16,7 @@ function Restaurantes() {
     const [carregando, setCarregando] = useState(false);
     const [carregar, setCarregar] = useState(false);
     const history = useHistory();
-
+    
     useEffect(() => {
       setCarregar(false);
       async function carregarRestaurantes() {
@@ -42,10 +42,6 @@ function Restaurantes() {
             return setErro(dados);
           };
 
-          // if (erro) {
-          //   return setErro(dados);
-          // }
-          
           setRestaurantes(dados);
 
           if(dados.length === 0) {
@@ -58,7 +54,7 @@ function Restaurantes() {
       }
       carregarRestaurantes();
     }, [token, carregar]);
-    
+
     const restaurantesFiltrados = restaurantes.filter((restaurante) => {
       if (busca === '') {
         return restaurante;
@@ -78,8 +74,9 @@ function Restaurantes() {
                     <p>Não há restaurantes cadastrados.</p>
                   </div>}
                   <div className='cards'>
-                    {restaurantesFiltrados.map(restaurante => <Card key={restaurante.id} restaurante={restaurante} recarregar={() => setCarregar(true)}/>)
-                    }
+                    {restaurantesFiltrados.map(restaurante => 
+                      <Card key={restaurante.id} restaurante={restaurante} recarregar={() => setCarregar(true)}/>
+                    )}
                   </div>         
                 </div>
         </div>

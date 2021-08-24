@@ -1,0 +1,59 @@
+.modal-endereco:first-child {
+    color: var(--cor-vermelho);
+    text-decoration: underline;
+}
+
+.card-endereco {
+    display: flex;
+    flex-direction: column;
+    width: 625px;
+    height: 90%;
+    background-color: #F9F9F9;
+    border-radius: 16px;
+    margin: 20px auto;
+    padding: 70px;
+    gap: 18px;
+    overflow-y: auto;
+}
+
+.try {
+    /* overflow: auto; */
+    height: 90vh;
+}
+
+.nome-restaurante {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.container-endereco {
+    background: rgba(251, 59, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+span {
+    font-weight: bold;
+}
+
+.resumo-valores {
+    margin-top: auto;
+}
+
+.text-container-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.total-pedido {
+    margin-top: 15px;
+}
+
+.container-botao {
+    display: flex;
+    justify-content: center;
+}
+

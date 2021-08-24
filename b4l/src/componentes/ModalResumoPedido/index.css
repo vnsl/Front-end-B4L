@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+
+
+h4 {
+    font-family: 'Baloo 2', cursive !important;
+    font-weight: bold !important;
+    color: rgba(18, 18, 18, 0,8) !important;
+}
+
+.card-resumo-pedido {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 625px;
+    height: 90%;
+    background-color: #F9F9F9;
+    border-radius: 16px;
+    margin: 20px auto;
+    padding: 70px;
+    overflow-y: auto;
+}
+
+.conteudo-cartao {
+    display: flex;
+    flex-direction: column;
+    height: 88%;
+    gap: 20px;
+}
+
+.botao-fechar-resumo {
+    position: absolute;
+    top: 70px;
+    right: 70px;
+    cursor: pointer;
+}
+
+.nome-restaurante {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.container-endereco {
+    background: rgba(251, 59, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+span {
+    font-weight: bold;
+}
+
+.carrinho-cheio {
+    overflow: auto;
+    height: 45%;
+}
+
+.carrinho-vazio {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.adicionar-itens {
+    text-align: center;
+    font-size: 13px !important;
+    text-decoration: underline;
+    margin-top: 20px !important;
+    margin-bottom: 10px !important;
+}
+
+.resumo-valores {
+    margin-top: auto;
+}
+
+.text-container-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.total-pedido {
+    margin-top: 15px;
+}
+
+.container-botao {
+    display: flex;
+    justify-content: center;
+}
+
+.container-sucesso {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.container-imagem {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    height: 70%; 
+
+}
+

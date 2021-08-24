@@ -14,6 +14,7 @@ import Produtos from "./paginas/Produtos";
 import LoginConsumidor from "./paginas/LoginConsumidor";
 import CadastroConsumidor from "./paginas/CadastroConsumidor";
 import Restaurantes from "./paginas/Restaurantes";
+import Cardapio from "./paginas/Cardapio";
 
 // import { AuthProvider } from './context/AuthContext';
 import useAuth from './hook/useAuth';
@@ -67,23 +68,9 @@ function Routes() {
                 <Route path="/loginconsumidor" exact component={LoginConsumidor}/>  
                 <Route path="/cadastroconsumidor" component={CadastroConsumidor}/>
 
-                {/* {consumidor && <Route path="/restaurantes" component={Restaurantes}/>} */}
-                {/* {token && <Route path="/produtos" component={Produtos}/>} */}
                 <PrivateRoute1 exact path='/produtos' component={Produtos}/>
                 <PrivateRoute2 exact path='/restaurantes' component={Restaurantes}/>
-
-
-                {/* <Switch>
-                    <RotasProtegidasConsumidor>
-                        <Route path="/restaurantes" component={Restaurantes}/>  
-                    </RotasProtegidasConsumidor>
-                </Switch> */}
-                
-                {/* <Switch>
-                    <RotasProtegidasProprietario>
-                        <Route path="/produtos" component={Produtos}/>
-                    </RotasProtegidasProprietario>
-                </Switch> */}
+                <PrivateRoute2 exact path='/cardapio/:id' component={Cardapio}/>
                 
             </Switch>
         </Router>
