@@ -1,4 +1,4 @@
-.content {
+.content-produtos {
     position: relative;
     z-index: 0;
     width: 100vw;
@@ -6,6 +6,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.container-produtos {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: right;
+    margin-top: 40px;
+    padding: 10px;
 }
 
 h2 {
@@ -16,23 +27,20 @@ h2 {
     margin-bottom: 68px !important;
 }
 
-.container-produtos {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.standard-text {
+    font-size: 16px;
+    color: #525459;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 40px;
 }
 
-.container-produtos:last-child {
-    margin-top: 15px;
+.container-modal {
+    margin-right: 30px;
 }
 
 .modal {
-    padding-top: 15px;
+    margin-left: auto;
+    margin-right: 20px;
 }
 
 .cards {
@@ -41,6 +49,7 @@ h2 {
     row-gap: 40px;
     column-gap: 32px;
     padding-top: 30px;
+    margin-top: 100px;
 }
 
 .botao-direita {

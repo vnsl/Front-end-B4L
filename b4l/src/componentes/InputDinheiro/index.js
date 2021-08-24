@@ -2,8 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import TextField from '@material-ui/core/TextField';
-
-
+import { Controller } from 'react-hook-form';
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
 
@@ -40,20 +39,19 @@ export default function InputDinheiro(props) {
   });
 
   const handleChange = (event) => {
-    /* setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    }); */
     setValues(event.target.value);
   };
 
   return (
-    <div>
-      <TextField
+    <Controller
+      name={props.name}
+      control={props.control}
+      render={({ field }) => <TextField
+        className='textarea'
         variant="outlined"
         label={props.label}
+        defaultValue={props.defaultValue}
         key={props.label}
-        {...props.register("10")}
         value={values.numberformat}
         onChange={handleChange}
         name="numberformat"
@@ -61,7 +59,8 @@ export default function InputDinheiro(props) {
         InputProps={{
           inputComponent: NumberFormatCustom,
         }}
-      />
-    </div>
+        {...field}
+      />}
+    />
   );
 }

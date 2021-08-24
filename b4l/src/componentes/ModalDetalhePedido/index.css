@@ -1,0 +1,94 @@
+.card-detalhe-pedido {
+    position: relative;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 625px;
+    height: 90%;
+    background-color: #F9F9F9;
+    border-radius: 16px;
+    margin: 20px auto;
+    overflow-y: auto;
+}
+
+.header-card img {
+    width: 625px;
+    height: 337px;
+    border-radius: 16px 16px 0 0;
+}
+
+.botao-fechar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.imagem-restaurante img {
+    position: absolute;
+    background-color: gray;
+    height: 119px;
+    width: 119px;
+    border-radius: 50%;
+    top: 280px;
+    left: 460px;
+}
+
+.text-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 50px;
+    gap: 35px;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detalhes {
+    display: flex;
+    justify-content: space-between;
+}
+
+.preco-total {
+    display: flex;
+    align-items: center;
+    padding: 8px 35px;
+    background: linear-gradient(0deg, rgba(13, 138, 79, 0.1), rgba(13, 138, 79, 0.1)), #FFFFFF;
+    border-radius: 4px;
+}
+
+.botoes {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
+}
+
+.quantidade {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    gap: 30px;
+    font-weight: bold;
+}
+
+.img-carrinho {
+    display: flex;
+    height: 50%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom-link {
+    text-align: center;
+    font-size: 13px !important;
+    margin-bottom: 20px !important;
+}
+
+span {
+    font-weight: bold;
+}

@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+
+.main-screen {
+    display: flex;
+    height: 100vh;
+}
+
+.div-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 40px;
+}
+
+.container-img-barril {
+    display: flex;
+    width: 100%;
+    align-items: left;
+}
+
+.img-app {
+    width: 70%;
+    height: 70%;
+}
+
+.caixa-consumidor {
+    width: 50%;
+    height: 100vh;
+    border-bottom-left-radius: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 16px rgba(50, 50, 50, 0.15);
+}
+
+.content-consumidor {
+    display: flex;
+    flex-direction: column;
+    padding: 100px;
+}
+
+.bottom-text {
+    color: #6F7377;
+    font-family: 'Montserrat', sans-serif !important;
+}
