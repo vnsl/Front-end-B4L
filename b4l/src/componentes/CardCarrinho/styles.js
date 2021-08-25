@@ -2,11 +2,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
     cardCarrinho: { 
+      display: 'flex',
+      alignItems: 'center',
       position: 'relative',
       width: '100%',
       height: 80,
       marginBottom: 30,
       boxShadow: 'none',
+      backgroundColor: '#f9f9f9'
     },
     cardActionArea: {
       display: 'flex',
@@ -14,7 +17,6 @@ export default makeStyles({
       alignItems: 'center',
       gap: 5,
       height: '100%',
-      cursor: 'default',
     },
     botaoExcluir: {
       marginLeft: 'auto',

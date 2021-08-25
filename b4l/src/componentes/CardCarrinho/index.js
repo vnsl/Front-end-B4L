@@ -31,7 +31,7 @@ export default function CardCarrinho({ itemCarrinho, excluirProduto }) {
           <Typography variant="h5" component="h5" style={{ fontSize: '20px'}} >
             {itemCarrinho.nome}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p" style={{ display: 'flex', gap: 5, cursor: 'default' }} >
+          <Typography variant="body2" color="textSecondary" component="p" style={{ display: 'flex', gap: 5 }} >
             {itemCarrinho.quantidade_produto} 
             <div>
               {unidade}
@@ -43,9 +43,8 @@ export default function CardCarrinho({ itemCarrinho, excluirProduto }) {
             </Typography>
           </div>  
         </CardContent>
-        <BotaoExcluirProduto fill="red" className={classes.botaoExcluir} onClick={() => excluirProduto(itemCarrinho.produto_id)} />
-        
       </CardActionArea>
+        <BotaoExcluirProduto fill="red" className={classes.botaoExcluir} onClick={() => excluirProduto(itemCarrinho.produto_id)} />
     </Card>
   );
 }

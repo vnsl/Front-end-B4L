@@ -87,7 +87,6 @@ function Produtos() {
         setCustoTotalCarrinho(novoCustoTotalCarrinho);
         setErro('');
         setCarrinhoVisivel(true);
-        setQtdProduto(0);
         return;
       }
 
@@ -107,7 +106,6 @@ function Produtos() {
       
       setErro('');
       setCarrinhoVisivel(true);
-      setQtdProduto(0);
     }
 
     function excluirProduto (idProduto) {
