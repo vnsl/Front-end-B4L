@@ -29,6 +29,7 @@ function Produtos() {
     const [informacao, setInformacao] = useState({});
     const [cardapio, setCardapio] = useState([]);
     const [carregando, setCarregando] = useState(false);
+    const [acao, setAcao] = useState('');
     const [openModalDetalhe, setOpenModalDetalhe] = useState(false);
     const [openModalResumo, setOpenModalResumo] = useState(false);
     const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
@@ -57,6 +58,8 @@ function Produtos() {
     }, [carrinho, custoTotalCarrinho]);
 
     function adicionarProdutoAoCarrinho(produtoAtualizado) {
+
+      console.log(produtoAtualizado);
 
       if (produtoAtualizado.quantidade === 0) {
         setErro("Informe a quantidade desejada antes de prosseguir.");
@@ -96,6 +99,7 @@ function Produtos() {
         nome: produtoAtualizado.nome,
         imagem: produtoAtualizado.imagem,
         quantidade_produto: produtoAtualizado.quantidade,
+        preco: produtoAtualizado.preco,
         custo_total_produto: produtoAtualizado.valor_total 
       });
       setCarrinho(novosProdutos);
@@ -312,7 +316,7 @@ function Produtos() {
                   {cardapio.length > 0?(
                     <div>               
                       <div className='cards'>
-                        {cardapio.map(produto => <CardMarket key={produto.id} produto={produto} handleOpenModalResumo={handleOpenModalResumo} restaurante={informacao} setOpenModalDetalhe={setOpenModalDetalhe} setDadosProduto={setDadosProduto} setCarrinhoVisivel={setCarrinhoVisivel} />)}
+                        {cardapio.map(produto => <CardMarket key={produto.id} setAcao={setAcao} produto={produto} handleOpenModalResumo={handleOpenModalResumo} restaurante={informacao} setOpenModalDetalhe={setOpenModalDetalhe} setDadosProduto={setDadosProduto} setCarrinhoVisivel={setCarrinhoVisivel} />)}
                       </div>
                     </div>
                     ) :(
@@ -323,8 +327,8 @@ function Produtos() {
                     )
                   }
                 </div>
-                <ModalDetalhePedido restaurante={informacao} produto={dadosProduto} openModalDetalhe={openModalDetalhe} qtdProduto={qtdProduto} setQtdProduto={setQtdProduto} setOpenModalDetalhe={setOpenModalDetalhe} handleOpenModalResumo={handleOpenModalResumo} carrinho={carrinho} setCarrinho={setCarrinho} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} adicionarProdutoAoCarrinho={adicionarProdutoAoCarrinho} erro={erro} />
-                <ModalResumoPedido carrinho={carrinho} custoTotalCarrinho={custoTotalCarrinho} restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} pedidoConcluido={pedidoConcluido} setPedidoConcluido={setPedidoConcluido} excluirProduto={excluirProduto} finalizarPedido={finalizarPedido} erro={erro} setErro={setErro} />
+                <ModalDetalhePedido acao={acao} restaurante={informacao} produto={dadosProduto} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} qtdProduto={qtdProduto} setQtdProduto={setQtdProduto} handleOpenModalResumo={handleOpenModalResumo} carrinho={carrinho} setCarrinho={setCarrinho} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} adicionarProdutoAoCarrinho={adicionarProdutoAoCarrinho} erro={erro} />
+                <ModalResumoPedido setAcao={setAcao} carrinho={carrinho} custoTotalCarrinho={custoTotalCarrinho} restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} setOpenModalDetalhe={setOpenModalDetalhe} setDadosProduto={setDadosProduto} setCarrinhoVisivel={setCarrinhoVisivel} pedidoConcluido={pedidoConcluido} setPedidoConcluido={setPedidoConcluido} excluirProduto={excluirProduto} finalizarPedido={finalizarPedido} erro={erro} setErro={setErro} />
         </div>
     )
     

@@ -11,7 +11,7 @@ import { ReactComponent as BotaoExcluirProduto } from '../../assets/icone-lixeir
 
 import useStyles from './styles';
 
-export default function CardCarrinho({ itemCarrinho, excluirProduto }) {
+export default function CardCarrinho({ itemCarrinho, excluirProduto, setOpenModalDetalhe, setCarrinhoVisivel, setDadosProduto, setAcao }) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -19,9 +19,16 @@ export default function CardCarrinho({ itemCarrinho, excluirProduto }) {
   
   const unidade = itemCarrinho.quantidade_produto > 1 ? "unidades" : "unidade";
 
+  const handleOpenEditarProduto = () => {
+    setAcao("editar");
+    setCarrinhoVisivel(false);
+    setOpenModalDetalhe(true);
+    setDadosProduto(itemCarrinho);
+  };
+
   return (
     <Card key={itemCarrinho.produto_id} className={`${classes.cardCarrinho}`}>
-      <CardActionArea className={`${classes.cardActionArea}`}>
+      <CardActionArea className={`${classes.cardActionArea}`} onClick={handleOpenEditarProduto} >
         <CardMedia
           className={classes.media}
           image={itemCarrinho.imagem}
@@ -39,7 +46,7 @@ export default function CardCarrinho({ itemCarrinho, excluirProduto }) {
           </Typography>
           <div className={classes.containerCustoTotalProduto}>
             <Typography className={classes.custoTotalProduto} variant="body2" color="textPrimary" component="p" style={{ cursor: 'default' }} >
-              R$ {(itemCarrinho.custo_total_produto).toFixed([2]) }
+              R$ {itemCarrinho.custo_total_produto && (itemCarrinho.custo_total_produto).toFixed([2]) }
             </Typography>
           </div>  
         </CardContent>

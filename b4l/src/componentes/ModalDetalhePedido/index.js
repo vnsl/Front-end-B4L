@@ -26,12 +26,8 @@ export default function ModalDetalhePedido(props) {
   
   const { id, nome, preco, descricao, imagem } = props.produto ?? '';
   
-  // const [ qtdProduto, props.setQtdProduto ] = useState(0);
   const [ valorTotalProduto, setValorTotalProduto ] = useState(preco);
-  const [produtoAtualizado, setProdutoAtualizado] = useState({});
-  
-  // const [carrinhoVisivel, setCarrinhoVisivel] = useState(false);
-  
+  const [produtoAtualizado, setProdutoAtualizado] = useState({});  
 
   useEffect(() => {
     setValorTotalProduto(props.qtdProduto*preco);  
@@ -40,10 +36,11 @@ export default function ModalDetalhePedido(props) {
   useEffect(() => {
     setProdutoAtualizado({
       restaurante_id: props.restaurante.id,
-      id: id,
+      id: props.acao === 'criar' ? id : props.produto.produto_id,
       nome,
       imagem,
       quantidade: props.qtdProduto,
+      preco,
       valor_total: valorTotalProduto 
     })
   }, [id, props.qtdProduto, valorTotalProduto]);
