@@ -10,6 +10,7 @@ import React from "react";
 import Login from "./paginas/Login";
 import Cadastro from "./paginas/Cadastro";
 import Produtos from "./paginas/Produtos";
+import Pedidos from "./paginas/Pedidos";
 
 import LoginConsumidor from "./paginas/LoginConsumidor";
 import CadastroConsumidor from "./paginas/CadastroConsumidor";
@@ -68,6 +69,7 @@ function Routes() {
                 <Route path="/loginconsumidor" exact component={LoginConsumidor}/>  
                 <Route path="/cadastroconsumidor" component={CadastroConsumidor}/>
 
+                <PrivateRoute1 exact path='/home' component={Pedidos}/>
                 <PrivateRoute1 exact path='/produtos' component={Produtos}/>
                 <PrivateRoute2 exact path='/restaurantes' component={Restaurantes}/>
                 <PrivateRoute2 exact path='/cardapio/:id' component={Cardapio}/>
