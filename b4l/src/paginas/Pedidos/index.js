@@ -43,7 +43,7 @@ function Produtos() {
           if (erro) {
             return setErro(dados);
           }
-          
+
           setPedidos(dados);
 
         } catch (error) {
@@ -53,6 +53,8 @@ function Produtos() {
       }
       carregarProdutos();
     }, [token, carregar]);
+
+    // const pedidosUnicos = pedidos.filter((item, i) => pedidos.indexOf(item) === i);
 
     return (
         <div className='content-produtos'>
@@ -85,7 +87,7 @@ function Produtos() {
                           )}
                           </table>  
                       </div>
-                      ) :(
+                      ) : (
                       <div>
                         <button className='modal'>Não entregues</button>
                         <button className='modal'>Entregues</button>
