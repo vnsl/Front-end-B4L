@@ -13,7 +13,7 @@ import Header from '../../componentes/HeaderProduto';
 function Produtos() {
     const { token } = useAuth();
     const [erro, setErro] = useState('');
-    const [produtos, setProdutos] = useState([]);
+    const [pedidos, setPedidos] = useState([]);
     const [carregando, setCarregando] = useState(false);
     const [carregar, setCarregar] = useState(false);
     const history = useHistory();
@@ -25,11 +25,9 @@ function Produtos() {
           setCarregando(true);
           setErro('');
 
-          const resposta = await fetch('http://localhost:3000/produtos', {
+          const resposta = await fetch('http://localhost:3000/pedidos', {
             method: 'GET',
-            body: JSON.stringify(),
             headers: {
-              'Content-type': 'application/json',
               'Authorization': `Bearer ${token}`
             }
         });
@@ -42,11 +40,11 @@ function Produtos() {
             return setErro(dados);
           };
 
-          // if (erro) {
-          //   return setErro(dados);
-          // }
+          if (erro) {
+            return setErro(dados);
+          }
           
-          setProdutos(dados);
+          setPedidos(dados);
 
         } catch (error) {
           return setErro(error.message);
@@ -62,21 +60,37 @@ function Produtos() {
             
             <Header recarregar={() => setCarregar(true)}/>
                 <div className='container-produtos'>
-                    {produtos.length > 0?(
+                    {pedidos.length > 0?(
                       <div>
                         <div className="container-modal" >
-                          <CustomModal className="modal" acao='Novo produto' recarregar={() => setCarregar(true)}/>
+                          <button className='modal'>Não entregues</button>
+                          <button className='modal'>Entregues</button>
                         </div>                        
-                        <div className='cards'>
-                          {produtos.map(produto => <CardMarket key={produto.id} produto={produto} recarregar={() => setCarregar(true)}/>)}
-                        </div>
+                          <table className='tabela'>
+                            <tr className='row'>
+                              <td>Pedido</td>
+                              <td>Items</td>
+                              <td>Endereço</td>
+                              <td>Cliente</td>
+                              <td>Total</td>
+                            </tr>
+                          {pedidos.map(pedido => 
+                            <tr>
+                              <td>{pedido.id}</td>
+                              <td>{pedido.itens}</td>
+                              <td>{pedido.endereco}, {pedido.cep}, {pedido.complemento}</td>
+                              <td>{pedido.nome}</td>
+                              <td>{pedido.valor_total_produto}</td>
+                            </tr>  
+                          )}
+                          </table>  
                       </div>
                       ) :(
                       <div>
-                        <CustomModal className='modal' acao='Novo produto' recarregar={() => setCarregar(true)}/>
+                        <button className='modal'>Não entregues</button>
+                        <button className='modal'>Entregues</button>
                         <div className="standard-text">
-                          <p>Você não tem nenhum produto no seu cardápio.</p>
-                          <p>Gostaria de adicionar um novo produto.</p>
+                          <p>Não há pedidos para o seu restaurante.</p>
                         </div>
                       </div>
                       )

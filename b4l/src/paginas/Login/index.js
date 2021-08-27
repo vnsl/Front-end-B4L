@@ -26,42 +26,42 @@ function Login() {
     const { logar } = useAuth();
 
     async function onSubmit(data) {
-        // setCarregando(true);
-        // setErro('');
+        setCarregando(true);
+        setErro('');
 
-        // try {
-        //   const resposta = await fetch('http://localhost:3000/login', {
-        //     method: 'POST',
-        //     body: JSON.stringify(data),
-        //     headers: {
-        //       'Content-type': 'application/json'
-        //     }
-        //   })
+        try {
+          const resposta = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+              'Content-type': 'application/json'
+            }
+          })
         
-        //   const dados = await resposta.json();
+          const dados = await resposta.json();
     
-        //   setCarregando(false);
+          setCarregando(false);
           
-        //   if (!resposta.ok) {
-        //     setErro(dados);
-        //     return;
-        //   }
+          if (!resposta.ok) {
+            setErro(dados);
+            return;
+          }
 
                   
-        //   const respostaCategorias = await fetch('http://localhost:3000/categorias', {
-        //     method: 'GET',
-        //     headers: {
-        //       'Content-type': 'application/json',
-        //     }
-        //   });
+          const respostaCategorias = await fetch('http://localhost:3000/categorias', {
+            method: 'GET',
+            headers: {
+              'Content-type': 'application/json',
+            }
+          });
 
-        //   const categorias = await respostaCategorias.json();          
+          const categorias = await respostaCategorias.json();          
           
-        //   logar(dados.token, dados.usuario, categorias);
-        //   history.push('/home');
-        // } catch (error) {
-        //   setErro(error.message)
-        // }
+          logar(dados.token, dados.usuario, categorias);
+          history.push('/home');
+        } catch (error) {
+          setErro(error.message)
+        }
     };
 
   return (
