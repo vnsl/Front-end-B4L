@@ -36,7 +36,11 @@ export default function Header(props) {
             <div className='logo'>
                 <ModalEditarUsuario className='modal' logo={logo} usuario={userPersistido} recarregar={props.recarregar}/>
                 <div className='header-text'>
-                    <h1>{userPersistido.restaurante.nome}</h1>
+                    <div>
+                        <h1>{userPersistido.restaurante.nome}</h1>
+                        <button onClick={() => history.push('/produtos')}>Cardápio</button>
+                        <button onClick={() => history.push('/home')}>Pedidos</button>
+                    </div>
                     <p onClick={logout}>Logout</p>
                 </div>
             </div>

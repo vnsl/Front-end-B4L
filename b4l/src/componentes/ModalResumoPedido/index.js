@@ -21,9 +21,8 @@ import './index.css';
 export default function ModalResumoPedido(props) {
   const classes = useStyles();
   
-  const { token, userPersistido } = useAuth();
+  const { token, userPersistido, endereco, setEndereco } = useAuth();
   
-  const [ endereco, setEndereco ] = useState();
   const [ enderecoEffect, setEnderecoEffect ] = useState(endereco);
 
   const handleCloseModalResumo = () => {
