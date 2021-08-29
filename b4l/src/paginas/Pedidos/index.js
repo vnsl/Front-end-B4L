@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CustomModal from '../../componentes/Modal';
-// import ModalEditarUsuario from '../../componentes/ModalEditarUsuario';
-import CardMarket from '../../componentes/Card';
+import ModalEnviarPedido from '../../componentes/ModalEnviarPedido';
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../componentes/Loading';
@@ -11,9 +9,13 @@ import './index.css';
 import Header from '../../componentes/HeaderProduto';
 
 function Produtos() {
-    const { token } = useAuth();
+    const { token, userPersistido } = useAuth();
     const [erro, setErro] = useState('');
     const [pedidos, setPedidos] = useState([]);
+    const [listaPedidos, setListaPedidos] = useState([]);
+    const [dadosPedido, setDadosPedido] = useState('');
+    const [dadosPedidoAtualizado, setDadosPedidoAtualizado] = useState('');
+    const [openModalPedidoFinal, setOpenModalPedidoFinal] = useState(false);
     const [carregando, setCarregando] = useState(false);
     const [carregar, setCarregar] = useState(false);
     const history = useHistory();
@@ -45,6 +47,7 @@ function Produtos() {
           }
 
           setPedidos(dados);
+          setListaPedidos(dados.pedidos);
 
         } catch (error) {
           return setErro(error.message);
@@ -54,51 +57,90 @@ function Produtos() {
       carregarProdutos();
     }, [token, carregar]);
 
-    // const pedidosUnicos = pedidos.filter((item, i) => pedidos.indexOf(item) === i);
+    /* useEffect(() => {
+      setListaPedidos(pedidos.pedidos);
+    }, [pedidos]) */
+  
+    function handleOpenModalPedido (idPedido) {
+      const infoPedido = pedidos.arrayPedidos.filter(item => {
+        if(item.id === idPedido){
+          return item;
+        }
+      });
+      
+      const custoFinalPedido = pedidos.pedidos.filter(item => {
+        if(item.id === idPedido){
+          return item;
+        }
+      });    
+
+      setDadosPedido({
+        idPedido,
+        infoPedido,
+        'custoFinalPedido': custoFinalPedido[0].custo_final
+      });  
+      
+      setDadosPedidoAtualizado(dadosPedido);
+
+      setOpenModalPedidoFinal(true);
+    };
+
+    useEffect(() => {
+      setDadosPedidoAtualizado(dadosPedido);
+    }, [dadosPedido]);
 
     return (
         <div className='content-produtos'>
             {carregando && <Loading/>}
             
             <Header recarregar={() => setCarregar(true)}/>
-                <div className='container-produtos'>
-                    {pedidos.length > 0?(
-                      <div>
-                        <div className="container-modal" >
-                          <button className='modal'>Não entregues</button>
-                          <button className='modal'>Entregues</button>
-                        </div>                        
-                          <table className='tabela'>
-                            <tr className='row'>
-                              <td>Pedido</td>
-                              <td>Items</td>
-                              <td>Endereço</td>
-                              <td>Cliente</td>
-                              <td>Total</td>
-                            </tr>
-                          {pedidos.map(pedido => 
-                            <tr>
-                              <td>{pedido.id}</td>
-                              <td>{pedido.itens}</td>
-                              <td>{pedido.endereco}, {pedido.cep}, {pedido.complemento}</td>
-                              <td>{pedido.nome}</td>
-                              <td>{pedido.valor_total_produto}</td>
-                            </tr>  
-                          )}
-                          </table>  
-                      </div>
-                      ) : (
-                      <div>
-                        <button className='modal'>Não entregues</button>
-                        <button className='modal'>Entregues</button>
-                        <div className="standard-text">
-                          <p>Não há pedidos para o seu restaurante.</p>
-                        </div>
-                      </div>
-                      )
-                    }
+            <div className='container-produtos'>
+              {listaPedidos.length > 0?(
+              <div>
+                <div className="container-modal" >
+                  <button className='modal'>Não entregues</button>
+                  <button className='modal'>Entregues</button>
+                </div>                        
+                <table className='tabela' style={{textAlign: 'left'}} >
+                  <tr className='row'>
+                    <td>Pedido</td>
+                    <td width="280px">Items</td>
+                    <td>Endereço</td>
+                    <td>Cliente</td>
+                    <td>Total</td>
+                    </tr>
+                      {listaPedidos.map(pedido => 
+                        <tr onClick={() => handleOpenModalPedido(pedido.id)} >
+                          <td>{pedido.id}</td>
+                          <td style={{display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', height: '100%'}} >
+                            {pedidos.arrayPedidos.map(item => {
+                              if(item.id === pedido.id) {
+                                return (
+                                  <div>
+                                    {item.nome_produto} 
+                                  </div>);
+                              }
+                            })}
+                          </td>
+                          <td>{pedidos.arrayPedidos[pedidos.arrayPedidos.findIndex(item => item.id === pedido.id)].endereco}</td>
+                          <td>{pedidos.arrayPedidos[pedidos.arrayPedidos.findIndex(item => item.id === pedido.id)].nome_cliente}</td>
+                          <td>{pedido.custo_final}</td>
+                        </tr>  
+                      )}
+                </table>  
+              </div>
+              ) : (
+                <div>
+                  <button className='modal'>Não entregues</button>
+                  <button className='modal'>Entregues</button>
+                <div className="standard-text">
+                  <p>Não há pedidos para o seu restaurante.</p>
                 </div>
-
+                </div>
+              )
+              }
+            </div>
+            <ModalEnviarPedido openModalPedidoFinal={openModalPedidoFinal} setOpenModalPedidoFinal={setOpenModalPedidoFinal} dadosPedido={dadosPedidoAtualizado} />
         </div>
     )
     

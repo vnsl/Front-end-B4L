@@ -35,6 +35,8 @@ export default function ModalResumoPedido(props) {
     setEnderecoEffect(endereco);
   }, [setEndereco, endereco])
 
+  props.setCustoFinalCarrinho(props.custoTotalCarrinho + props.restaurante.taxa_entrega);
+
   const enderecoFinal = userPersistido.endereco ?? enderecoEffect;
 
   return (
@@ -122,7 +124,7 @@ export default function ModalResumoPedido(props) {
                           </Typography>
                           <Typography variant="h5" color="textSecondary" component="p">
                             <span>
-                              R$ {props.custoTotalCarrinho && (props.custoTotalCarrinho + props.restaurante.taxa_entrega).toFixed([2]) }
+                              R$ {props.custoTotalCarrinho && (props.custoFinalCarrinho).toFixed([2]) }
                             </span>
                           </Typography>
                         </div>
@@ -132,7 +134,7 @@ export default function ModalResumoPedido(props) {
                           className={classes.botaoConfirmarPedido} 
                           type="button" 
                           color="secondary" 
-                          onClick={() => props.finalizarPedido(props.restaurante.id, props.custoTotalCarrinho, enderecoFinal)}
+                          onClick={() => props.finalizarPedido(props.restaurante.id, props.custoTotalCarrinho, props.custoFinalCarrinho, enderecoFinal)}
                         >
                           Confirmar Pedido
                         </Button>

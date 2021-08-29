@@ -23,7 +23,7 @@ h4 {
 .conteudo-cartao {
     display: flex;
     flex-direction: column;
-    height: 88%;
+    height: 100%;
     gap: 20px;
 }
 
@@ -51,28 +51,9 @@ span {
     font-weight: bold;
 }
 
-.carrinho-cheio {
+.pedido-fechado {
     overflow: auto;
-    height: 45%;
-}
-
-.carrinho-vazio {
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-}
-
-.adicionar-itens {
-    text-align: center;
-    font-size: 13px !important;
-    text-decoration: underline;
-    margin-top: 20px !important;
-    margin-bottom: 10px !important;
-}
-
-.resumo-valores {
-    margin-top: auto;
+    height: 90%;
 }
 
 .text-container-bottom {
@@ -89,21 +70,5 @@ span {
 .container-botao {
     display: flex;
     justify-content: center;
-}
-
-.container-sucesso {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-
-.container-imagem {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    height: 70%; 
-
 }
 

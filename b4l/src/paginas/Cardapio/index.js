@@ -40,6 +40,7 @@ function Produtos() {
 
     const [carrinho, setCarrinho] = useState(carrinhoPersistido);
     const [custoTotalCarrinho, setCustoTotalCarrinho] = useState(custoTotalCarrinhoPersistido);
+    const [custoFinalCarrinho, setCustoFinalCarrinho] = useState(0);
 
     const [ qtdProduto, setQtdProduto ] = useState(1);
     const [pedidoConcluido, setPedidoConcluido] = useState(false);
@@ -131,7 +132,7 @@ function Produtos() {
       return;
     }
 
-    async function finalizarPedido(id, custoCarrinho, enderecoEffect) {
+    async function finalizarPedido(id, custoCarrinho, custoFinalCarrinho, enderecoEffect) {
       try {
         setCarregando(true);
 
@@ -149,8 +150,8 @@ function Produtos() {
         setErro('');
 
         const resposta = await fetch(`http://localhost:3001/pedido/${id}`, {
-          method: 'GET',
-          body: JSON.stringify(),
+          method: 'POST',
+          body: JSON.stringify({custoFinalCarrinho}),
           headers: {
             'Content-type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -328,7 +329,7 @@ function Produtos() {
                   }
                 </div>
                 <ModalDetalhePedido acao={acao} restaurante={informacao} produto={dadosProduto} openModalDetalhe={openModalDetalhe} setOpenModalDetalhe={setOpenModalDetalhe} qtdProduto={qtdProduto} setQtdProduto={setQtdProduto} handleOpenModalResumo={handleOpenModalResumo} carrinho={carrinho} setCarrinho={setCarrinho} carrinhoVisivel={carrinhoVisivel} setCarrinhoVisivel={setCarrinhoVisivel} adicionarProdutoAoCarrinho={adicionarProdutoAoCarrinho} erro={erro} />
-                <ModalResumoPedido setAcao={setAcao} carrinho={carrinho} custoTotalCarrinho={custoTotalCarrinho} restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} setOpenModalDetalhe={setOpenModalDetalhe} setDadosProduto={setDadosProduto} setCarrinhoVisivel={setCarrinhoVisivel} pedidoConcluido={pedidoConcluido} setPedidoConcluido={setPedidoConcluido} excluirProduto={excluirProduto} finalizarPedido={finalizarPedido} erro={erro} setErro={setErro} />
+                <ModalResumoPedido setAcao={setAcao} carrinho={carrinho} custoTotalCarrinho={custoTotalCarrinho} custoFinalCarrinho={custoFinalCarrinho} setCustoFinalCarrinho={setCustoFinalCarrinho} restaurante={informacao} openModalResumo={openModalResumo} setOpenModalResumo={setOpenModalResumo} setOpenModalDetalhe={setOpenModalDetalhe} setDadosProduto={setDadosProduto} setCarrinhoVisivel={setCarrinhoVisivel} pedidoConcluido={pedidoConcluido} setPedidoConcluido={setPedidoConcluido} excluirProduto={excluirProduto} finalizarPedido={finalizarPedido} erro={erro} setErro={setErro} />
         </div>
     )
     

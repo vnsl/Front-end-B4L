@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({   
-    botaoConfirmarPedido: {
+    botaoEnviarPedido: {
       fontWeight: 'bold',
       fontSize: 13,
       color: 'white',
