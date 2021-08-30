@@ -34,10 +34,6 @@ h2 {
     padding-top: 40px;
 }
 
-.container-modal {
-    margin-right: 30px;
-}
-
 .modal {
     margin-left: auto;
     margin-right: 20px;
@@ -46,8 +42,9 @@ h2 {
 .tabela {
     background-color: white;
     color: blue;
-    width: 90%;
+    width: 100%;
     height: 90%;
+    margin-top: 50px;
 }
 
 .row {
@@ -56,6 +53,13 @@ h2 {
     font-size: 14px;
     width: 100px;
     height:100px;
+}
+
+td {
+    text-align: center;
+    color: black;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 10px;
 }
 
 .botao-direita {

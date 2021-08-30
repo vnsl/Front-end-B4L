@@ -173,8 +173,8 @@ function Produtos() {
             produto_id: produto.produto_id,
             quantidade_produto: produto.quantidade_produto,
             valor_total_produto: produto.custo_total_produto
-        }
-    });
+          }
+        });
         
         const pedidoFinalizado = {
           listaEditada        
