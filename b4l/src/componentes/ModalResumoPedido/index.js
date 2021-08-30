@@ -4,7 +4,6 @@ import CardCarrinho from '../../componentes/CardCarrinho';
 import ModalEndereco from '../../componentes/ModalEndereco';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
-import Loading from '../Loading';
 import useStyles from './styles';
 import { ReactComponent as ImagemCarrinho } from '../../assets/carrinho.svg';
 import { ReactComponent as BotaoFecharModal } from '../../assets/botao-close-modal.svg';
@@ -21,7 +20,7 @@ import './index.css';
 export default function ModalResumoPedido(props) {
   const classes = useStyles();
   
-  const { token, userPersistido, endereco, setEndereco } = useAuth();
+  const { userPersistido, endereco, setEndereco } = useAuth();
   
   const [ enderecoEffect, setEnderecoEffect ] = useState(endereco);
 
