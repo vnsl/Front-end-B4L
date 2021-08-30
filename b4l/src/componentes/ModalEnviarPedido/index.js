@@ -13,7 +13,7 @@ import { Typography } from '@material-ui/core';
 
 import './index.css';
 
-export default function ModalEnviarPedido({ dadosPedido, openModalPedidoFinal, setOpenModalPedidoFinal }) {
+export default function ModalEnviarPedido({ dadosPedido, openModalPedidoFinal, setOpenModalPedidoFinal, enviarPedido }) {
   const classes = useStyles();
     
   const handleCloseModalResumo = () => {
@@ -71,7 +71,7 @@ export default function ModalEnviarPedido({ dadosPedido, openModalPedidoFinal, s
                       </Typography>
                       <Typography variant="h5" color="textSecondary" component="p">
                         <span>
-                          R$ {(dadosPedido.custoFinalPedido).toFixed([2])}
+                          R$ {(dadosPedido.custoFinalPedido[0].custo_final).toFixed([2])}
                         </span>
                       </Typography>
                     </div>
@@ -81,7 +81,9 @@ export default function ModalEnviarPedido({ dadosPedido, openModalPedidoFinal, s
                       className={classes.botaoEnviarPedido} 
                       type="button" 
                       color="secondary" 
-                      // onClick={() => enviarPedido(dadosPedido.idPedido)}
+                      disabled={dadosPedido.custoFinalPedido[0].saiu_entrega}
+                      onClick={() => enviarPedido(dadosPedido.idPedido)}
+                      style={{background: dadosPedido.custoFinalPedido[0].saiu_entrega ? '#BABABA' : ''}}
                     >
                       Enviar Pedido
                     </Button>

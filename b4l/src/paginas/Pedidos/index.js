@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ModalEnviarPedido from '../../componentes/ModalEnviarPedido';
+import Button from '@material-ui/core/Button';
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../componentes/Loading';
 
 import './index.css';
+import useStyles from './styles';
 
 import Header from '../../componentes/HeaderProduto';
 
@@ -15,10 +17,13 @@ function Produtos() {
     const [listaPedidos, setListaPedidos] = useState([]);
     const [dadosPedido, setDadosPedido] = useState('');
     const [dadosPedidoAtualizado, setDadosPedidoAtualizado] = useState('');
+    const [pedidoEnviado, setPedidoEnviado] = useState(false);
     const [openModalPedidoFinal, setOpenModalPedidoFinal] = useState(false);
     const [carregando, setCarregando] = useState(false);
     const [carregar, setCarregar] = useState(false);
     const history = useHistory();
+
+    const classes = useStyles();
 
     useEffect(() => {
       setCarregar(false);
@@ -77,7 +82,7 @@ function Produtos() {
       setDadosPedido({
         idPedido,
         infoPedido,
-        'custoFinalPedido': custoFinalPedido[0].custo_final
+        custoFinalPedido
       });  
       
       setDadosPedidoAtualizado(dadosPedido);
@@ -89,14 +94,13 @@ function Produtos() {
       setDadosPedidoAtualizado(dadosPedido);
     }, [dadosPedido]);
 
-    /* async function enviarPedido(idPedido) {
+    async function enviarPedido(idPedido) {
       try {
         setCarregando(true);
         setErro('');
 
-        const resposta = await fetch(`http://localhost:3001/pedido/${idPedido}`, {
+        const resposta = await fetch(`http://localhost:3000/pedidos/${idPedido}`, {
           method: 'PUT',
-          body: JSON.stringify({custoFinalCarrinho}),
           headers: {
             'Content-type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -110,78 +114,69 @@ function Produtos() {
           return setErro(dados);
         };
 
-        const listaDeProdutos = [...carrinho];
-
-        const listaEditada = listaDeProdutos.map(produto => {
-        return {
-            pedido_id: dados.id,
-            produto_id: produto.produto_id,
-            quantidade_produto: produto.quantidade_produto,
-            valor_total_produto: produto.custo_total_produto
-          }
-        });
-        
-        const pedidoFinalizado = {
-          listaEditada        
-        }
-
-        const respostaPedido = await fetch('http://localhost:3001/finalizar_pedido', {
-          method: 'POST',
-          body: JSON.stringify(pedidoFinalizado),
-          headers: {
-            'Content-type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        })
-
-        const dadosPedido = await respostaPedido.json();
-
         setCarregando(false);
-        setCarrinho([]);
-        setCustoTotalCarrinho(0);
-        setPedidoConcluido(true);        
+        setPedidoEnviado(true);
+        setOpenModalPedidoFinal(false);
+        setCarregar(true);        
       } catch (error) {
         return setErro(error.message);
       }
-    } */
+    }
 
     return (
         <div className='content-produtos'>
             {carregando && <Loading/>}
             
             <Header recarregar={() => setCarregar(true)}/>
-            <div className='container-produtos'>
+            <div className='container-pedidos'>
               {listaPedidos.length > 0?(
                 <div style={{width: '100%'}} >
-                  <div style={{width: '100%'}} >
-                    <button className='modal'>Não entregues</button>
-                    <button className='modal'>Entregues</button>
+                  <div className="container-botoes-entrega" style={{width: '100%'}} >
+                    <div className="botoes-entrega" >
+                      <Button 
+                        className={classes.botaoNaoEntregues}
+                        type="button" 
+                      >
+                        Não entregues
+                      </Button>
+                      <Button
+                        className={classes.botaoEntregues} 
+                        type="button" 
+                      >
+                        Entregues
+                      </Button>
+                    </div>
                   </div>                        
                   <table className='tabela' style={{textAlign: 'left'}} >
                     <tr className='row'>
                       <td>Pedido</td>
-                      <td width="280px">Items</td>
+                      <td>Items</td>
                       <td>Endereço</td>
                       <td>Cliente</td>
                       <td>Total</td>
                     </tr>
-                      {listaPedidos.map(pedido => 
-                        <tr onClick={() => handleOpenModalPedido(pedido.id)} style={{cursor: 'pointer'}} >
-                          <td>{pedido.id}</td>
-                          <td style={{display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', height: '100%'}} >
-                            {pedidos.arrayPedidos.map(item => {
-                              if(item.id === pedido.id) {
-                                return (
-                                  <div>
-                                    {item.nome_produto} 
-                                  </div>);
-                              }
-                            })}
-                          </td>
-                          <td>{pedidos.arrayPedidos[pedidos.arrayPedidos.findIndex(item => item.id === pedido.id)].endereco}</td>
-                          <td>{pedidos.arrayPedidos[pedidos.arrayPedidos.findIndex(item => item.id === pedido.id)].nome_cliente}</td>
-                          <td>{pedido.custo_final}</td> 
-                        </tr>
+                      {listaPedidos.map(pedido => {
+                        if(!pedido.saiu_entrega) {
+                          return (
+                            <tr onClick={() => handleOpenModalPedido(pedido.id)} style={{cursor: 'pointer'}} >
+                              <td>{pedido.id}</td>
+                              <td style={{display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', height: '100%'}} >
+                                {pedidos.arrayPedidos.map(item => {
+                                  if(item.id === pedido.id) {
+                                    return (
+                                      <div>
+                                        {item.nome_produto} 
+                                      </div>);
+                                  }
+                                })}
+                              </td>
+                              <td>{pedidos.arrayPedidos[pedidos.arrayPedidos.findIndex(item => item.id === pedido.id)].endereco}</td>
+                              <td>{pedidos.arrayPedidos[pedidos.arrayPedidos.findIndex(item => item.id === pedido.id)].nome_cliente}</td>
+                              <td style={{fontWeight: 'bold'}} >R$ {(pedido.custo_final).toFixed([2])}</td> 
+                            </tr>
+                          );                          
+                        }  
+                      }                                              
                       )}
                   </table>  
                 </div>
@@ -196,7 +191,7 @@ function Produtos() {
               )
               }
             </div>
-            {dadosPedidoAtualizado && <ModalEnviarPedido openModalPedidoFinal={openModalPedidoFinal} setOpenModalPedidoFinal={setOpenModalPedidoFinal} dadosPedido={dadosPedidoAtualizado} />}
+            {dadosPedidoAtualizado && <ModalEnviarPedido openModalPedidoFinal={openModalPedidoFinal} setOpenModalPedidoFinal={setOpenModalPedidoFinal} dadosPedido={dadosPedidoAtualizado} enviarPedido={enviarPedido} />}
         </div>
     )
     
