@@ -11,6 +11,7 @@ import { useForm, Controller } from 'react-hook-form';
 import useAuth from '../../hook/useAuth';
 import { useHistory, Link } from 'react-router-dom';
 import InputText from '../InputText';
+import InputTextCEP from '../InputTextCEP';
 import { Typography } from '@material-ui/core';
 
 import './index.css';
@@ -21,7 +22,7 @@ export default function ModalEndereco({ openModalResumo, setEndereco }) {
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
   const [ open, setOpen ] = useState(false);
-  const { token, userPersistido } = useAuth();
+  const { token, userPersistido, setUserPersistido } = useAuth();
   const { handleSubmit, control } = useForm();
   const [ adicionado, setAdicionado ] = useState(false);
   
@@ -43,6 +44,12 @@ export default function ModalEndereco({ openModalResumo, setEndereco }) {
     
     setCarregando(true);
     setErro('');
+
+    if(!data.endereco || !data.cep) {
+      setCarregando(false);
+      setErro('Endereço e CEP são obrigatórios.');
+      return;
+    }
     
     try {
       const resposta = await fetch('http://localhost:3001/endereco', {
@@ -63,6 +70,20 @@ export default function ModalEndereco({ openModalResumo, setEndereco }) {
       }
       
       setEndereco(enderecoEnvio);
+
+      const updateUser = {
+        id: userPersistido.id,
+        email: userPersistido.email,
+        nome: userPersistido.nome,
+        telefone: userPersistido.telefone,
+        endereco: {
+          endereco: enderecoEnvio.endereco,
+          cep: enderecoEnvio.cep,
+          complemento: enderecoEnvio.complemento
+        }
+      }
+
+      setUserPersistido(updateUser);
       setAdicionado(true);
       
     } catch (error) {
@@ -91,8 +112,8 @@ export default function ModalEndereco({ openModalResumo, setEndereco }) {
           </div>
           { !adicionado && <form
             onSubmit={handleSubmit(cadastrarEndereco)}
-          >
-            <InputText name='cep' label='CEP' control={control}/>
+          style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} >
+            <InputTextCEP name='cep' label='CEP' control={control} />
             <InputText name='endereco' label='Endereço' control={control}/>
             <InputText name='complemento' label='Complemento' control={control}/>
             {carregando && <Loading/>}

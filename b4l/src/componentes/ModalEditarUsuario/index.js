@@ -268,7 +268,7 @@ export default function ModalEditarUsuario(props) {
       <img 
         className='logo' 
         // src={props.logo ?? novo} 
-        src={imagem} 
+        src={imagemPerfil} 
         alt="" 
         onClick={handleOpen}
       />

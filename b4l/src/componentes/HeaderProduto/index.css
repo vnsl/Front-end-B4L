@@ -40,6 +40,11 @@
     height: 100%;
 }
 
+.botoes-header {
+    display: flex;
+    gap: 20px;
+}
+
 .modal {
     padding-top: 15px;
 }

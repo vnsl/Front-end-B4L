@@ -47,6 +47,7 @@ export default function CustomModal(props) {
   const handleOpen = () => {
     if (props.acao === 'Novo produto') {
       setErro('');
+      setBaseImage('');
       setProdutoAtivo(true);
       setObservacoes(false);
       setValue("nome", '');

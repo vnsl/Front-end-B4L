@@ -10,6 +10,7 @@ import React from "react";
 import Login from "./paginas/Login";
 import Cadastro from "./paginas/Cadastro";
 import Produtos from "./paginas/Produtos";
+import Pedidos from "./paginas/Pedidos";
 
 import LoginConsumidor from "./paginas/LoginConsumidor";
 import CadastroConsumidor from "./paginas/CadastroConsumidor";
@@ -19,7 +20,7 @@ import Cardapio from "./paginas/Cardapio";
 // import { AuthProvider } from './context/AuthContext';
 import useAuth from './hook/useAuth';
 
-function PrivateRoute1({ component: Component, ...rest }) {
+function PrivateProprietario({ component: Component, ...rest }) {
     return (
         <Route
             {...rest}
@@ -37,7 +38,7 @@ function PrivateRoute1({ component: Component, ...rest }) {
         />
     )
 };
-function PrivateRoute2({ component: Component, ...rest }) {
+function PrivateConsumidor({ component: Component, ...rest }) {
     return (
         <Route
             {...rest}
@@ -68,9 +69,11 @@ function Routes() {
                 <Route path="/loginconsumidor" exact component={LoginConsumidor}/>  
                 <Route path="/cadastroconsumidor" component={CadastroConsumidor}/>
 
-                <PrivateRoute1 exact path='/produtos' component={Produtos}/>
-                <PrivateRoute2 exact path='/restaurantes' component={Restaurantes}/>
-                <PrivateRoute2 exact path='/cardapio/:id' component={Cardapio}/>
+                <PrivateProprietario exact path='/home' component={Pedidos}/>
+                <PrivateProprietario exact path='/produtos' component={Produtos}/>
+                
+                <PrivateConsumidor exact path='/restaurantes' component={Restaurantes}/>
+                <PrivateConsumidor exact path='/cardapio/:id' component={Cardapio}/>
                 
             </Switch>
         </Router>
