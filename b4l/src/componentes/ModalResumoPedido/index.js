@@ -4,7 +4,6 @@ import CardCarrinho from '../../componentes/CardCarrinho';
 import ModalEndereco from '../../componentes/ModalEndereco';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
-import Loading from '../Loading';
 import useStyles from './styles';
 import { ReactComponent as ImagemCarrinho } from '../../assets/carrinho.svg';
 import { ReactComponent as BotaoFecharModal } from '../../assets/botao-close-modal.svg';
@@ -21,7 +20,7 @@ import './index.css';
 export default function ModalResumoPedido(props) {
   const classes = useStyles();
   
-  const { token, userPersistido, endereco, setEndereco } = useAuth();
+  const { userPersistido, endereco, setEndereco } = useAuth();
   
   const [ enderecoEffect, setEnderecoEffect ] = useState(endereco);
 
@@ -34,8 +33,6 @@ export default function ModalResumoPedido(props) {
   useEffect( () => {
     setEnderecoEffect(endereco);
   }, [setEndereco, endereco])
-
-  props.setCustoFinalCarrinho(props.custoTotalCarrinho + props.restaurante.taxa_entrega);
 
   const enderecoFinal = userPersistido.endereco ?? enderecoEffect;
 
@@ -92,7 +89,7 @@ export default function ModalResumoPedido(props) {
                       min
                     </Typography>
                     <div className="carrinho-cheio">
-                      {props.carrinho.map(itemCarrinho => <CardCarrinho key={itemCarrinho.id} itemCarrinho={itemCarrinho} setAcao={props.setAcao} excluirProduto={props.excluirProduto} setOpenModalDetalhe={props.setOpenModalDetalhe} setCarrinhoVisivel={props.setCarrinhoVisivel} setDadosProduto={props.setDadosProduto} />)}
+                      {props.carrinho.map(itemCarrinho => <CardCarrinho key={itemCarrinho.id} itemCarrinho={itemCarrinho} excluirProduto={props.excluirProduto} />)}
                     </div>
                     <div style={{marginTop: 'auto'}}>
                       <Typography className="adicionar-itens" onClick={handleCloseModalResumo} >Adicionar mais itens ao pedido</Typography>
@@ -124,7 +121,7 @@ export default function ModalResumoPedido(props) {
                           </Typography>
                           <Typography variant="h5" color="textSecondary" component="p">
                             <span>
-                              R$ {props.custoTotalCarrinho && (props.custoFinalCarrinho).toFixed([2]) }
+                              R$ {props.custoTotalCarrinho && (props.custoTotalCarrinho + props.restaurante.taxa_entrega).toFixed([2]) }
                             </span>
                           </Typography>
                         </div>
@@ -134,7 +131,7 @@ export default function ModalResumoPedido(props) {
                           className={classes.botaoConfirmarPedido} 
                           type="button" 
                           color="secondary" 
-                          onClick={() => props.finalizarPedido(props.restaurante.id, props.custoTotalCarrinho, props.custoFinalCarrinho, enderecoFinal)}
+                          onClick={() => props.finalizarPedido(props.restaurante.id, props.custoTotalCarrinho, enderecoFinal)}
                         >
                           Confirmar Pedido
                         </Button>

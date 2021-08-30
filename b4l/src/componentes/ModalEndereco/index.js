@@ -21,7 +21,7 @@ export default function ModalEndereco({ openModalResumo, setEndereco }) {
   const [ erro, setErro ] = useState('');
   const [ carregando, setCarregando ] = useState(false);
   const [ open, setOpen ] = useState(false);
-  const { token, userPersistido } = useAuth();
+  const { token, userPersistido, setUserPersistido } = useAuth();
   const { handleSubmit, control } = useForm();
   const [ adicionado, setAdicionado ] = useState(false);
   
@@ -63,6 +63,20 @@ export default function ModalEndereco({ openModalResumo, setEndereco }) {
       }
       
       setEndereco(enderecoEnvio);
+
+      const updateUser = {
+        id: userPersistido.id,
+        email: userPersistido.email,
+        nome: userPersistido.nome,
+        telefone: userPersistido.telefone,
+        endereco: {
+          endereco: enderecoEnvio.endereco,
+          cep: enderecoEnvio.cep,
+          complemento: enderecoEnvio.complemento
+        }
+      }
+
+      setUserPersistido(updateUser);
       setAdicionado(true);
       
     } catch (error) {
