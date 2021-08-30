@@ -58,7 +58,7 @@ function Login() {
           const categorias = await respostaCategorias.json();          
           
           logar(dados.token, dados.usuario, categorias);
-          history.push('/produtos');
+          history.push('/home');
         } catch (error) {
           setErro(error.message)
         }

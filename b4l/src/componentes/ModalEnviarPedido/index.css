@@ -1,26 +1,44 @@
-.card-endereco {
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+
+
+h4 {
+    font-family: 'Baloo 2', cursive !important;
+    font-weight: bold !important;
+    color: rgba(18, 18, 18, 0,8) !important;
+}
+
+.card-resumo-pedido {
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 625px;
-    height: 100%;
+    height: 90%;
     background-color: #F9F9F9;
     border-radius: 16px;
     margin: 20px auto;
     padding: 70px;
-    gap: 18px;
     overflow-y: auto;
 }
 
-.try {
-    /* overflow: auto; */
-    height: 90vh;
+.conteudo-cartao {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 20px;
+}
+
+.botao-fechar-resumo {
+    position: absolute;
+    top: 70px;
+    right: 70px;
+    cursor: pointer;
 }
 
 .nome-restaurante {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-bottom: 10px;
 }
 
 .container-endereco {
@@ -33,8 +51,9 @@ span {
     font-weight: bold;
 }
 
-.resumo-valores {
-    margin-top: auto;
+.pedido-fechado {
+    overflow: auto;
+    height: 90%;
 }
 
 .text-container-bottom {
