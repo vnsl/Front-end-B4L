@@ -131,7 +131,7 @@ export default function ModalResumoPedido(props) {
                           className={classes.botaoConfirmarPedido} 
                           type="button" 
                           color="secondary" 
-                          onClick={() => props.finalizarPedido(props.restaurante.id, props.custoTotalCarrinho, enderecoFinal)}
+                          onClick={() => props.finalizarPedido(props.restaurante.id, props.custoTotalCarrinho, (props.custoTotalCarrinho + props.restaurante.taxa_entrega))}
                         >
                           Confirmar Pedido
                         </Button>

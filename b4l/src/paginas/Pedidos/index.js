@@ -182,11 +182,25 @@ function Produtos() {
                 </div>
               ) : (
                 <div>
-                  <button className='modal'>Não entregues</button>
-                  <button className='modal'>Entregues</button>
-                <div className="standard-text">
-                  <p>Não há pedidos para o seu restaurante.</p>
-                </div>
+                  <div className="container-botoes-entrega" style={{width: '100%'}} >
+                    <div className="botoes-entrega" >
+                      <Button 
+                        className={classes.botaoNaoEntregues}
+                        type="button" 
+                      >
+                        Não entregues
+                      </Button>
+                      <Button
+                        className={classes.botaoEntregues} 
+                        type="button" 
+                      >
+                        Entregues
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="standard-text">
+                    <p>Não há pedidos para o seu restaurante.</p>
+                  </div>
                 </div>
               )
               }

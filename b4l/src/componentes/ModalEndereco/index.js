@@ -11,6 +11,7 @@ import { useForm, Controller } from 'react-hook-form';
 import useAuth from '../../hook/useAuth';
 import { useHistory, Link } from 'react-router-dom';
 import InputText from '../InputText';
+import InputTextCEP from '../InputTextCEP';
 import { Typography } from '@material-ui/core';
 
 import './index.css';
@@ -43,6 +44,12 @@ export default function ModalEndereco({ openModalResumo, setEndereco }) {
     
     setCarregando(true);
     setErro('');
+
+    if(!data.endereco || !data.cep) {
+      setCarregando(false);
+      setErro('Endereço e CEP são obrigatórios.');
+      return;
+    }
     
     try {
       const resposta = await fetch('http://localhost:3001/endereco', {
@@ -105,8 +112,8 @@ export default function ModalEndereco({ openModalResumo, setEndereco }) {
           </div>
           { !adicionado && <form
             onSubmit={handleSubmit(cadastrarEndereco)}
-          >
-            <InputText name='cep' label='CEP' control={control}/>
+          style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} >
+            <InputTextCEP name='cep' label='CEP' control={control} />
             <InputText name='endereco' label='Endereço' control={control}/>
             <InputText name='complemento' label='Complemento' control={control}/>
             {carregando && <Loading/>}

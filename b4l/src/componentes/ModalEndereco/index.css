@@ -1,13 +1,9 @@
-.modal-endereco:first-child {
-    color: var(--cor-vermelho);
-    text-decoration: underline;
-}
-
 .card-endereco {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 625px;
-    height: 90%;
+    height: 100%;
     background-color: #F9F9F9;
     border-radius: 16px;
     margin: 20px auto;

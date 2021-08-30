@@ -132,11 +132,11 @@ function Produtos() {
       return;
     }
 
-    async function finalizarPedido(id, custoCarrinho, custoFinalCarrinho, enderecoEffect) {
+    async function finalizarPedido(id, custoCarrinho, custoFinalCarrinho) {
       try {
         setCarregando(true);
 
-        if (!enderecoEffect) {
+        if (!userPersistido.endereco.endereco) {
           setErro("Não é possível prosseguir sem um endereço cadastrado.");
           return;
         }
