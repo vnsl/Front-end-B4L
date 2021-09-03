@@ -34,7 +34,9 @@ export default function ModalResumoPedido(props) {
     setEnderecoEffect(endereco);
   }, [setEndereco, endereco])
 
-  const enderecoFinal = userPersistido.endereco ?? enderecoEffect;
+  props.setCustoFinalCarrinho(props.custoTotalCarrinho + props.restaurante.taxa_entrega);
+  
+  // const enderecoFinal = userPersistido.endereco ?? enderecoEffect;
 
   return (
     <div>
@@ -89,7 +91,7 @@ export default function ModalResumoPedido(props) {
                       min
                     </Typography>
                     <div className="carrinho-cheio">
-                      {props.carrinho.map(itemCarrinho => <CardCarrinho key={itemCarrinho.id} itemCarrinho={itemCarrinho} excluirProduto={props.excluirProduto} />)}
+                    {props.carrinho.map(itemCarrinho => <CardCarrinho key={itemCarrinho.id} itemCarrinho={itemCarrinho} setAcao={props.setAcao} excluirProduto={props.excluirProduto} setOpenModalDetalhe={props.setOpenModalDetalhe} setCarrinhoVisivel={props.setCarrinhoVisivel} setDadosProduto={props.setDadosProduto} />)}
                     </div>
                     <div style={{marginTop: 'auto'}}>
                       <Typography className="adicionar-itens" onClick={handleCloseModalResumo} >Adicionar mais itens ao pedido</Typography>
