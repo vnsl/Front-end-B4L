@@ -23,7 +23,7 @@ export default function ModalEditarUsuario(props) {
   const [ erro, setErro ] = useState('');
   const [baseImage, setBaseImage] = useState('');
   const [ carregando, setCarregando ] = useState(false);
-  const { token, categoriasPersistidas, userPersistido, setUserPersistido } = useAuth();
+  const { token, userPersistido, setUserPersistido } = useAuth();
   
   const { nome, email, telefone, imagem } = userPersistido;
   
@@ -90,7 +90,7 @@ export default function ModalEditarUsuario(props) {
       }
     
       try {
-        const resposta = await fetch('http://localhost:3000/upload', {
+        const resposta = await fetch('http://localhost:3001/upload', {
           method: 'POST',
           body: JSON.stringify(envio),
           headers: {
@@ -121,7 +121,7 @@ export default function ModalEditarUsuario(props) {
     };
 
         try {
-          const resposta = await fetch(`http://localhost:3000/usuarios/${userPersistido.id}`, {
+          const resposta = await fetch(`http://localhost:3001/consumidores/${userPersistido.id}`, {
               method: 'PUT',
               body: JSON.stringify(usuario),
               headers: {
