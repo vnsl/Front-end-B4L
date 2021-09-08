@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import CustomModal from '../../componentes/Modal';
-// import ModalEditarUsuario from '../../componentes/ModalEditarUsuario';
 import CardMarket from '../../componentes/Card';
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../componentes/Loading';
+import { ReactComponent as FormaProdutos } from '../../assets/forma-produtos.svg';
 
 import './index.css';
 
@@ -62,7 +62,7 @@ function Produtos() {
     return (
         <div className='content-produtos'>
             {carregando && <Loading/>}
-            
+            <FormaProdutos className='forma-produtos'/>
             <Header recarregar={() => setCarregar(true)}/>
                 <div className='container-produtos'>
                     {produtos.length > 0?(

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import useAuth from '../../hook/useAuth';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../componentes/Loading';
+import { ReactComponent as FormaProdutos } from '../../assets/forma-produtos.svg';
 
 import './index.css';
 import useStyles from './styles';
@@ -61,10 +62,6 @@ function Produtos() {
       }
       carregarProdutos();
     }, [token, carregar]);
-
-    /* useEffect(() => {
-      setListaPedidos(pedidos.pedidos);
-    }, [pedidos]) */
   
     function handleOpenModalPedido (idPedido) {
       const infoPedido = pedidos.arrayPedidos.filter(item => {
@@ -126,7 +123,7 @@ function Produtos() {
     return (
         <div className='content-produtos'>
             {carregando && <Loading/>}
-            
+            <FormaProdutos className='forma-produtos'/>
             <Header recarregar={() => setCarregar(true)}/>
             <div className='container-pedidos'>
               {listaPedidos.length > 0?(

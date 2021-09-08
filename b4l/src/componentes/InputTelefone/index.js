@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
     inputTelefone: {
         marginBottom: theme.spacing(5),
+        width: 150
     }
 }));
 

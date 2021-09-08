@@ -7,7 +7,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'grid',
         placeContent: 'center',
         minHeight: '100vh',
-        gap: '15px'
     },
     card: {
       background: `url(${BgConsumidor})`,
@@ -16,18 +15,28 @@ const useStyles = makeStyles((theme) => ({
       backgroundRepeat: 'no-repeat',
       height: '100vh',
     },
+    forma: {
+      position: 'absolute',
+      top: '5%',
+      left: '15%',
+      maxHeight: '90%'
+    },
     containerLogin: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       gap: 30,
-      width: 488,
-      height: 612,
+      position: 'absolute',
+      width: '35%',
+      maxWidth: 488,
+      height: '90%',
+      maxHeight: 612,
       backgroundColor: 'white',
       borderRadius: 16,
       boxShadow: `0px 4px 16px rgba(50, 50, 50, 0.4)`,
       padding: 20,
-      marginRight: 320
+      top: '5%',
+      left: '25%'
     },
     login: {
       display: 'grid',

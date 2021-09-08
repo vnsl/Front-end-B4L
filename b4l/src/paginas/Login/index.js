@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import Loading from '../../componentes/Loading';
 import InputSenha from '../../componentes/InputSenha';
+import { ReactComponent as Forma } from '../../assets/forma-login.svg';
 
 import './index.css';
 
@@ -72,6 +73,7 @@ function Login() {
           autoComplete="off"
           onSubmit={handleSubmit(onSubmit)}
         >
+            <Forma className={classes.forma}/>
             <div className={classes.containerLogin} >
                 <Typography variant="h3" className={classes.title} >Login</Typography>
                 {carregando && <Loading/>}

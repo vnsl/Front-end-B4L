@@ -2,16 +2,20 @@
 
 .main-screen {
     display: flex;
-    height: 100vh;
+    max-height: 100vh;
 }
 
 .div-img {
+    position: absolute;
+    top: 0;
+    left: 5%;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50%;
-    padding: 40px;
+    width: 60%;
+    height: 100vh;
 }
 
 .container-img-barril {
@@ -21,27 +25,14 @@
 }
 
 .img-app {
-    width: 70%;
-    height: 70%;
+    width: 40%;
+    height: 60%;
 }
 
-.caixa-consumidor {
-    width: 50%;
-    height: 100vh;
-    border-bottom-left-radius: 88px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 4px 16px rgba(50, 50, 50, 0.15);
-}
-
-.content-consumidor {
-    display: flex;
-    flex-direction: column;
-    padding: 100px;
-}
-
-.bottom-text {
-    color: #6F7377;
-    font-family: 'Montserrat', sans-serif !important;
+.img-fundo {
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    left: -10%;
+    bottom: 0;
 }
