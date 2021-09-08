@@ -6,7 +6,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'grid',
         placeContent: 'center',
         minHeight: '100vh',
-        // gap: '15px'
     },
     card: {
       background: `url(${BgImage})`,

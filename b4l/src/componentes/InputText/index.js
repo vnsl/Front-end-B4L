@@ -14,6 +14,7 @@ export default function InputText({name, label, control, defaultValue }) {
                 label={label}
                 defaultValue={defaultValue}
                 type='text'
+                style={{marginBottom: 0}}
                 {...field}
             />}
         />

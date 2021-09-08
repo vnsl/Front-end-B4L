@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+
+.caixa-consumidor {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    border-bottom-left-radius: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 16px rgba(50, 50, 50, 0.15);
+    overflow-y: auto;
+}
+
+.content-consumidor {
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom-text {
+    color: #6F7377;
+    font-family: 'Montserrat', sans-serif !important;
+    text-align: center;
+}

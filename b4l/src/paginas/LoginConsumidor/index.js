@@ -7,6 +7,7 @@ import Alert from '@material-ui/lab/Alert';
 import Loading from '../../componentes/Loading';
 import InputSenha from '../../componentes/InputSenha';
 import { ReactComponent as BarrilLogo } from '../../assets/logo-barril.svg';
+import { ReactComponent as Forma } from '../../assets/forma-login.svg';
 
 import './index.css';
 
@@ -66,6 +67,7 @@ function LoginConsumidor() {
           autoComplete="off"
           onSubmit={handleSubmit(onSubmit)}
         >
+            <Forma className={classes.forma}/>
             <div className={classes.containerLogin} >
                 <div className="title">
                   <Typography variant="h3" className={classes.title} >Login</Typography>
