@@ -30,7 +30,7 @@ export default function ModalEditarUsuario(props) {
   const { id: id_restaurante, nome: nome_restaurante, categoria_id, descricao, taxa_entrega, tempo_entrega_minutos, valor_minimo_pedido, imagem } = restaurante;
 
   const imagemPerfil = baseImage ? baseImage : (imagem ? imagem : 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg');
-
+  
   const defaultValues = {
     nome: '',
     email: '',
@@ -61,6 +61,7 @@ export default function ModalEditarUsuario(props) {
   }, [nome, setValue, email, descricao, nome_restaurante, categoria_id, taxa_entrega, valor_minimo_pedido, tempo_entrega_minutos])
 
   const handleOpen = () => {
+    setValue('restaurante.categoria_id', categoria_id)
     setValue('senha', '');
     setValue('nova_senha', '');
     setValue('nova_senha_repetida', '');
@@ -128,6 +129,10 @@ export default function ModalEditarUsuario(props) {
       } catch (error) {
         setErro(error.message)
       }
+    } else if (imagem) {
+      imagemPerfil = imagem;
+    } else {
+      imagemPerfil = 'http://www.casanovanet.com.br/wp-content/uploads/2020/09/download.jpg'; 
     }
 
     const usuario = {
@@ -266,8 +271,6 @@ export default function ModalEditarUsuario(props) {
   return (
     <div>
       <img 
-        className='logo' 
-        // src={props.logo ?? novo} 
         src={imagemPerfil} 
         alt="" 
         onClick={handleOpen}

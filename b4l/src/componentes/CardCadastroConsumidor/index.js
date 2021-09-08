@@ -5,18 +5,14 @@ import { useHistory, Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/lab/Alert';
-import CardCadastroConsumidor from '../../componentes/CardCadastroConsumidor';
+
 import CadastroFormConsumidor from '../../componentes/CadastroFormConsumidor';
 import Loading from '../../componentes/Loading';
-import ImagemApp from "../../assets/imagem-app.svg";
-import ImagemBarril from "../../assets/logo-consumidor.svg";
-import ImagemFundo from "../../assets/bg-consumidor.svg";
-import { ReactComponent as FundoConsumidor } from '../../assets/bg-consumidor.svg';
 
 import './index.css';
 import useStyles from './styles';
 
-function CadastroConsumidor() {
+function CardCadastroConsumidor() {
     const classes = useStyles();
     const [carregando, setCarregando] = useState(false);
     const [ erro, setErro ] = useState('');
@@ -84,18 +80,29 @@ function CadastroConsumidor() {
     };
 
     return (
-      <div className="main-screen">
-        <div className="div-img">
-          <div className="container-img-barril">
-            <img className="img-barril" src={ImagemBarril} alt="" />
+        <div className="caixa-consumidor">
+          <div className="content-consumidor">
+            <div className="title">
+              <Typography variant="h3" className={classes.title} >Cadastro</Typography>
+            </div>
+            <div className="container-form">
+              <CadastroFormConsumidor control={control} />
+            </div>
+            {carregando && <Loading/>}
+            {erro && <Alert severity="error">{erro}</Alert>}
+            <div className="container-botoes">
+              <Button
+                variant="contained"
+                onClick={handleSubmit(onSubmit)}
+                className={classes.button}
+              >
+                Criar conta
+              </Button> 
+            </div>
+            <Typography className="bottom-text" >Já tem uma conta? <Link to='/loginconsumidor'>Login</Link></Typography>
           </div>
-          <img className="img-app" src={ImagemApp} alt="" />
-        </div>
-        <FundoConsumidor className="img-fundo"/>
-        <CardCadastroConsumidor />
-      </div>
-      
+        </div>              
     )
 }
 
-export default CadastroConsumidor;
+export default CardCadastroConsumidor;

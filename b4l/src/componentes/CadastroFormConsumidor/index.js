@@ -9,7 +9,7 @@ import InputTelefone from '../InputTelefone';
 
 export default function CadastroFormConsumidor({control}) {
     return (
-        <form className='cadastro'>
+        <form style={{ display: 'flex', flexDirection: 'column' }} >
             <InputText name='nome' label='Nome de usuário' control={control}/>
             <Controller
                 name='email'

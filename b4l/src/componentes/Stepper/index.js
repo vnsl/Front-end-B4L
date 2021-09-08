@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-
   },
   stepsControl: {
     width: '50%',

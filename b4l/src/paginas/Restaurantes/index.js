@@ -66,7 +66,7 @@ function Restaurantes() {
     return (
         <div className='content'>
             {carregando && <Loading/>}
-            <Header />
+            <Header recarregar={() => setCarregar(true)} />
                 <div className='container-restaurantes'>
                   <input className='pesquisa' type='text' placeholder='Buscar' onChange={(event) => { setBusca(event.target.value) }}/>
                   {restaurantesFiltrados.length === 0 && 
