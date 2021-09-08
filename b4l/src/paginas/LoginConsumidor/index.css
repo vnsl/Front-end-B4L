@@ -5,6 +5,10 @@ h3 {
     font-family: 'Baloo 2', cursive !important;
 }
 
+.caixa {
+    position: absolute;
+}
+
 .title {
     display: flex;
     justify-content: space-between;

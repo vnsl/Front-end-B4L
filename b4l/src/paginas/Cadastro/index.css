@@ -5,10 +5,16 @@
     position: relative;
 }
 
+.forma-cadastro {
+    width: 60%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 .caixa {
     background: white;
     position: absolute;
-    z-index: -1;
     width: 50%;
     height: 100vh;
     border-bottom-right-radius: 88px;

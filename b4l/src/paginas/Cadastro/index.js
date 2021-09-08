@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import StepperHorizontal from '../../componentes/Stepper';
 import Loading from '../../componentes/Loading';
+import { ReactComponent as FormaCadastro } from '../../assets/forma-cadastro.svg';
 
 import './index.css';
 
@@ -33,8 +34,9 @@ function Cadastro() {
     return (
         <div className='container-cadastro'>
             {carregando && <Loading/>}
+            <FormaCadastro className='forma-cadastro' />
             <div className='caixa'>
-                <StepperHorizontal/>
+                <StepperHorizontal />
             </div>
         </div>
     )

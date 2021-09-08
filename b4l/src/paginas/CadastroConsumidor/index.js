@@ -10,6 +10,8 @@ import CadastroFormConsumidor from '../../componentes/CadastroFormConsumidor';
 import Loading from '../../componentes/Loading';
 import ImagemApp from "../../assets/imagem-app.svg";
 import ImagemBarril from "../../assets/logo-consumidor.svg";
+import ImagemFundo from "../../assets/bg-consumidor.svg";
+// import { ReactComponent as FundoConsumidor } from '../../assets/bg-consumidor.svg';
 
 import './index.css';
 import useStyles from './styles';
@@ -89,6 +91,7 @@ function CadastroConsumidor() {
           </div>
           <img className="img-app" src={ImagemApp} alt="" />
         </div>
+        {/* <img className="img-fundo" src={ImagemFundo} alt="" /> */}
         <div className="caixa-consumidor">
           <div className="content-consumidor">
             <div className="title">

@@ -8,6 +8,13 @@
     align-items: center;
 }
 
+.forma-produtos {
+    position: absolute;
+    z-index: 2;
+    top: -30px;
+    left: 0;
+}
+
 .container-produtos {
     width: 100%;
     height: 100vh;

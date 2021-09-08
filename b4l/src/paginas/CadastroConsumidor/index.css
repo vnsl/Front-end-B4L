@@ -37,6 +37,7 @@
 
 .content-consumidor {
     display: flex;
+    height: 80%;
     flex-direction: column;
     padding: 100px;
 }
